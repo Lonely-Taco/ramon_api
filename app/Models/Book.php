@@ -10,6 +10,7 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'title',
         'authors',
         'average_rating',
@@ -19,8 +20,8 @@ class Book extends Model
     ];
 
     protected $casts = [
-
+        'average_rating' => 'float',
     ];
 
-//bookID, title, authors, average_rating, ratings_count, publication_date,
+    public $incrementing = false;
 }

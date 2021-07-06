@@ -15,17 +15,12 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->text('title');
+            $table->text('authors');
+            $table->float('average_rating');
+            $table->integer('ratings_count');
+            $table->date('publication_date')->nullable();
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('books');
     }
 }

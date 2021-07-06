@@ -2,46 +2,33 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\BookImport;
+use App\Imports\GameImport;
+use App\Imports\MovieImport;
+use App\Models\Movie;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InsertData extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'insert:data';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
+    protected $description = 'inserts the data';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): void
     {
-//        $json = \Illuminate\Support\Facades\File::get("database/data/books.csv");
+        Excel::import(new BookImport, storage_path('data/books.csv'));
+        $this->info('books inserted');
 
-        Excel::import(new BookImport, storage_path('database/data/books.csv'));
+        Excel::import(new GameImport, storage_path('data/games.csv'));
+        $this->info('games inserted');
 
-        return 0;
+        Excel::import(new MovieImport, storage_path('data/movies.csv'));
+        $this->info('movies inserted');
     }
 }
