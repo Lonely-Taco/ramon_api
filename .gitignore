@@ -125,3 +125,5 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+#laravel-excel
+storage/framework
