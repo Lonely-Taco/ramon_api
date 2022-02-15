@@ -13,7 +13,7 @@ class MovieImport implements ToModel
             'title'   => $row[1],
             'year'    => $row[2],
             'iMDb'    => $row[3],
-            'genres'  => $row[4],
+            'genres'  => explode(',', $row[4])[0],
             'runtime' => $row[5],
         ]);
     }
