@@ -37,11 +37,12 @@ class InsertData extends Command
 
     public function getTags()
     {
-        $users = DB::table('games')
-            ->select('steamspy_tags')
-            ->groupBy('steamspy_tags')
+        $users = DB::table('books')
+            ->select('categories')
+            ->groupBy('categories')
             ->get();
 
+        $this->info($users->count());
     }
 
 }
