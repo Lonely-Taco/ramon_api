@@ -15,10 +15,11 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('authors');
-            $table->float('average_rating');
-            $table->integer('ratings_count');
+            $table->text('title')->nullable();
+            $table->text('authors')->nullable();
+            $table->text('categories')->nullable();
+            $table->float('average_rating',8,3)->nullable();
+            $table->integer('ratings_count')->nullable();
             $table->date('publication_date')->nullable();
             $table->timestamps();
         });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef5fe43e608478c66aaec50c706846fa",
+    "content-hash": "7c2d35c700eafaeab9a53d17c262e93b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2904,6 +2904,63 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "seromenho/xml-validator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seromenho/XmlValidator.git",
+                "reference": "39d0482d83f1f5dd2f3b26c7a8ff7586988e01cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seromenho/XmlValidator/zipball/39d0482d83f1f5dd2f3b26c7a8ff7586988e01cc",
+                "reference": "39d0482d83f1f5dd2f3b26c7a8ff7586988e01cc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "XmlValidator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ricardo Seromenho",
+                    "email": "ricardo@seromenho.com",
+                    "homepage": "http://seromenho.com"
+                }
+            ],
+            "description": "Validates your XML against a xsd schema file.",
+            "homepage": "http://github.com/seromenho/XmlValidator",
+            "keywords": [
+                "PSR-4",
+                "XML Validator",
+                "xml",
+                "xsd"
+            ],
+            "support": {
+                "issues": "https://github.com/seromenho/XmlValidator/issues",
+                "source": "https://github.com/seromenho/XmlValidator/tree/master"
+            },
+            "time": "2015-08-04T18:29:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7924,7 +7981,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "seromenho/xml-validator": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

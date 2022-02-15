@@ -7,6 +7,7 @@ use App\Imports\GameImport;
 use App\Imports\MovieImport;
 use App\Models\Movie;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InsertData extends Command
@@ -30,5 +31,17 @@ class InsertData extends Command
 
         Excel::import(new MovieImport, storage_path('data/movies.csv'));
         $this->info('movies inserted');
+
+        $this->getTags();
     }
+
+    public function getTags()
+    {
+        $users = DB::table('games')
+            ->select('steamspy_tags')
+            ->groupBy('steamspy_tags')
+            ->get();
+
+    }
+
 }

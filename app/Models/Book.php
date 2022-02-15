@@ -13,6 +13,7 @@ class Book extends Model
         'id',
         'title',
         'authors',
+        'categories',
         'average_rating',
         'ratings_count',
         'publication_date',

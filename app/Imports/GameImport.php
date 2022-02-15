@@ -18,6 +18,5 @@ class GameImport implements ToModel
             'positive_ratings' => $row[6],
             'negative_ratings' => $row[7],
         ]);
-        //appid,name,release_date,categories,genres,steamspy_tags,positive_ratings,negative_ratings
     }
 }
