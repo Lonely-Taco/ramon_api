@@ -18,4 +18,13 @@ class Game extends Model
         'positive_ratings',
         'negative_ratings',
     ];
+
+    //-----------------------------------------------------------------------------
+    // Relationships
+    //-----------------------------------------------------------------------------
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }
