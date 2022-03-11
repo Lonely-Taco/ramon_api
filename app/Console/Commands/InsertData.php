@@ -35,15 +35,4 @@ class InsertData extends Command
 
         $this->getTags();
     }
-
-    public function getTags()
-    {
-        $tags = Book::select('categories')
-            ->groupBy('categories')
-            ->get();
-
-
-        $this->info($tags->count());
-    }
-
 }
