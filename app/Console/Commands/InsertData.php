@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Imports\BookImport;
 use App\Imports\GameImport;
 use App\Imports\MovieImport;
-use App\Models\Movie;
+use App\Models\Book;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class InsertData extends Command
@@ -37,12 +38,12 @@ class InsertData extends Command
 
     public function getTags()
     {
-        $users = DB::table('books')
-            ->select('categories')
+        $tags = Book::select('categories')
             ->groupBy('categories')
             ->get();
 
-        $this->info($users->count());
+
+        $this->info($tags->count());
     }
 
 }
