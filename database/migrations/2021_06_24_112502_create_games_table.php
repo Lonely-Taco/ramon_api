@@ -19,7 +19,6 @@ class CreateGamesTable extends Migration
             $table->date('release_date');
             $table->text('categories');
             $table->text('genres');
-            $table->text('steamspy_tags');
             $table->unsignedInteger('positive_ratings');
             $table->unsignedInteger('negative_ratings');
             $table->timestamps();

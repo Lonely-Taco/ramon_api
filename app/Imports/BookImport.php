@@ -15,7 +15,6 @@ class BookImport implements ToModel
         $book = Book::query()->create([
             'title'            => $row[0],
             'authors'          => $row[1],
-            'categories'       => explode(',', $row[2])[0],
             'average_rating'   => $row[3],
             'ratings_count'    => $row[4],
             'publication_date' => date('y-m-d', strtotime($row[5])),
@@ -34,6 +33,7 @@ class BookImport implements ToModel
     public function makeTags(?string $tag): Collection
     {
         $tagCollection = new Collection();
+
         if ($tag == null) {
             return $tagCollection;
         }
@@ -44,7 +44,6 @@ class BookImport implements ToModel
         $newTag->save();
 
         $tagCollection->add($newTag);
-
 
         return $tagCollection;
     }

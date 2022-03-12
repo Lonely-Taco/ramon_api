@@ -18,19 +18,8 @@ class CreateMoviesTable extends Migration
             $table->string('title');
             $table->unsignedInteger('year');
             $table->float('iMDb')->nullable();
-            $table->text('genres')->nullable();
             $table->unsignedInteger('runtime')->nullable();
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('movies');
     }
 }

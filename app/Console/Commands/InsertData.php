@@ -32,7 +32,5 @@ class InsertData extends Command
 
         Excel::import(new MovieImport, storage_path('data/movies.csv'));
         $this->info('movies inserted');
-
-        $this->getTags();
     }
 }
