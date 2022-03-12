@@ -15,7 +15,6 @@ class MovieImport implements ToModel
             'title'   => $row[1],
             'year'    => $row[2],
             'iMDb'    => $row[3],
-            'genres'  => explode(',', $row[4])[0],
             'runtime' => $row[5],
         ]);
 
@@ -23,13 +22,22 @@ class MovieImport implements ToModel
 
         $movie->save();
 
+        if ($tags == null) {
+            return;
+        }
+
         $movie->tags()->attach($tags);
     }
 
-    public function makeTags(string $tags): Collection
+    public function makeTags(?string $tags): Collection
     {
         $tagCollection = new Collection();
-        $tagsArray     = explode(';', $tags);
+
+        if ($tags == null) {
+            return $tagCollection;
+        }
+
+        $tagsArray = explode(';', $tags);
 
         foreach ($tagsArray as $tag) {
             $newTag = Tag::firstOrNew([

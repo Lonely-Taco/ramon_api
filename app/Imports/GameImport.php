@@ -17,7 +17,6 @@ class GameImport implements ToModel
             'release_date'     => $row[2],
             'categories'       => $row[3],
             'genres'           => $row[4],
-            'steamspy_tags'    => $row[5],
             'positive_ratings' => $row[6],
             'negative_ratings' => $row[7],
         ]);
