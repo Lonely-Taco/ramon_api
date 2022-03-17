@@ -2,42 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateBookRequest;
-use App\Models\Book;
+use App\Http\Requests\UpdateMovieRequest;
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
     public function index(): array|Collection
     {
-        return Book::all();
+        return Movie::all();
     }
 
-    public function show($id): Book
+    public function show($id): Movie
     {
-        return Book::find($id);
+        return Movie::find($id);
     }
 
-    public function create(UpdateBookRequest $request): Book
+    public function create(UpdateMovieRequest $request): Movie
     {
-        return Book::create($request->validated());
+        return Movie::create($request->validated());
     }
 
-    public function edit($id, UpdateBookRequest $request): Book
+    public function edit($id, UpdateMovieRequest $request): Movie
     {
-        $game = Book::findOrFail($id);
+        $game = Movie::findOrFail($id);
 
         $game->update($request->validated());
 
         $game->save();
 
         return $game;
+
     }
 
     public function destroy($id)
     {
-        $game = Book::findOrFail($id);
+        $game = Movie::findOrFail($id);
 
         $game->delete();
 
