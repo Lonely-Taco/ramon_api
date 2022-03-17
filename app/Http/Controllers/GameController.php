@@ -55,12 +55,13 @@ class GameController extends Controller
 
     public function create(UpdateGameRequest $request): Response
     {
-        Game::create($request->validated());
+        $game = Game::create($request->validated());
 
-        return response('OK', 200);
+        return response($game, 200);
     }
 
-    public function edit($id, UpdateGameRequest $request): Response
+    public
+    function edit($id, UpdateGameRequest $request): Response
     {
         if (Game::where('id', $id)->doesntExist()) {
             return response('not found', 404);
@@ -72,11 +73,12 @@ class GameController extends Controller
 
         $game->save();
 
-        return response('OK', 200);
+        return response($game, 200);
 
     }
 
-    public function destroy($id): Response
+    public
+    function destroy($id): Response
     {
         if (Game::where('id', $id)->doesntExist()) {
             return response('not found', 404);
