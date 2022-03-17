@@ -4,18 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    public function index(): array|Collection
+    public function index(Request $request)
     {
-        return Game::all();
+        if ($request->accepts('json')) {
+            return response()->json(Game::all(), 200);
+        } else {
+            return response()->xml(Game::all(), 200);
+        }
+
     }
 
-    public function show($id): Game
+    public function show(Request $request, $id)
     {
-        return Game::find($id);
+        $acceptedType = $request->getAcceptableContentTypes();
+
+        if ($acceptedType[0] === 'application/json') {
+            return response()->json(Game::findOrFail($id), 200);
+        }
+
+        if ($acceptedType[0] === 'application/xml') {
+            return response()->xml(Game::findOrFail($id), 200);
+        }
+
+
     }
 
     public function create(UpdateGameRequest $request): Game
