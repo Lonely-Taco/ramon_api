@@ -18,37 +18,23 @@ class UpdateMovieRequest extends FormRequest
     public function rules(Request $request): array
     {
         return [
-            'name'             => [
+            'title'   => [
                 'required',
                 'string',
             ],
-            'release_date'     => [
+            'year'    => [
                 'required',
+                'integer'
             ],
-            'categories'       => [
+            'iMDb'    => [
                 'required',
-                'string',
+                'float',
 
             ],
-            'genres'           => [
-                'required',
-                'string',
-            ],
-            'positive_ratings' => [
-                'required',
-                'integer',
-
-            ],
-            'negative_ratings' => [
+            'runtime' => [
                 'required',
                 'integer',
             ],
-
         ];
     }
 }
-//"release_date": "2000-11-01",
-//    "categories": "Multi-player;Online Multi-Player;Local Multi-Player;Valve Anti-Cheat enabled",
-//    "genres": "Action",
-//    "positive_ratings": 124534,
-//    "negative_ratings": 3339,

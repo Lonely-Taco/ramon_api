@@ -18,32 +18,26 @@ class UpdateBookRequest extends FormRequest
     public function rules(Request $request): array
     {
         return [
-            'name'             => [
+            'title'             => [
                 'required',
                 'string',
             ],
-            'release_date'     => [
+            'authors'     => [
+                'string',
                 'required',
             ],
-            'categories'       => [
-                'required',
-                'string',
+            'average_rating'       => [
+                'float',
 
             ],
-            'genres'           => [
-                'required',
-                'string',
-            ],
-            'positive_ratings' => [
-                'required',
-                'integer',
-
-            ],
-            'negative_ratings' => [
-                'required',
+            'ratings_count'           => [
                 'integer',
             ],
+            'publication_date' => [
+                'required',
+                'date',
 
+            ],
         ];
     }
 }
