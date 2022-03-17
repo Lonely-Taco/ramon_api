@@ -2,42 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Collection;
 
 class BookController extends Controller
 {
-    public function viewAll(): Collection
+    public function index(): array|Collection
     {
         return Book::all();
     }
 
-    public function view(int $id): Book
+    public function show($id): Book
     {
-        return Book::query()->findOrFail($id)->first();
+        return Book::find($id);
     }
 
-    public function update(int $id, array $values): Book
+    public function create(UpdateBookRequest $request): Book
     {
-        $book = Book::query()->findOrFail($id)->first();
-
-        $book->update($values);
-
-        return $book;
+        return Book::create($request->validated());
     }
 
-    public function delete(int $id): string
+    public function edit($id, UpdateBookRequest $request): Book
     {
+        $game = Book::findOrFail($id);
 
-        $book = Book::query()->findOrFail($id)->first();
+        $game->update($request->validated());
 
-        if (!$book) {
+        $game->save();
 
-            return "book not found";
-        }
+        return $game;
+    }
 
-        $book->delete();
+    public function destroy($id)
+    {
+        $game = Book::findOrFail($id);
 
-        return "book deleted";
+        $game->delete();
+
+        return response('', 204);
     }
 }
