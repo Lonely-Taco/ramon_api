@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.ramonapi.com/books"
+        xmlns="http://www.ramonapi.com/books"
+>
+    <xs:complexType name="authorsType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="author" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="bookType" >
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="bookID" type="xs:int"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="authors" type="authorsType"/>
+            <xs:element name="average_rating" type="xs:float"/>
+            <xs:element name="ratings_count" type="xs:int"/>
+            <xs:element name="publication_date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="booksType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="book" type="bookType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="books" type="booksType"/>
+
+
+
+</xs:schema>
+
+
+

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use DOMDocument;
+use Eclipxe\XmlSchemaValidator\SchemaValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
 class GameController extends Controller
@@ -48,11 +50,16 @@ class GameController extends Controller
         }
 
         if ($acceptedType[0] === 'application/xml') {
-            $xml = new DOMDocument();
-            $xml->loadXML('A string goes here containing the XML data ', LIBXML_NOBLANKS); // Or load if filename required
-            if (! $xml->schemaValidate('file name for the XSD file ')) // Or schemaValidateSource if string used.
+
+            $result = ArrayToXml::convert(Game::findOrFail($id)->toArray());
+
+            $xml    = new DOMDocument();
+            $xml->loadXML($result, LIBXML_NOBLANKS); // Or load if filename required
+            if (! $xml->schemaValidate(storage_path('data/schemas_xml/gameDefinition.xsd'))) // Or schemaValidateSource if string used.
             {
+                return response('Bad Request', 400);
             }
+
             return response()->xml(Game::findOrFail($id), 200);
         }
 

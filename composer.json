@@ -2,10 +2,15 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "8.0|8.*",
+        "ext-dom": "*",
+        "ext-libxml": "*",
         "eclipxe/xmlschemavalidator": "^3.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -14,7 +19,8 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
-        "seromenho/xml-validator": "dev-master"
+        "seromenho/xml-validator": "dev-master",
+        "spatie/array-to-xml": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
