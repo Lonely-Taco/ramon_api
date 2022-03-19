@@ -36,7 +36,7 @@ class UpdateGameRequest extends FormRequest
             ],
             'positive_ratings' => [
                 'required',
-                'integer',
+                'int',
 
             ],
             'negative_ratings' => [
@@ -47,8 +47,3 @@ class UpdateGameRequest extends FormRequest
         ];
     }
 }
-//"release_date": "2000-11-01",
-//    "categories": "Multi-player;Online Multi-Player;Local Multi-Player;Valve Anti-Cheat enabled",
-//    "genres": "Action",
-//    "positive_ratings": 124534,
-//    "negative_ratings": 3339,
