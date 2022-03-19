@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
+use DOMDocument;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -47,6 +48,11 @@ class GameController extends Controller
         }
 
         if ($acceptedType[0] === 'application/xml') {
+            $xml = new DOMDocument();
+            $xml->loadXML('A string goes here containing the XML data ', LIBXML_NOBLANKS); // Or load if filename required
+            if (! $xml->schemaValidate('file name for the XSD file ')) // Or schemaValidateSource if string used.
+            {
+            }
             return response()->xml(Game::findOrFail($id), 200);
         }
 
@@ -60,8 +66,7 @@ class GameController extends Controller
         return response($game, 200);
     }
 
-    public
-    function edit($id, UpdateGameRequest $request): Response
+    public function edit($id, UpdateGameRequest $request): Response
     {
         if (Game::where('id', $id)->doesntExist()) {
             return response('not found', 404);
@@ -77,8 +82,7 @@ class GameController extends Controller
 
     }
 
-    public
-    function destroy($id): Response
+    public function destroy($id): Response
     {
         if (Game::where('id', $id)->doesntExist()) {
             return response('not found', 404);
