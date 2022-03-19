@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://ramon.api/books",
+  "$description": "schema to define books structure",
+  "type": "object",
+  "properties": {
+    "appid": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "release_date": {
+      "type": "integer"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "genres": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "steamspy_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "positive_ratings": {
+      "type": "integer"
+    },
+    "negative_ratings": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "appid",
+    "name",
+    "release_date",
+    "categories",
+    "steamspy_tags",
+    "positive_ratings",
+    "negative_ratings"
+  ]
+}

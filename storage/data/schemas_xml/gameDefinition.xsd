@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.ramonapi.com/games"
+        xmlns="http://www.ramonapi.com/games"
+>
+    <xs:complexType name="genresType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="genre" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="steamspyType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="tag" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="gameType" >
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="appid" type="xs:int"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="release_date" type="xs:date"/>
+            <xs:element name="genres" type="genresType"/>
+            <xs:element name="steamspy_tags" type="steamspyType"/>
+            <xs:element name="positive_ratings" type="xs:int"/>
+            <xs:element name="negative_ratings" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="gamesType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="game" type="gameType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="games" type="gamesType"/>
+
+
+
+</xs:schema>
