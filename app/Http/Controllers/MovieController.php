@@ -14,58 +14,68 @@ use XmlResponse\XmlResponse;
 
 class MovieController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
-        $acceptedType = $request->getAcceptableContentTypes();
-
-        if (empty($acceptedType)) {
-            return response('Bad Request', 400);
+        if ($request->wantsJson()) {
+            return response()->json(
+                [
+                    'data' => Movie::all(),
+                ], 200);
         }
 
-        if ($acceptedType[0] === 'application/json') {
-            return response()->json(Movie::all(), 200);
-        }
-
-        if ($acceptedType[0] === 'application/xml') {
-            return response()->xml(Movie::all(), 200);
+        if ($request->wantsXml()) {
+            return response()->xml(
+                [
+                    'data' => Movie::all(),
+                ], 200);
         }
 
         return response('Bad Request', 400);
     }
 
-    public function show(Request $request, $id): XmlResponse|JsonResponse|Response
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function show(Request $request, int $id): XmlResponse|JsonResponse|Response
     {
-        $acceptedType = $request->getAcceptableContentTypes();
-
-        if (Movie::where('id', $id)->doesntExist()) {
-            return response('not found', 404);
-        }
-
-        if (empty($acceptedType)) {
-            return response('Bad Request', 400);
-        }
-
-        if ($acceptedType[0] === 'application/json') {
-            return response()->json(Movie::findOrFail($id), 200);
-        }
-
         if ($request->wantsXml()) {
+
+            if (Movie::where('id', $id)->doesntExist()) {
+                return response()->xml(
+                    ['message' => 'The data with the following id was not found',
+                     'data'    => $id,
+                    ], 404);
+            }
 
             $result = ArrayToXml::convert(Movie::findOrFail($id)->toArray());
 
             $xml = new DOMDocument();
-            $xml->loadXML($result, LIBXML_NOBLANKS); // Or load if filename required
-            if (! $xml->schemaValidate(storage_path('data/schemas_xml/movieDefinition.xsd'))) // Or schemaValidateSource if string used.
-            {
+            $xml->loadXML($result, LIBXML_NOBLANKS);
+
+            if (! $xml->schemaValidate(storage_path('data/schemas_xml/movieDefinition.xsd'))) {
                 return response('Bad Request', 400);
             }
 
             return response()->xml(Movie::findOrFail($id), 200);
         }
 
+        if ($request->wantsJson()) {
+
+        }
+
         return response('Bad Request', 400);
     }
 
+    /**
+     * @param UpdateMovieRequest $request
+     * @return Response
+     */
     public function create(UpdateMovieRequest $request): Response
     {
         if ($request->wantsXml()) {
@@ -87,34 +97,85 @@ class MovieController extends Controller
                 ], 200);
         }
 
+        if ($request->wantsJson()) {
+
+        }
+
         return response('OK', 200);
     }
 
-    public function edit($id, UpdateMovieRequest $request): Response
+    /**
+     * @param int $id
+     * @param UpdateMovieRequest $request
+     * @return Response
+     */
+    public function edit(int $id, UpdateMovieRequest $request): Response
     {
-        if (Movie::where('id', $id)->doesntExist()) {
-            return response('not found', 404);
+        if ($request->wantsXml()) {
+
+            if (Movie::where('id', $id)->doesntExist()) {
+                return response()->xml(
+                    ['message' => 'The data with the following id was not found',
+                     'data'    => $id,
+                    ], 404);
+            }
+
+            $requestXml = ArrayToXml::convert($request->all());
+
+            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/movieDefinition.xsd'));
+
+            if ($errors) {
+                return response()->xml([
+                    'message' => 'The data was invalid.',
+                    'errors'  => $errors,
+                ], 422);
+            }
+
+            $movie = Movie::findOrFail($id);
+            $movie->update($request->validated());
+            $movie->save();
+
+            return response()->xml(
+                ['message' => 'The data has been inserted.',
+                 'data'    => $movie,
+                ], 200);
         }
-
-        $game = Movie::findOrFail($id);
-
-        $game->update($request->validated());
-
-        $game->save();
 
         return response('OK', 200);
 
     }
 
-    public function destroy($id): Response
+    /**
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function destroy(int $id, Request $request): Response
     {
-        if (Movie::where('id', $id)->doesntExist()) {
-            return response('not found', 404);
+        if ($request->wantsXml()) {
+
+            if (Movie::where('id', $id)->doesntExist()) {
+                return response()->xml(
+                    [
+                        'message' => 'The data with the following id was not found',
+                        'data'    => $id,
+                    ], 404);
+            }
+
+            $movie = Movie::findOrFail($id);
+
+            $movie->delete();
+
+            return response()->xml(
+                [
+                    'message' => 'The data has been deleted.',
+                    'data'    => $movie,
+                ], 200);
         }
 
-        $game = Movie::findOrFail($id);
+        if ($request->wantsJson()) {
 
-        $game->delete();
+        }
 
         return response('No Content', 204);
     }

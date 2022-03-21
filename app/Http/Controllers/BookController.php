@@ -126,13 +126,13 @@ class BookController extends Controller
                 ], 422);
             }
 
-            $game = Book::findOrFail($id);
-            $game->update($request->validated());
-            $game->save();
+            $book = Book::findOrFail($id);
+            $book->update($request->validated());
+            $book->save();
 
             return response()->xml(
                 ['message' => 'The data has been inserted.',
-                 'data'    => $game,
+                 'data'    => $book,
                 ], 200);
         }
 
@@ -161,14 +161,14 @@ class BookController extends Controller
                     ], 404);
             }
 
-            $game = Book::findOrFail($id);
+            $book = Book::findOrFail($id);
 
-            $game->delete();
+            $book->delete();
 
             return response()->xml(
                 [
                     'message' => 'The data has been deleted.',
-                    'data'    => $game,
+                    'data'    => $book,
                 ], 200);
         }
 
