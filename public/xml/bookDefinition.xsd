@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-<xs:complexType name="authorsType">
+    <xs:complexType name="authorsType">
         <xs:sequence maxOccurs="unbounded" minOccurs="1">
             <xs:element name="author" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="root" >
+    <xs:complexType name="root">
         <xs:sequence maxOccurs="unbounded" minOccurs="1">
             <xs:element name="id" minOccurs="0" type="xs:int"/>
             <xs:element name="title" type="xs:string"/>
@@ -19,11 +19,7 @@
             <xs:element name="updated_at" minOccurs="0" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
-
     <xs:element name="root" type="root"/>
-
-
-
 </xs:schema>
 
 
