@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->text('authors')->nullable();
             $table->float('average_rating',8,3)->nullable();
             $table->integer('ratings_count')->nullable();
-            $table->date('publication_date')->nullable();
+            $table->year('publication_date')->nullable();
             $table->timestamps();
         });
     }

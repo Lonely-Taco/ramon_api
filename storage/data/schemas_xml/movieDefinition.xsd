@@ -1,37 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-<xs:schema
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.ramonapi.com/movies"
-        xmlns="http://www.ramonapi.com/movies"
->
-    <xs:complexType name="genresType">
+    <xs:complexType name="root">
         <xs:sequence maxOccurs="unbounded" minOccurs="1">
-            <xs:element name="genre" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="movieType" >
-        <xs:sequence maxOccurs="unbounded" minOccurs="1">
-            <xs:element name="id" type="xs:int"/>
+            <xs:element name="id" nillable="true" minOccurs="0" type="xs:int"/>
             <xs:element name="title" type="xs:string"/>
             <xs:element name="year" type="xs:int"/>
-            <xs:element name="IMDb" type="xs:double"/>
-            <xs:element name="genres" type="genresType"/>
-            <xs:element name="runtime" type="xs:int"/>
+            <xs:element name="iMDb" type="xs:double"/>
+            <xs:element name="genres" nillable="true" minOccurs="0" type="xs:string"/>
+            <xs:element name="runtime" nillable="true" minOccurs="0" type="xs:integer"/>
+            <xs:element name="created_at" minOccurs="0" type="xs:dateTime"/>
+            <xs:element name="updated_at" minOccurs="0" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="moviesType">
-        <xs:sequence maxOccurs="unbounded" minOccurs="1">
-            <xs:element name="movie" type="movieType"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:element name="movies" type="moviesType"/>
-
-
-
+    <xs:element name="root" type="root"/>
 </xs:schema>
 
 

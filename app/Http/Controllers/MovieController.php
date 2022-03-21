@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateGameRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
-use Illuminate\Database\Eloquent\Collection;
+use DOMDocument;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Spatie\ArrayToXml\ArrayToXml;
+use Xml;
 use XmlResponse\XmlResponse;
 
 class MovieController extends Controller
@@ -48,7 +49,17 @@ class MovieController extends Controller
             return response()->json(Movie::findOrFail($id), 200);
         }
 
-        if ($acceptedType[0] === 'application/xml') {
+        if ($request->wantsXml()) {
+
+            $result = ArrayToXml::convert(Movie::findOrFail($id)->toArray());
+
+            $xml = new DOMDocument();
+            $xml->loadXML($result, LIBXML_NOBLANKS); // Or load if filename required
+            if (! $xml->schemaValidate(storage_path('data/schemas_xml/movieDefinition.xsd'))) // Or schemaValidateSource if string used.
+            {
+                return response('Bad Request', 400);
+            }
+
             return response()->xml(Movie::findOrFail($id), 200);
         }
 
@@ -57,9 +68,24 @@ class MovieController extends Controller
 
     public function create(UpdateMovieRequest $request): Response
     {
-        dump($request->validated());
-        exit();
-        Movie::create($request->validated());
+        if ($request->wantsXml()) {
+
+            $requestXml = ArrayToXml::convert($request->all());
+
+            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/movieDefinition.xsd'));
+
+            if ($errors) {
+                return response()->xml([
+                    'message' => 'The data was invalid.',
+                    'errors'  => $errors,
+                ], 422);
+            }
+
+            return response()->xml(
+                ['message' => 'The data has been inserted.',
+                 'data'    => Movie::create($request->validated()),
+                ], 200);
+        }
 
         return response('OK', 200);
     }

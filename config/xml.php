@@ -11,7 +11,7 @@ return [
     | <root xmlns:v1="http://www.site.com/schema"></root>
     |
     */
-    'template' => '<root xmlns="http://www.ramonapi.com/game"></root>',
+    'template' => '<root></root>',
     'caseSensitive' => false,
     'showEmptyField' => true, //Show empty field
     'charset' => 'utf-8',

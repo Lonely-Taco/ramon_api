@@ -18,32 +18,20 @@ class UpdateGameRequest extends FormRequest
     public function rules(Request $request): array
     {
         return [
+            'id'               => [
+            ],
             'name'             => [
-                'required',
-                'string',
             ],
             'release_date'     => [
-                'required',
             ],
             'categories'       => [
-                'required',
-                'string',
-
             ],
             'genres'           => [
-                'required',
-                'string',
             ],
             'positive_ratings' => [
-//                'required',
-//                'int',
-
             ],
             'negative_ratings' => [
-//                'required',
-//                'integer',
             ],
-
         ];
     }
 }
