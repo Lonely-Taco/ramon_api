@@ -33,8 +33,8 @@ Route::post('/book', [BookController::class, 'create']);
 Route::patch('/book/{id}', [BookController::class, 'edit']);
 Route::delete('/book/{id}', [BookController::class, 'destroy']);
 
-Route::get('/movies', [GameController::class, 'index']);
+Route::get('/movies', [MovieController::class, 'index']);
 Route::get('/movie/{id}', [MovieController::class, 'show']);
-Route::post('/movie', [MovieController::class, 'create']);
+Route::post('/movie/', [MovieController::class, 'create']);
 Route::patch('/movie/{id}', [MovieController::class, 'edit']);
 Route::delete('/movie/{id}', [MovieController::class, 'destroy']);

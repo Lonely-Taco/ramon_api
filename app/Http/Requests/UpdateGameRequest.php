@@ -35,13 +35,13 @@ class UpdateGameRequest extends FormRequest
                 'string',
             ],
             'positive_ratings' => [
-                'required',
-                'int',
+//                'required',
+//                'int',
 
             ],
             'negative_ratings' => [
-                'required',
-                'integer',
+//                'required',
+//                'integer',
             ],
 
         ];

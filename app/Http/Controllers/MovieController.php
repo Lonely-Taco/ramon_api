@@ -57,6 +57,8 @@ class MovieController extends Controller
 
     public function create(UpdateMovieRequest $request): Response
     {
+        dump($request->validated());
+        exit();
         Movie::create($request->validated());
 
         return response('OK', 200);

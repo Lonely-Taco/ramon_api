@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use DOMDocument;
-use Eclipxe\XmlSchemaValidator\SchemaValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
-
+use Xml;
 class GameController extends Controller
 {
     public function index(Request $request): XmlResponse|JsonResponse|Response
@@ -37,6 +36,7 @@ class GameController extends Controller
     {
         $acceptedType = $request->getAcceptableContentTypes();
 
+
         if (Game::where('id', $id)->doesntExist()) {
             return response('not found', 404);
         }
@@ -49,11 +49,11 @@ class GameController extends Controller
             return response()->json(Game::findOrFail($id), 200);
         }
 
-        if ($acceptedType[0] === 'application/xml') {
+        if ($request->wantsXml()) {
 
             $result = ArrayToXml::convert(Game::findOrFail($id)->toArray());
 
-            $xml    = new DOMDocument();
+            $xml = new DOMDocument();
             $xml->loadXML($result, LIBXML_NOBLANKS); // Or load if filename required
             if (! $xml->schemaValidate(storage_path('data/schemas_xml/gameDefinition.xsd'))) // Or schemaValidateSource if string used.
             {
@@ -66,11 +66,45 @@ class GameController extends Controller
         return response('Bad Request', 400);
     }
 
-    public function create(UpdateGameRequest $request): Response
+    public function create(UpdateGameRequest $request): XmlResponse|JsonResponse|Response
     {
-        $game = Game::create($request->validated());
+        $acceptedType = $request->getAcceptableContentTypes();
 
-        return response($game, 200);
+        if ($request->wantsXml()) {
+
+            $requestXml = ArrayToXml::convert($request->all());
+
+
+            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/gameDefinition.xsd'));
+
+
+            if ($errors) {
+                return response()->xml([
+                    'message' => 'The given data was invalid.',
+                    'errors'  => $errors,
+                ], 422);
+            }
+        }
+
+        if ($acceptedType[0] === 'application/xml') {
+
+
+            $requestXml = ArrayToXml::convert($request->all());
+
+
+            $xml = new DOMDocument();
+
+            $xml->loadXML($requestXml, LIBXML_NOBLANKS);
+
+            if ($xml->schemaValidate(storage_path('data/schemas_xml/gameDefinition.xsd'))) {
+
+                $game = Game::create($request->validated());
+            }
+
+
+        }
+
+        return response('OK', 200);
     }
 
     public function edit($id, UpdateGameRequest $request): Response
