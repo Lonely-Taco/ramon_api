@@ -50,6 +50,7 @@ class BookImport implements ToModel
         $newTag = Tag::firstOrNew([
             'name' => $tag,
         ]);
+
         $newTag->save();
 
         $tagCollection->add($newTag);
