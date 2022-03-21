@@ -20,18 +20,18 @@ class BookController extends Controller
      */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
-        $acceptedType = $request->getAcceptableContentTypes();
-
-        if (empty($acceptedType)) {
-            return response('Bad Request', 400);
+        if ($request->wantsJson()) {
+            return response()->json(
+                [
+                    'data' => Book::all(),
+                ], 200);
         }
 
-        if ($acceptedType[0] === 'application/json') {
-            return response()->json(Book::all(), 200);
-        }
-
-        if ($acceptedType[0] === 'application/xml') {
-            return response()->xml(Book::all(), 200);
+        if ($request->wantsXml()) {
+            return response()->xml(
+                [
+                    'data' => Book::all(),
+                ], 200);
         }
 
         return response('Bad Request', 400);
@@ -44,21 +44,14 @@ class BookController extends Controller
      */
     public function show(Request $request, int $id): XmlResponse|JsonResponse|Response
     {
-        $acceptedType = $request->getAcceptableContentTypes();
-
-        if (Book::where('id', $id)->doesntExist()) {
-            return response('not found', 404);
-        }
-
-        if (empty($acceptedType)) {
-            return response('Bad Request', 400);
-        }
-
-        if ($acceptedType[0] === 'application/json') {
-            return response()->json(Book::findOrFail($id), 200);
-        }
-
         if ($request->wantsXml()) {
+
+            if (Book::where('id', $id)->doesntExist()) {
+                return response()->xml(
+                    ['message' => 'The data with the following id was not found',
+                     'data'    => $id,
+                    ], 404);
+            }
 
             $result = ArrayToXml::convert(Book::findOrFail($id)->toArray());
 
@@ -70,6 +63,10 @@ class BookController extends Controller
             }
 
             return response()->xml(Book::findOrFail($id), 200);
+        }
+
+        if ($request->wantsJson()) {
+
         }
 
         return response('Bad Request', 400);
@@ -93,8 +90,6 @@ class BookController extends Controller
                     'errors'  => $errors,
                 ], 422);
             }
-
-            $attributes = $request->all();
 
             return response()->xml(
                 ['message' => 'The data has been inserted.',
