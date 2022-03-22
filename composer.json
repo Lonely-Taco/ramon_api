@@ -17,11 +17,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jailtonsc/laravel-response-xml": "^3.0",
+        "justinrainbow/json-schema": "^5.2",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "seromenho/xml-validator": "dev-master",
-        "spatie/array-to-xml": "^3.1"
+        "spatie/array-to-xml": "^3.1",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",

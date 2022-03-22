@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\XmlBookValidatorInterface;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use DOMDocument;
@@ -9,11 +10,16 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
-use Xml;
 use XmlResponse\XmlResponse;
 
 class BookController extends Controller
 {
+    public function __construct(
+        protected XmlBookValidatorInterface $bookXmlValidator
+    )
+    {
+    }
+
     /**
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
@@ -76,25 +82,20 @@ class BookController extends Controller
      * @param UpdateBookRequest $request
      * @return Response
      */
-    public function create(UpdateBookRequest $request): Response
+    public function create(XmlBookValidatorInterface $bookXmlValidator, UpdateBookRequest $request): Response
     {
         if ($request->wantsXml()) {
 
             $requestXml = ArrayToXml::convert($request->all());
 
-            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/bookDefinition.xsd'));
-
-            if ($errors) {
-                return response()->xml([
-                    'message' => 'The data was invalid.',
-                    'errors'  => $errors,
-                ], 422);
-            }
+            $validated = $bookXmlValidator->processCreate($requestXml);
 
             return response()->xml(
-                ['message' => 'The data has been inserted.',
-                 'data'    => Book::create($request->validated()),
-                ], 200);
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
+
         }
         return response('OK', 200);
     }
@@ -104,36 +105,19 @@ class BookController extends Controller
      * @param UpdateBookRequest $request
      * @return Response
      */
-    public function edit(int $id, UpdateBookRequest $request): Response
+    public function edit(XmlBookValidatorInterface $bookXmlValidator, int $id, UpdateBookRequest $request): Response
     {
         if ($request->wantsXml()) {
 
-            if (Book::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    ['message' => 'The data with the following id was not found',
-                     'data'    => $id,
-                    ], 404);
-            }
-
             $requestXml = ArrayToXml::convert($request->all());
 
-            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/bookDefinition.xsd'));
-
-            if ($errors) {
-                return response()->xml([
-                    'message' => 'The data was invalid.',
-                    'errors'  => $errors,
-                ], 422);
-            }
-
-            $book = Book::findOrFail($id);
-            $book->update($request->validated());
-            $book->save();
+            $validated = $bookXmlValidator->processEdit($requestXml, $id);
 
             return response()->xml(
-                ['message' => 'The data has been inserted.',
-                 'data'    => $book,
-                ], 200);
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
         }
 
         if ($request->wantsJson()) {

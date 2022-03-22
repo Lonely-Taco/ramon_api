@@ -5,7 +5,7 @@
     <xs:complexType name="root">
         <xs:sequence maxOccurs="unbounded" minOccurs="1">
             <xs:element name="id" nillable="true" minOccurs="0" type="xs:int"/>
-            <xs:element name="name" type="xs:string"/>
+            <xs:element name="name" minOccurs="1" type="xs:string"/>
             <xs:element name="release_date" type="xs:date"/>
             <xs:element name="categories" type="xs:string"/>
             <xs:element name="genres" type="xs:string"/>

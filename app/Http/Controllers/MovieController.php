@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\XmlMovieValidatorInterface;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 use DOMDocument;
@@ -14,6 +15,11 @@ use XmlResponse\XmlResponse;
 
 class MovieController extends Controller
 {
+    public function __construct(
+        protected XmlMovieValidatorInterface $movieXmlValidator
+    ) {
+    }
+
     /**
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
@@ -109,36 +115,19 @@ class MovieController extends Controller
      * @param UpdateMovieRequest $request
      * @return Response
      */
-    public function edit(int $id, UpdateMovieRequest $request): Response
+    public function edit(XmlMovieValidatorInterface $movieXmlValidator ,int $id, UpdateMovieRequest $request): Response
     {
         if ($request->wantsXml()) {
 
-            if (Movie::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    ['message' => 'The data with the following id was not found',
-                     'data'    => $id,
-                    ], 404);
-            }
-
             $requestXml = ArrayToXml::convert($request->all());
 
-            $errors = Xml::validate($requestXml, storage_path('data/schemas_xml/movieDefinition.xsd'));
-
-            if ($errors) {
-                return response()->xml([
-                    'message' => 'The data was invalid.',
-                    'errors'  => $errors,
-                ], 422);
-            }
-
-            $movie = Movie::findOrFail($id);
-            $movie->update($request->validated());
-            $movie->save();
+            $validated = $movieXmlValidator->processEdit($requestXml, $id);
 
             return response()->xml(
-                ['message' => 'The data has been inserted.',
-                 'data'    => $movie,
-                ], 200);
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
         }
 
         return response('OK', 200);
