@@ -11,7 +11,9 @@
         "php": "8.0|8.*",
         "ext-dom": "*",
         "ext-libxml": "*",
+        "ext-simplexml": "*",
         "bmatovu/laravel-xml": "^3.1",
+        "consoletvs/charts": "7.*",
         "eclipxe/xmlschemavalidator": "^3.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -22,8 +24,7 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "seromenho/xml-validator": "dev-master",
-        "spatie/array-to-xml": "^3.1",
-        "ext-simplexml": "*"
+        "spatie/array-to-xml": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
