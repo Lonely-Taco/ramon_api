@@ -37,8 +37,12 @@ run:
 `php artisan migrate:fresh`
 
 
-
 to insert the data into the database run: 
 
 `php artisan insert:data`
+
+serve the application;
+
+`php artisan serve`
+
 
