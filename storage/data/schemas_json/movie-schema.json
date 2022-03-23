@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://ramon.api/movie",
+  "$description": "schema to define movie structure",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "iMDb": {
+      "type": "integer"
+    },
+    "runtime": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "title",
+    "year",
+    "iMDb",
+    "runtime"
+  ]
+}
+
+

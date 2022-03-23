@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://ramon.api/books",
+  "$description": "schema to define books structure",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "average_rating": {
+      "type": "integer"
+    },
+    "authors": {
+        "type": "string"
+    },
+    "ratings_count": {
+      "type": "integer"
+    },
+    "publication_date": {
+        "type": "integer"
+    }
+  },
+  "required": [
+    "title",
+    "average_rating",
+    "authors",
+    "ratings_count",
+    "publication_date"
+  ]
+}

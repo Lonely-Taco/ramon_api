@@ -4,11 +4,16 @@ namespace App\Imports;
 
 use App\Models\Book;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class BookImport implements ToModel
 {
+    /**
+     * @param array $row
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model[]|void|null
+     */
     public function model(array $row)
     {
         /** @var Book $book */
@@ -17,7 +22,7 @@ class BookImport implements ToModel
             'authors'          => $row[1],
             'average_rating'   => $row[3],
             'ratings_count'    => $row[4],
-            'publication_date' => date('y-m-d', strtotime($row[5])),
+            'publication_date' => Carbon::parse($row[5])->year,
         ]);
 
         $tags = $this->makeTags($row[2]);
@@ -30,6 +35,10 @@ class BookImport implements ToModel
         $book->tags()->attach($tags);
     }
 
+    /**
+     * @param string|null $tag
+     * @return Collection
+     */
     public function makeTags(?string $tag): Collection
     {
         $tagCollection = new Collection();
@@ -41,6 +50,7 @@ class BookImport implements ToModel
         $newTag = Tag::firstOrNew([
             'name' => $tag,
         ]);
+
         $newTag->save();
 
         $tagCollection->add($newTag);

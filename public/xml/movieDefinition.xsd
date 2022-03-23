@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:complexType name="root">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="id" nillable="true" minOccurs="0" type="xs:int"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="year" minOccurs="1" type="xs:int"/>
+            <xs:element name="iMDb"  minOccurs="1" type="xs:double"/>
+            <xs:element name="runtime" nillable="true" minOccurs="0" type="xs:integer"/>
+            <xs:element name="created_at" minOccurs="0" type="xs:dateTime"/>
+            <xs:element name="updated_at" minOccurs="0" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="root" type="root"/>
+</xs:schema>
+
+
+

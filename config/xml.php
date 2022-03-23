@@ -18,10 +18,10 @@ return [
 
     /**
      * line name if it is an array
-     * 
+     *
      * example
      * value null = <row_0></row_0>
      * value name item = <item></item>
      */
-    'rowName' => null 
+    'rowName' => null
 ];

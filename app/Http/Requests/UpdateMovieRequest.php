@@ -18,22 +18,16 @@ class UpdateMovieRequest extends FormRequest
     public function rules(Request $request): array
     {
         return [
+            'id'   => [
+            ],
             'title'   => [
-                'required',
-                'string',
             ],
             'year'    => [
-                'required',
-                'integer'
             ],
             'iMDb'    => [
                 'required',
-                'float',
-
             ],
             'runtime' => [
-                'required',
-                'integer',
             ],
         ];
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="root" type="root"/>
+    <xs:complexType name="root">
+        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+            <xs:element name="id" nillable="true" minOccurs="0" type="xs:int"/>
+            <xs:element name="name" minOccurs="1" type="xs:string"/>
+            <xs:element name="release_date" type="xs:date"/>
+            <xs:element name="categories" type="xs:string"/>
+            <xs:element name="genres" type="xs:string"/>
+            <xs:element name="positive_ratings" type="rating"/>
+            <xs:element name="negative_ratings" type="rating"/>
+            <xs:element name="created_at" minOccurs="0" type="xs:dateTime"/>
+            <xs:element name="updated_at" minOccurs="0" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="rating">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxExclusive value="999999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
