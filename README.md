@@ -7,7 +7,7 @@ the goal is to visualize data and create crud methods to mutate and validate dat
 
 *PHP 8.^
 
-# Inatllation
+# Instllation
 
 install composer 
 
