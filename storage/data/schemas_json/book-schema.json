@@ -4,34 +4,27 @@
   "$description": "schema to define books structure",
   "type": "object",
   "properties": {
-    "bookID": {
-      "type": "integer"
-    },
     "title": {
       "type": "string"
     },
     "average_rating": {
-      "type": "number"
+      "type": "integer"
     },
     "authors": {
-      "type": "array",
-      "items": {
         "type": "string"
-      }
     },
     "ratings_count": {
       "type": "integer"
     },
-    "release_date": {
-      "type": "integer"
+    "publication_date": {
+        "type": "integer"
     }
   },
   "required": [
-    "bookID",
     "title",
     "average_rating",
     "authors",
     "ratings_count",
-    "release_date"
+    "publication_date"
   ]
 }

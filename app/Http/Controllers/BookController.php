@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
-use DOMDocument;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,7 +15,8 @@ use XmlResponse\XmlResponse;
 class BookController extends Controller
 {
     public function __construct(
-        protected XmlBookValidatorInterface $bookXmlValidator
+        protected XmlBookValidatorInterface $bookXmlValidator,
+        protected JsonBookValidatorInterface $bookJsonValidator,
     )
     {
     }
@@ -50,39 +51,40 @@ class BookController extends Controller
      */
     public function show(Request $request, int $id): XmlResponse|JsonResponse|Response
     {
+        if (Book::where('id', $id)->doesntExist()) {
+            return response()->json(
+                ['message' => 'The data with the following id was not found',
+                 'data'    => $id,
+                ], 404);
+        }
+
+        $model = Book::findOrFail($id);
+
+
         if ($request->wantsXml()) {
 
-            if (Book::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    ['message' => 'The data with the following id was not found',
-                     'data'    => $id,
-                    ], 404);
-            }
-
-            $result = ArrayToXml::convert(Book::findOrFail($id)->toArray());
-
-            $xml = new DOMDocument();
-            $xml->loadXML($result, LIBXML_NOBLANKS); // Or load if filename required
-            if (! $xml->schemaValidate(storage_path('data/schemas_xml/bookDefinition.xsd'))) // Or schemaValidateSource if string used.
-            {
-                return response('Bad Request', 400);
-            }
-
-            return response()->xml(Book::findOrFail($id), 200);
+            return response()->xml($model, 200);
         }
 
         if ($request->wantsJson()) {
 
+
+            return response()->json($model, 200);
         }
 
         return response('Bad Request', 400);
     }
 
     /**
+     * @param JsonBookValidatorInterface $bookJsonValidator
+     * @param XmlBookValidatorInterface $bookXmlValidator
      * @param UpdateBookRequest $request
-     * @return Response
+     * @return XmlResponse|JsonResponse|Response
      */
-    public function create(XmlBookValidatorInterface $bookXmlValidator, UpdateBookRequest $request): Response
+    public function create(JsonBookValidatorInterface $bookJsonValidator,
+        XmlBookValidatorInterface $bookXmlValidator,
+        UpdateBookRequest $request
+    ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
 
@@ -97,15 +99,33 @@ class BookController extends Controller
                 ], $validated['code']);
 
         }
+
+        if ($request->wantsJson()) {
+            $data = $request->all();
+
+            $validated = $bookJsonValidator->processCreate($data);
+
+            return response()->json(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
+        }
         return response('OK', 200);
     }
 
     /**
+     * @param JsonBookValidatorInterface $bookJsonValidator
+     * @param XmlBookValidatorInterface $bookXmlValidator
      * @param int $id
      * @param UpdateBookRequest $request
-     * @return Response
+     * @return XmlResponse|JsonResponse|Response
      */
-    public function edit(XmlBookValidatorInterface $bookXmlValidator, int $id, UpdateBookRequest $request): Response
+    public function edit(
+        JsonBookValidatorInterface $bookJsonValidator,
+        XmlBookValidatorInterface $bookXmlValidator,
+        int $id, UpdateBookRequest $request
+    ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
 
@@ -122,42 +142,57 @@ class BookController extends Controller
 
         if ($request->wantsJson()) {
 
+            $data = $request->all();
+
+            $validated = $bookJsonValidator->processEdit($data, $id);
+
+            return response()->json(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
         }
 
         return response('Not found', 404);
-
     }
 
     /**
      * @param int $id
      * @param Request $request
-     * @return Response
+     * @return XmlResponse|JsonResponse|Response
      */
-    public function destroy(int $id, Request $request): Response
+    public function destroy(int $id, Request $request): XmlResponse|JsonResponse|Response
     {
+        if (Book::where('id', $id)->doesntExist()) {
+            return response(
+                [
+                    'message' => 'The data with the following id was not found',
+                    'data'    => $id,
+                ], 404);
+        }
+
+        $model = Book::findOrFail($id);
+
         if ($request->wantsXml()) {
 
-            if (Book::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    [
-                        'message' => 'The data with the following id was not found',
-                        'data'    => $id,
-                    ], 404);
-            }
-
-            $book = Book::findOrFail($id);
-
-            $book->delete();
+            $model->delete();
 
             return response()->xml(
                 [
                     'message' => 'The data has been deleted.',
-                    'data'    => $book,
+                    'data'    => $model,
                 ], 200);
         }
 
         if ($request->wantsJson()) {
 
+            $model->delete();
+
+            return response()->json(
+                [
+                    'message' => 'The data has been deleted.',
+                    'data'    => $model,
+                ], 200);
         }
 
         return response('No Content', 204);

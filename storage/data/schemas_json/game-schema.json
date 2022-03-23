@@ -19,7 +19,6 @@
         },
         "positive_ratings": {
             "type": "integer"
-
         },
         "negative_ratings": {
             "type": "integer"

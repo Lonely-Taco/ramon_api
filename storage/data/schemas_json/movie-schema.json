@@ -13,25 +13,17 @@
     "year": {
       "type": "integer"
     },
-    "IMDb": {
-      "type": "number"
-    },
-    "genres": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+    "iMDb": {
+      "type": "integer"
     },
     "runtime": {
       "type": "integer"
     }
   },
   "required": [
-    "id",
     "title",
     "year",
-    "IMDb",
-    "genres",
+    "iMDb",
     "runtime"
   ]
 }

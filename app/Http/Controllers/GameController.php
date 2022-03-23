@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\JsonGameValidatorInterface;
 use App\Contracts\XmlGameValidatorInterface;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use JsonSchema\Validator;
 use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
 class GameController extends Controller
 {
     public function __construct(
-      protected XmlGameValidatorInterface $APIXmlValidator
-    ) {
+        protected XmlGameValidatorInterface $APIXmlValidator,
+        protected JsonGameValidatorInterface $jsonGameValidator,
+    )
+    {
     }
 
     /**
@@ -49,20 +51,24 @@ class GameController extends Controller
      */
     public function show(Request $request, int $id): XmlResponse|JsonResponse|Response
     {
+        if (Game::where('id', $id)->doesntExist()) {
+            return response()->json(
+                ['message' => 'The data with the following id was not found',
+                 'data'    => $id,
+                ], 404);
+        }
+
+        $model = Game::findOrFail($id);
+
         if ($request->wantsXml()) {
 
-            if (Game::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    ['message' => 'The data with the following id was not found',
-                     'data'    => $id,
-                    ], 404);
-            }
-
-            return response()->xml(Game::findOrFail($id), 200);
+            return response()->xml($model, 200);
         }
 
         if ($request->wantsJson()) {
 
+
+            return response()->json($model, 200);
         }
 
         return response('Bad Request', 400);
@@ -72,8 +78,13 @@ class GameController extends Controller
      * @param UpdateGameRequest $request
      * @return XmlResponse|JsonResponse|Response
      */
-    public function create(XmlGameValidatorInterface $gameXmlValidator, UpdateGameRequest $request): XmlResponse|JsonResponse|Response
+    public function create(
+        JsonGameValidatorInterface $jsonGameValidator,
+        XmlGameValidatorInterface $gameXmlValidator,
+        UpdateGameRequest $request
+    ): XmlResponse|JsonResponse|Response
     {
+
         if ($request->wantsXml()) {
 
             $requestXml = ArrayToXml::convert($request->all());
@@ -90,20 +101,36 @@ class GameController extends Controller
 
         if ($request->wantsJson()) {
 
+            $data = $request->all();
+
+            $validated = $jsonGameValidator->processCreate($data);
+
+            return response()->json(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
         }
 
-        return response('OK', 200);
+        return response('No Data', 204);
     }
 
     /**
+     * @param JsonGameValidatorInterface $jsonGameValidator
      * @param int $id
      * @param UpdateGameRequest $request
      * @param XmlGameValidatorInterface $gameXmlValidator
      * @return XmlResponse|JsonResponse|Response
      */
-    public function edit(int $id, UpdateGameRequest $request, XmlGameValidatorInterface $gameXmlValidator): XmlResponse|JsonResponse|Response
+    public function edit(
+        JsonGameValidatorInterface $jsonGameValidator,
+        int $id, UpdateGameRequest $request,
+        XmlGameValidatorInterface $gameXmlValidator
+    ): XmlResponse|JsonResponse|Response
     {
+
         if ($request->wantsXml()) {
+
             $requestXml = ArrayToXml::convert($request->all());
 
             $validated = $gameXmlValidator->processEdit($requestXml, $id);
@@ -117,44 +144,15 @@ class GameController extends Controller
 
         if ($request->wantsJson()) {
 
-            if (Game::where('id', $id)->doesntExist()) {
-                return response()->json(
-                    [
-                        'message' => 'The data with the following id was not found',
-                        'data'    => $id,
-                    ], 404);
-            }
-
-            $validator = new Validator();
-
             $data = $request->all();
 
-            $data['positive_ratings'] = (int) $data['positive_ratings'];
-            $data['negative_ratings'] = (int) $data['negative_ratings'];
+            $validated = $jsonGameValidator->processEdit($data, $id);
 
-            $jsonData = Validator::arrayToObjectRecursive($data);
-
-            $validator->validate($jsonData, (object) ['$ref' => storage_path('data/schemas_json/game-schema.json')]);
-
-            if ($validator->isValid()) {
-
-                $game = Game::findOrFail($id);
-                $game->update($request->validated());
-                $game->save();
-
-                return response()->json(
-                    [
-                        'message' => 'The data has been inserted.',
-                        'data'    => $game,
-                    ], 200);
-
-            }
-
-            return response()->json([
-                'message' => 'The data was invalid.',
-                'errors'  => $validator->getErrors(),
-            ], 422);
-
+            return response()->json(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
         }
 
         return response('Not found', 404);
@@ -167,44 +165,35 @@ class GameController extends Controller
      */
     public function destroy(int $id, Request $request): XmlResponse|JsonResponse|Response
     {
+        if (Game::where('id', $id)->doesntExist()) {
+            return response(
+                [
+                    'message' => 'The data with the following id was not found',
+                    'data'    => $id,
+                ], 404);
+        }
+
+        $model = Game::findOrFail($id);
+
         if ($request->wantsXml()) {
 
-            if (Game::where('id', $id)->doesntExist()) {
-                return response()->xml(
-                    [
-                        'message' => 'The data with the following id was not found',
-                        'data'    => $id,
-                    ], 404);
-            }
-
-            $game = Game::findOrFail($id);
-
-            $game->delete();
+            $model->delete();
 
             return response()->xml(
                 [
                     'message' => 'The data has been deleted.',
-                    'data'    => $game,
+                    'data'    => $model,
                 ], 200);
         }
 
         if ($request->wantsJson()) {
-            if (Game::where('id', $id)->doesntExist()) {
-                return response()->json(
-                    [
-                        'message' => 'The data with the following id was not found',
-                        'data'    => $id,
-                    ], 404);
-            }
 
-            $game = Game::findOrFail($id);
-
-            $game->delete();
+            $model->delete();
 
             return response()->json(
                 [
                     'message' => 'The data has been deleted.',
-                    'data'    => $game,
+                    'data'    => $model,
                 ], 200);
         }
 
