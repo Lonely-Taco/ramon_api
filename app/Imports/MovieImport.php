@@ -37,7 +37,7 @@ class MovieImport implements ToModel
             return $tagCollection;
         }
 
-        $tagsArray = explode(';', $tags);
+        $tagsArray = explode(',', $tags);
 
         foreach ($tagsArray as $tag) {
             $newTag = Tag::firstOrNew([

@@ -45,16 +45,20 @@ class BookImport implements ToModel
 
         if ($tag == null) {
             return $tagCollection;
+
         }
 
-        $newTag = Tag::firstOrNew([
-            'name' => $tag,
-        ]);
+        $tagsArray = explode(",", $tag);
 
-        $newTag->save();
+        foreach ($tagsArray as $tags) {
+            $newTag = Tag::firstOrNew([
+                'name' => $tags,
+            ]);
 
-        $tagCollection->add($newTag);
+            $newTag->save();
 
+            $tagCollection->add($newTag);
+        }
         return $tagCollection;
     }
 }

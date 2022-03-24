@@ -14,9 +14,12 @@
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 <!-- Your application script -->
 <script>
+
     const chart = new Chartisan({
         el: '#chart',
         url: "@chart('game_chart')",
+        hooks: new ChartisanHooks()
+            .tooltip(true),
     });
 </script>
 </body>
