@@ -148,13 +148,13 @@ Route::get('/movie/id={id}', [MovieController::class, 'show']);
  *     @OA\Response(response="default", description="create")
  * )
  */
-Route::post('/movie/id={id}', [MovieController::class, 'create']);
+Route::post('/movie/', [MovieController::class, 'create']);
 
 /**
  * @OA\Patch    (
- *     path="/api/game/id={id}",
- *     description="games",
- *     @OA\Response(response="default", description="post")
+ *     path="/api/movie/id={id}",
+ *     description="movie",
+ *     @OA\Response(response="default", description="patch")
  * )
  */
 Route::patch('/movie/id={id}', [MovieController::class, 'edit']);

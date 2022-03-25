@@ -35,10 +35,13 @@ class BookController extends Controller
      *      description="Returns all books",
      *      @OA\Response(
      *          response=200,
-     *          description="Books"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Returns list of Books
      *
      * @param Request $request
@@ -46,12 +49,6 @@ class BookController extends Controller
      */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsJson()) {
-            return response()->json(
-                [
-                    'data' => Book::all(),
-                ], 200);
-        }
 
         if ($request->wantsXml()) {
             return response()->xml(
@@ -60,7 +57,11 @@ class BookController extends Controller
                 ], 200);
         }
 
-        return response('Bad Request', 400);
+
+        return response()->json(
+            [
+                'data' => Book::all(),
+            ], 200);
     }
 
     /**
@@ -82,10 +83,13 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Book"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Returns a book by index
      * @param Request $request
      * @param int $id
@@ -108,18 +112,12 @@ class BookController extends Controller
             return response()->xml($model, 200);
         }
 
-        if ($request->wantsJson()) {
-
-
-            return response()->json($model, 200);
-        }
-
-        return response('Bad Request', 400);
+        return response()->json($model, 200);
     }
 
     /**
      * @OA\Post(
-     *      path="/book",
+     *      path="/api/book/",
      *      operationId="createBook",
      *      tags={"Book"},
      *      summary="Creates and returns a book object",
@@ -129,7 +127,7 @@ class BookController extends Controller
      *          name="title",
      *          description="Book title",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -139,7 +137,7 @@ class BookController extends Controller
      *          name="authors",
      *          description="authors in string format seperated by ','",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -149,7 +147,7 @@ class BookController extends Controller
      *          name="average_rating",
      *          description="average rating",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -159,27 +157,38 @@ class BookController extends Controller
      *          name="ratings_count",
      *          description="ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
      *         ),
      *
      *     @OA\Parameter(
-     *          name="publication_date:2022",
-     *          description="positive ratings count",
+     *          name="publication_date",
+     *          description="pblication date'2022'",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="Book"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Creates and returns a book object
      * @param JsonBookValidatorInterface $bookJsonValidator
      * @param XmlBookValidatorInterface $bookXmlValidator
@@ -205,18 +214,16 @@ class BookController extends Controller
 
         }
 
-        if ($request->wantsJson()) {
-            $data = $request->all();
 
-            $validated = $bookJsonValidator->processCreate($data);
+        $data = $request->all();
 
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
-        return response('OK', 200);
+        $validated = $bookJsonValidator->processCreate($data);
+
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
     }
 
     /**
@@ -288,8 +295,20 @@ class BookController extends Controller
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="Book"
-     *       )
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
      *     )
      *
      * Updates and returns a book object
@@ -355,6 +374,14 @@ class BookController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Books"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="No content"
      *       ),
      *     )
      *

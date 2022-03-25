@@ -56,6 +56,7 @@ abstract class JsonValidator
                 ];
         }
 
+
         $validator = $this->validateJson($data);
 
         if ($validator->isValid()) {
