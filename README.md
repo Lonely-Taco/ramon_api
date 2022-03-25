@@ -66,6 +66,10 @@ All testing was done with Postman.
 
 if there are no swagger docs generate docs: 
 
+The documetation is in
+
+ramon_api/storage/api_docs/api-docs.json
+
 ` php artisan l5-swagger:generate `
 
 
