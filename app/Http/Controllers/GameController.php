@@ -264,7 +264,7 @@ class GameController extends Controller
      *          name="name",
      *          description="Name of the game",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -274,7 +274,7 @@ class GameController extends Controller
      *          name="release_date",
      *          description="Date released",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -284,7 +284,7 @@ class GameController extends Controller
      *          name="categories",
      *          description="categorie",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -294,7 +294,7 @@ class GameController extends Controller
      *          name="genres",
      *          description="genres in a string format seperated by ';'",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -304,7 +304,7 @@ class GameController extends Controller
      *          name="positive_ratings",
      *          description="positive ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -314,7 +314,7 @@ class GameController extends Controller
      *          name="negative_ratings",
      *          description="negative ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),

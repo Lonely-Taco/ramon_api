@@ -165,7 +165,7 @@ class BookController extends Controller
      *
      *     @OA\Parameter(
      *          name="publication_date",
-     *          description="pblication date'2022'",
+     *          description="pblication date 'YYYY'",
      *          required=true,
      *          in="query",
      *          @OA\Schema(
@@ -248,7 +248,7 @@ class BookController extends Controller
      *          name="title",
      *          description="Book title",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -258,7 +258,7 @@ class BookController extends Controller
      *          name="authors",
      *          description="authors in string format seperated by ','",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -268,7 +268,7 @@ class BookController extends Controller
      *          name="average_rating",
      *          description="average rating",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -278,17 +278,17 @@ class BookController extends Controller
      *          name="ratings_count",
      *          description="ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
      *         ),
      *
      *     @OA\Parameter(
-     *          name="publication_date:2022",
-     *          description="positive ratings count",
+     *          name="publication_date",
+     *          description="publication date 'YYYY'",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
