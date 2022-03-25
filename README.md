@@ -57,7 +57,7 @@ Fill the parameters in the params edit an object
 ![image](https://user-images.githubusercontent.com/47434636/160123244-0d27de04-0e6f-4cc5-99cd-83dd8f679a73.png)
 
 ## deleting any object place the id in the path
-![image](https://user-images.githubusercontent.com/47434636/160115503-6fb0bd79-493f-4818-95b9-465490781336.png)
+![image](https://user-images.githubusercontent.com/47434636/160123338-084023a9-0b6a-4e49-9d36-6ba0eb447da6.png)
 
 
 
