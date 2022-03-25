@@ -22,7 +22,7 @@
                 }
             }
         },
-        "/api/book/{id}": {
+        "/api/book/id={id}": {
             "get": {
                 "tags": [
                     "Book"
@@ -218,7 +218,7 @@
                 }
             }
         },
-        "/api/game/{id}": {
+        "/api/game/id={id}": {
             "get": {
                 "tags": [
                     "Game"
@@ -423,7 +423,7 @@
                 }
             }
         },
-        "/api/movie/{id}": {
+        "/api/movie/id={id}": {
             "get": {
                 "tags": [
                     "Movie"
