@@ -82,6 +82,11 @@ http://127.0.0.1:8000/api/{{endpoint}}
 specify in the header whether to accept application/xml or /json
 ![image](https://user-images.githubusercontent.com/47434636/160114907-e5bdc359-915f-4c36-b65f-fa8c961cc351.png)
 
+## Post request
+
+as shown below, i use the form-data to send post request in the body
+![image](https://user-images.githubusercontent.com/47434636/160150769-cb8d8f44-d14a-4f0b-97e8-bc795350d2d6.png)
+
 ## Patch request
 Fill the parameters in the params edit an object
 ![image](https://user-images.githubusercontent.com/47434636/160123244-0d27de04-0e6f-4cc5-99cd-83dd8f679a73.png)
