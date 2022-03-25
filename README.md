@@ -17,6 +17,9 @@ laravel also has a decent guide for installing.
 
 `composer global require laravel/installer`
 
+# Import project
+
+`git clone https://github.com/Lonely-Taco/ramon_api.git`
 
 ### troubleshooting
 
@@ -32,8 +35,13 @@ create a new database called ramon_api
 
 copy the .env.example contents into a new .env file
 
+with proper database username and password
 
-run:
+## Run app
+
+in the root folder of the project:
+
+`npm install`
 
 `composer install`
 
@@ -48,7 +56,7 @@ serve the application;
 
 `php artisan serve`
 
-generate docs: 
+if there are no swagger docs generate docs: 
 
 ` php artisan l5-swagger:generate `
 
