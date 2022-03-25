@@ -60,4 +60,85 @@ Fill the parameters in the params edit an object
 ![image](https://user-images.githubusercontent.com/47434636/160123338-084023a9-0b6a-4e49-9d36-6ba0eb447da6.png)
 
 
+## object examples
+json:
+`{
+    "data": {
+        "id": 2,
+        "name": "game name",
+        "release_date": "2020-05-18",
+        "categories": "single player",
+        "genres": "action",
+        "positive_ratings": "33",
+        "negative_ratings": "33",
+        "created_at": "2022-03-23T21:42:02.000000Z",
+        "updated_at": "2022-03-25T12:21:12.000000Z"
+    }
+}`
+
+`{
+    "id": 555,
+    "title": "Absent in the Spring and Other Novels",
+    "authors": "Mary Westmacott;Agatha Christie",
+    "average_rating": 4.19,
+    "ratings_count": 88,
+    "publication_date": 1970,
+    "created_at": "2022-03-23T21:41:52.000000Z",
+    "updated_at": "2022-03-23T21:41:52.000000Z"
+}`
+
+`{
+    "id": 55,
+    "title": "Willy Wonka & the Chocolate Factory",
+    "year": 1971,
+    "iMDb": 7.8,
+    "runtime": 100,
+    "created_at": "2022-03-23T21:43:36.000000Z",
+    "updated_at": "2022-03-23T21:43:36.000000Z"
+}`
+
+xml:
+`<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <Game>
+        <id>2</id>
+        <name>game name</name>
+        <release_date>2020-05-18</release_date>
+        <categories>single player</categories>
+        <genres>action</genres>
+        <positive_ratings>33</positive_ratings>
+        <negative_ratings>33</negative_ratings>
+        <created_at>2022-03-23T21:42:02.000000Z</created_at>
+        <updated_at>2022-03-25T12:21:12.000000Z</updated_at>
+    </Game>
+</root>`
+
+`<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <Movie>
+        <id>5</id>
+        <title>movie title</title>
+        <year>2020</year>
+        <iMDb>8.2</iMDb>
+        <runtime>125</runtime>
+        <created_at>2022-03-23T21:43:35.000000Z</created_at>
+        <updated_at>2022-03-25T12:41:31.000000Z</updated_at>
+    </Movie>
+</root>`
+
+`<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <message>The data has been inserted.</message>
+    <Book>
+        <id>5</id>
+        <title>book</title>
+        <authors>book authour,another authpr</authors>
+        <average_rating>8.2</average_rating>
+        <ratings_count>125</ratings_count>
+        <publication_date>2022</publication_date>
+        <created_at>2022-03-23T21:41:51.000000Z</created_at>
+        <updated_at>2022-03-25T11:41:20.000000Z</updated_at>
+    </Book>
+</root>`
+
 
