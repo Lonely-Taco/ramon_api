@@ -51,12 +51,6 @@ class GameController extends Controller
      */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsJson()) {
-            return response()->json(
-                [
-                    'data' => Game::all(),
-                ], 200);
-        }
 
         if ($request->wantsXml()) {
             return response()->xml(
@@ -65,7 +59,10 @@ class GameController extends Controller
                 ], 200);
         }
 
-        return response('Bad Request', 400);
+        return response()->json(
+            [
+                'data' => Game::all(),
+            ], 200);
     }
 
     /**
@@ -119,13 +116,8 @@ class GameController extends Controller
             return response()->xml($model, 200);
         }
 
-        if ($request->wantsJson()) {
+        return response()->json($model, 200);
 
-
-            return response()->json($model, 200);
-        }
-
-        return response('Bad Request', 400);
     }
 
     /**
