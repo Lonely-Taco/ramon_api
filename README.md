@@ -45,6 +45,10 @@ serve the application;
 
 `php artisan serve`
 
+generate docs: 
+
+` php artisan l5-swagger:generate `
+
 ## Api http://127.0.0.1:8000/api/{endpoint}
 
 
@@ -59,9 +63,11 @@ Fill the parameters in the params edit an object
 ## deleting any object place the id in the path
 ![image](https://user-images.githubusercontent.com/47434636/160123338-084023a9-0b6a-4e49-9d36-6ba0eb447da6.png)
 
-
+ 
 ## object examples
-json:
+
+### json:
+
 `{
     "data": {
         "id": 2,
@@ -97,7 +103,7 @@ json:
     "updated_at": "2022-03-23T21:43:36.000000Z"
 }`
 
-xml:
+### xml:
 `<?xml version="1.0" encoding="utf-8"?>
 <root>
     <Game>
