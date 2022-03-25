@@ -63,8 +63,8 @@
         </div>
 
         <div class="links">
-            <a href="">
-              API here
+            <a href="http://127.0.0.1:8000/api/documentation">
+              API Documentation
             </a>
         </div>
     </div>
