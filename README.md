@@ -54,7 +54,7 @@ specify in the header whether to accept application/xml or /json
 
 ## Patch request
 Fill the parameters in the params edit an object
-![image](https://user-images.githubusercontent.com/47434636/160115256-92bbec09-3ad3-4ae8-a99e-7b056adb8ae7.png)
+![image](https://user-images.githubusercontent.com/47434636/160123244-0d27de04-0e6f-4cc5-99cd-83dd8f679a73.png)
 
 ## deleting any object place the id in the path
 ![image](https://user-images.githubusercontent.com/47434636/160115503-6fb0bd79-493f-4818-95b9-465490781336.png)
