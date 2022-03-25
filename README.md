@@ -32,7 +32,10 @@ create a new database called ramon_api
 
 copy the .env.example contents into a new .env file
 
+
 run:
+
+`composer install`
 
 `php artisan migrate:fresh`
 
