@@ -6,6 +6,7 @@ the goal is to visualize data and create crud methods to mutate and validate dat
 ## Requirements 
 
 *PHP 8.^
+*Compser
 
 # Installation
 
