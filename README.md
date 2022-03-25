@@ -45,4 +45,19 @@ serve the application;
 
 `php artisan serve`
 
+## Api http://127.0.0.1:8000/api/{endpoint}
+
+
+## Making a request
+specify in the header whether to accept application/xml or /json
+![image](https://user-images.githubusercontent.com/47434636/160114907-e5bdc359-915f-4c36-b65f-fa8c961cc351.png)
+
+## Patch request
+Fill the parameters in the params edit an object
+![image](https://user-images.githubusercontent.com/47434636/160115256-92bbec09-3ad3-4ae8-a99e-7b056adb8ae7.png)
+
+## deleting any object place the id in the path
+![image](https://user-images.githubusercontent.com/47434636/160115503-6fb0bd79-493f-4818-95b9-465490781336.png)
+
+
 
