@@ -70,7 +70,7 @@ class GameController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/game/{id}",
+     *      path="/api/game/id={id}",
      *      operationId="show",
      *      tags={"Game"},
      *      summary="Get game by index",
@@ -135,7 +135,7 @@ class GameController extends Controller
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *            ),
      *         ),
      *
@@ -238,7 +238,7 @@ class GameController extends Controller
 
     /**
      * @OA\Patch (
-     *      path="/api/game/{id}",
+     *      path="/api/game/id={id}",
      *      operationId="edit",
      *      tags={"Game"},
      *      summary="Edit game",
@@ -250,7 +250,7 @@ class GameController extends Controller
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *            ),
      *         ),
      *
@@ -355,7 +355,7 @@ class GameController extends Controller
 
     /**
      * @OA\Delete (
-     *      path="/api/game/{id}",
+     *      path="/api/game/id={id}",
      *      operationId="destroy",
      *      tags={"Game"},
      *      summary="Delete a game",

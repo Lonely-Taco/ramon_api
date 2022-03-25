@@ -65,7 +65,7 @@ class BookController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/book/{id}",
+     *      path="/api/book/id={id}",
      *      operationId="showBooks",
      *      tags={"Book"},
      *      summary="Get book by index",
@@ -131,7 +131,7 @@ class BookController extends Controller
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *            ),
      *         ),
      *
@@ -221,27 +221,18 @@ class BookController extends Controller
 
     /**
      * @OA\Patch (
-     *      path="/api/book/{id}",
+     *      path="/api/book/id={id}",
      *      operationId="editBook",
      *      tags={"Book"},
      *      summary="Updates and returns a book object",
      *      description="Updates and returns a book",
-     *  @OA\Parameter(
-     *          name="id",
-     *          description="Book id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *     @OA\Parameter(
      *          name="title",
      *          description="Book title",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *            ),
      *         ),
      *
@@ -334,7 +325,7 @@ class BookController extends Controller
 
     /**
      * @OA\Delete (
-     *      path="/api/book/{id}",
+     *      path="/api/book/id={id}",
      *      operationId="destroyBook",
      *      tags={"Book"},
      *      summary="Delete a book",
