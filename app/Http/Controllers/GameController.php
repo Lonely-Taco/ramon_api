@@ -12,6 +12,16 @@ use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
+/**
+ * @OA\PathItem (
+ *  path="app/Http/Controllers"
+ *     )
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="Ramon api",
+ *      description="api for games, movies and books"
+ * )
+ */
 class GameController extends Controller
 {
     public function __construct(
@@ -22,6 +32,20 @@ class GameController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/games",
+     *      operationId="index",
+     *      tags={"Game"},
+     *      summary="Get all games",
+     *      description="Returns all games",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Games"
+     *       )
+     *     )
+     *
+     * Returns list of Games
+     *
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
@@ -45,6 +69,29 @@ class GameController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/game/{id}",
+     *      operationId="show",
+     *      tags={"Game"},
+     *      summary="Get game by index",
+     *      description="Returns a game by the given id",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Game id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Game"
+     *       )
+     *     )
+     *
+     * Returns a game by index
      * @param Request $request
      * @param int $id
      * @return XmlResponse|JsonResponse|Response
@@ -75,6 +122,80 @@ class GameController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/game",
+     *      operationId="create",
+     *      tags={"Game"},
+     *      summary="Creates and returns a game object",
+     *      description="Creates and returns a game",
+     *
+     *        @OA\Parameter(
+     *          name="name",
+     *          description="Name of the game",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="release_date",
+     *          description="Date released",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="categories",
+     *          description="categorie",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="genres",
+     *          description="genres in a string format seperated by ';'",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="positive_ratings",
+     *          description="positive ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="negative_ratings",
+     *          description="negative ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Game"
+     *       )
+     *     )
+     *
+     * Creates and returns a game object
      * @param UpdateGameRequest $request
      * @return XmlResponse|JsonResponse|Response
      */
@@ -116,6 +237,80 @@ class GameController extends Controller
     }
 
     /**
+     * @OA\Patch (
+     *      path="/api/game/{id}",
+     *      operationId="edit",
+     *      tags={"Game"},
+     *      summary="Edit game",
+     *      description="Updates a game",
+     *
+     *        @OA\Parameter(
+     *          name="name",
+     *          description="Name of the game",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="release_date",
+     *          description="Date released",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="categories",
+     *          description="categorie",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="genres",
+     *          description="genres in a string format seperated by ';'",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="positive_ratings",
+     *          description="positive ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="negative_ratings",
+     *          description="negative ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Games"
+     *       ),
+     *     )
+     *
+     * Updates a game
      * @param JsonGameValidatorInterface $jsonGameValidator
      * @param int $id
      * @param UpdateGameRequest $request
@@ -159,6 +354,30 @@ class GameController extends Controller
     }
 
     /**
+     * @OA\Delete (
+     *      path="/api/game/{id}",
+     *      operationId="destroy",
+     *      tags={"Game"},
+     *      summary="Delete a game",
+     *      description="Delete a game with the given id",
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Game id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Games"
+     *       ),
+     *     )
+     *
+     * Delete a game with the given id
      * @param int $id
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response

@@ -12,6 +12,12 @@ use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
+/**
+ * @OA\PathItem (
+ *  path="app/Http/Controllers"
+ *     )
+ *
+ */
 class MovieController extends Controller
 {
     public function __construct(
@@ -22,6 +28,20 @@ class MovieController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/movies",
+     *      operationId="movieIndex",
+     *      tags={"Movie"},
+     *      summary="Get all movies",
+     *      description="Returns all movies",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Movies"
+     *       )
+     *     )
+     *
+     * Returns list of Movies
+     *
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
@@ -45,6 +65,27 @@ class MovieController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/movie/{id}",
+     *      operationId="showMovies",
+     *      tags={"Movie"},
+     *      summary="Get movie by index",
+     *      description="Returns a movie by the given id",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Movie id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Movie"
+     *       )
+     *     )
      * @param Request $request
      * @param int $id
      * @return XmlResponse|JsonResponse|Response
@@ -76,6 +117,59 @@ class MovieController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/movie",
+     *      operationId="createMovie",
+     *      tags={"Movie"},
+     *      summary="Creates and returns a movie object",
+     *      description="Creates and returns a movie",
+     *
+     * @OA\Parameter(
+     *          name="title",
+     *          description="Movie title",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="year",
+     *          description="Year the movie was released",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="iMDb",
+     *          description="average rating",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="runtime",
+     *          description="movie duration in mintues",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Movie"
+     *       )
+     *     )
+     *
+     * Creates and returns a movie object
      * @param JsonMovieValidatorInterface $movieJsonValidator
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param UpdateMovieRequest $request
@@ -115,6 +209,67 @@ class MovieController extends Controller
     }
 
     /**
+     * * @OA\Patch (
+     *      path="/api/movie/{id}",
+     *      operationId="editMovie",
+     *      tags={"Movie"},
+     *      summary="Updates and returns a movie object",
+     *      description="Updates and returns a movie",
+     * @OA\Parameter(
+     *          name="id",
+     *          description="Movie id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     * @OA\Parameter(
+     *          name="title",
+     *          description="Movie title",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="year",
+     *          description="Year the movie was released",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="iMDb",
+     *          description="average rating",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="runtime",
+     *          description="movie duration in mintues",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Movie"
+     *       )
+     *     )
+     *
+     * Updates and returns a movie object
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param int $id
      * @param UpdateMovieRequest $request
@@ -155,6 +310,30 @@ class MovieController extends Controller
     }
 
     /**
+     * @OA\Delete (
+     *      path="/api/movie/{id}",
+     *      operationId="destroyMovie",
+     *      tags={"Movie"},
+     *      summary="Delete a movie",
+     *      description="Delete a movie with the given id",
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Movie id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Movies"
+     *       ),
+     *     )
+     *
+     * Delete a movie with the given id
      * @param int $id
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
