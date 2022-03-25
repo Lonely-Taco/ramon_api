@@ -47,21 +47,19 @@ class MovieController extends Controller
      */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsJson()) {
-            return response()->json(
-                [
-                    'data' => Movie::all(),
-                ], 200);
-        }
-
         if ($request->wantsXml()) {
+
             return response()->xml(
                 [
                     'data' => Movie::all(),
                 ], 200);
+
         }
 
-        return response('Bad Request', 400);
+        return response()->json(
+            [
+                'data' => Movie::all(),
+            ], 200);
     }
 
     /**
@@ -107,29 +105,22 @@ class MovieController extends Controller
             return response()->xml($model, 200);
         }
 
-        if ($request->wantsJson()) {
-
-
-            return response()->json($model, 200);
-        }
-
-        return response('Bad Request', 400);
+        return response()->json($model, 200);
     }
 
     /**
      * @OA\Post(
-     *      path="/api/movie",
+     *      path="/api/movie/",
      *      operationId="createMovie",
      *      tags={"Movie"},
      *      summary="Creates and returns a movie object",
      *      description="Creates and returns a movie",
      *
-
      *     @OA\Parameter(
      *          name="title",
      *          description="Movie title",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -139,7 +130,7 @@ class MovieController extends Controller
      *          name="year",
      *          description="Year the movie was released",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -149,7 +140,7 @@ class MovieController extends Controller
      *          name="iMDb",
      *          description="average rating",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -159,17 +150,29 @@ class MovieController extends Controller
      *          name="runtime",
      *          description="movie duration in mintues",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="Movie"
-     *       )
-     *     )
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
      *
+     *)
      * Creates and returns a movie object
      * @param JsonMovieValidatorInterface $movieJsonValidator
      * @param XmlMovieValidatorInterface $movieXmlValidator
@@ -194,19 +197,16 @@ class MovieController extends Controller
                 ], $validated['code']);
         }
 
-        if ($request->wantsJson()) {
-            $data = $request->all();
+        $data = $request->all();
 
-            $validated = $movieJsonValidator->processCreate($data);
+        $validated = $movieJsonValidator->processCreate($data);
 
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
 
-        return response('', 204);
     }
 
     /**
@@ -216,7 +216,6 @@ class MovieController extends Controller
      *      tags={"Movie"},
      *      summary="Updates and returns a movie object",
      *      description="Updates and returns a movie",
-     *
      *      @OA\Parameter(
      *          name="id",
      *          description="id",
@@ -231,7 +230,7 @@ class MovieController extends Controller
      *          name="title",
      *          description="Movie title",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -241,7 +240,7 @@ class MovieController extends Controller
      *          name="year",
      *          description="Year the movie was released",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -251,7 +250,7 @@ class MovieController extends Controller
      *          name="iMDb",
      *          description="average rating",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -261,17 +260,28 @@ class MovieController extends Controller
      *          name="runtime",
      *          description="movie duration in mintues",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="Movie"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Updates and returns a movie object
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param int $id
@@ -296,20 +306,17 @@ class MovieController extends Controller
                 ], $validated['code']);
         }
 
-        if ($request->wantsJson()) {
 
-            $data = $request->all();
+        $data = $request->all();
 
-            $validated = $movieJsonValidator->processEdit($data, $id);
+        $validated = $movieJsonValidator->processEdit($data, $id);
 
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
 
-        return response('', 204);
     }
 
     /**
@@ -331,11 +338,14 @@ class MovieController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="Movies"
+     *          response=204,
+     *          description="No content"
      *       ),
-     *     )
-     *
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Delete a movie with the given id
      * @param int $id
      * @param Request $request
@@ -364,17 +374,15 @@ class MovieController extends Controller
                 ], 200);
         }
 
-        if ($request->wantsJson()) {
 
-            $model->delete();
+        $model->delete();
 
-            return response()->json(
-                [
-                    'message' => 'The data has been deleted.',
-                    'data'    => $model,
-                ], 200);
-        }
+        return response()->json(
+            [
+                'message' => 'The data has been deleted.',
+                'data'    => $model,
+            ], 200);
 
-        return response('No Content', 204);
+
     }
 }

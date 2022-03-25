@@ -17,7 +17,10 @@
                 "operationId": "bookIndex",
                 "responses": {
                     "200": {
-                        "description": "Books"
+                        "description": "sucess"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
@@ -43,7 +46,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Book"
+                        "description": "sucess"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             },
@@ -68,6 +74,12 @@
                 "responses": {
                     "200": {
                         "description": "Books"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "No content"
                     }
                 }
             },
@@ -136,12 +148,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Book"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
         },
-        "/book": {
+        "/api/book/": {
             "post": {
                 "tags": [
                     "Book"
@@ -152,7 +173,7 @@
                 "parameters": [
                     {
                         "name": "title",
-                        "in": "path",
+                        "in": "query",
                         "description": "Book title",
                         "required": true,
                         "schema": {
@@ -161,7 +182,7 @@
                     },
                     {
                         "name": "authors",
-                        "in": "path",
+                        "in": "query",
                         "description": "authors in string format seperated by ','",
                         "required": true,
                         "schema": {
@@ -170,7 +191,7 @@
                     },
                     {
                         "name": "average_rating",
-                        "in": "path",
+                        "in": "query",
                         "description": "average rating",
                         "required": true,
                         "schema": {
@@ -179,7 +200,7 @@
                     },
                     {
                         "name": "ratings_count",
-                        "in": "path",
+                        "in": "query",
                         "description": "ratings count",
                         "required": true,
                         "schema": {
@@ -187,9 +208,9 @@
                         }
                     },
                     {
-                        "name": "publication_date:2022",
-                        "in": "path",
-                        "description": "positive ratings count",
+                        "name": "publication_date",
+                        "in": "query",
+                        "description": "pblication date'2022'",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -198,7 +219,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Book"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
@@ -239,7 +269,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Game"
+                        "description": "sucess"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             },
@@ -262,8 +298,11 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Games"
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             },
@@ -341,12 +380,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Games"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
         },
-        "/game": {
+        "/api/game": {
             "post": {
                 "tags": [
                     "Game"
@@ -366,7 +414,7 @@
                     },
                     {
                         "name": "release_date",
-                        "in": "path",
+                        "in": "query",
                         "description": "Date released",
                         "required": true,
                         "schema": {
@@ -375,7 +423,7 @@
                     },
                     {
                         "name": "categories",
-                        "in": "path",
+                        "in": "query",
                         "description": "categorie",
                         "required": true,
                         "schema": {
@@ -384,7 +432,7 @@
                     },
                     {
                         "name": "genres",
-                        "in": "path",
+                        "in": "query",
                         "description": "genres in a string format seperated by ';'",
                         "required": true,
                         "schema": {
@@ -393,7 +441,7 @@
                     },
                     {
                         "name": "positive_ratings",
-                        "in": "path",
+                        "in": "query",
                         "description": "positive ratings count",
                         "required": true,
                         "schema": {
@@ -402,7 +450,7 @@
                     },
                     {
                         "name": "negative_ratings",
-                        "in": "path",
+                        "in": "query",
                         "description": "negative ratings count",
                         "required": true,
                         "schema": {
@@ -412,7 +460,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Game"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
@@ -476,8 +533,11 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Movies"
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             },
@@ -500,7 +560,7 @@
                     },
                     {
                         "name": "title",
-                        "in": "path",
+                        "in": "query",
                         "description": "Movie title",
                         "required": true,
                         "schema": {
@@ -509,7 +569,7 @@
                     },
                     {
                         "name": "year",
-                        "in": "path",
+                        "in": "query",
                         "description": "Year the movie was released",
                         "required": true,
                         "schema": {
@@ -518,7 +578,7 @@
                     },
                     {
                         "name": "iMDb",
-                        "in": "path",
+                        "in": "query",
                         "description": "average rating",
                         "required": true,
                         "schema": {
@@ -527,7 +587,7 @@
                     },
                     {
                         "name": "runtime",
-                        "in": "path",
+                        "in": "query",
                         "description": "movie duration in mintues",
                         "required": true,
                         "schema": {
@@ -537,12 +597,21 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Movie"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }
         },
-        "/api/movie": {
+        "/api/movie/": {
             "post": {
                 "tags": [
                     "Movie"
@@ -553,7 +622,7 @@
                 "parameters": [
                     {
                         "name": "title",
-                        "in": "path",
+                        "in": "query",
                         "description": "Movie title",
                         "required": true,
                         "schema": {
@@ -562,7 +631,7 @@
                     },
                     {
                         "name": "year",
-                        "in": "path",
+                        "in": "query",
                         "description": "Year the movie was released",
                         "required": true,
                         "schema": {
@@ -571,7 +640,7 @@
                     },
                     {
                         "name": "iMDb",
-                        "in": "path",
+                        "in": "query",
                         "description": "average rating",
                         "required": true,
                         "schema": {
@@ -580,7 +649,7 @@
                     },
                     {
                         "name": "runtime",
-                        "in": "path",
+                        "in": "query",
                         "description": "movie duration in mintues",
                         "required": true,
                         "schema": {
@@ -590,7 +659,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Movie"
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 }
             }

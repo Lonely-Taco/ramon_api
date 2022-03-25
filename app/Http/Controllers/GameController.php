@@ -87,10 +87,17 @@ class GameController extends Controller
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="Game"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Returns a game by index
      * @param Request $request
      * @param int $id
@@ -123,7 +130,7 @@ class GameController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/game",
+     *      path="/api/game",
      *      operationId="create",
      *      tags={"Game"},
      *      summary="Creates and returns a game object",
@@ -143,7 +150,7 @@ class GameController extends Controller
      *          name="release_date",
      *          description="Date released",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -153,7 +160,7 @@ class GameController extends Controller
      *          name="categories",
      *          description="categorie",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -163,7 +170,7 @@ class GameController extends Controller
      *          name="genres",
      *          description="genres in a string format seperated by ';'",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *            ),
@@ -173,7 +180,7 @@ class GameController extends Controller
      *          name="positive_ratings",
      *          description="positive ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -183,7 +190,7 @@ class GameController extends Controller
      *          name="negative_ratings",
      *          description="negative ratings count",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *            ),
@@ -191,10 +198,21 @@ class GameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Game"
-     *       )
-     *     )
-     *
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Creates and returns a game object
      * @param UpdateGameRequest $request
      * @return XmlResponse|JsonResponse|Response
@@ -220,20 +238,16 @@ class GameController extends Controller
 
         }
 
-        if ($request->wantsJson()) {
+        $data = $request->all();
 
-            $data = $request->all();
+        $validated = $jsonGameValidator->processCreate($data);
 
-            $validated = $jsonGameValidator->processCreate($data);
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
 
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
-
-        return response('No Data', 204);
     }
 
     /**
@@ -316,10 +330,21 @@ class GameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Games"
+     *          description="sucess"
      *       ),
-     *     )
-     *
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Updates a game
      * @param JsonGameValidatorInterface $jsonGameValidator
      * @param int $id
@@ -347,20 +372,16 @@ class GameController extends Controller
                 ], $validated['code']);
         }
 
-        if ($request->wantsJson()) {
+        $data = $request->all();
 
-            $data = $request->all();
+        $validated = $jsonGameValidator->processEdit($data, $id);
 
-            $validated = $jsonGameValidator->processEdit($data, $id);
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
 
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
-
-        return response('Not found', 404);
     }
 
     /**
@@ -381,12 +402,15 @@ class GameController extends Controller
      *            ),
      *         ),
      *
-     *      @OA\Response(
-     *          response=200,
-     *          description="Games"
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
      *       ),
-     *     )
-     *
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
      * Delete a game with the given id
      * @param int $id
      * @param Request $request
@@ -415,17 +439,12 @@ class GameController extends Controller
                 ], 200);
         }
 
-        if ($request->wantsJson()) {
+        $model->delete();
 
-            $model->delete();
-
-            return response()->json(
-                [
-                    'message' => 'The data has been deleted.',
-                    'data'    => $model,
-                ], 200);
-        }
-
-        return response('No Content', 204);
+        return response()->json(
+            [
+                'message' => 'The data has been deleted.',
+                'data'    => $model,
+            ], 200);
     }
 }
