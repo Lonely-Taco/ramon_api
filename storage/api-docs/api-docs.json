@@ -82,7 +82,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Book id",
+                        "description": "id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -94,7 +94,7 @@
                         "description": "Book title",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -156,7 +156,7 @@
                         "description": "Book title",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -276,12 +276,21 @@
                 "operationId": "edit",
                 "parameters": [
                     {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "name",
                         "in": "path",
                         "description": "Name of the game",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -352,7 +361,7 @@
                         "description": "Name of the game",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -483,7 +492,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Movie id",
+                        "description": "id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -533,7 +542,7 @@
                 }
             }
         },
-        "/movie": {
+        "/api/movie": {
             "post": {
                 "tags": [
                     "Movie"
