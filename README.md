@@ -22,13 +22,6 @@ laravel also has a decent guide for installing.
 
 `git clone https://github.com/Lonely-Taco/ramon_api.git`
 
-### troubleshooting
-
-for windows its possible to require and extension to be enabled on the php.ini
-
-uncomment `extension=gd`
-
-
 
 ## To begin 
 
@@ -47,6 +40,12 @@ in the root folder of the project:
 `composer install`
 
 `php artisan migrate:fresh`
+
+### troubleshooting
+
+for windows its possible to require and extension to be enabled on the php.ini
+
+uncomment `extension=gd`
 
 
 to insert the data into the database run: 
