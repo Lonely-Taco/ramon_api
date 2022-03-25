@@ -7,7 +7,7 @@ the goal is to visualize data and create crud methods to mutate and validate dat
 
 *PHP 8.^
 
-# Instllation
+# Installation
 
 install composer 
 
@@ -29,7 +29,7 @@ uncomment `extension=gd`
 
 
 
-## to begin 
+## To begin 
 
 create a new database called ramon_api
 
@@ -75,7 +75,7 @@ Fill the parameters in the params edit an object
 ![image](https://user-images.githubusercontent.com/47434636/160123338-084023a9-0b6a-4e49-9d36-6ba0eb447da6.png)
 
  
-## object examples
+## Object examples
 
 ### json:
 
@@ -115,6 +115,7 @@ Fill the parameters in the params edit an object
 }`
 
 ### xml:
+
 `<?xml version="1.0" encoding="utf-8"?>
 <root>
     <Game>
