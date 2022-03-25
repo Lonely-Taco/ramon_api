@@ -337,20 +337,15 @@ class BookController extends Controller
                 ], $validated['code']);
         }
 
-        if ($request->wantsJson()) {
+        $data = $request->all();
 
-            $data = $request->all();
+        $validated = $bookJsonValidator->processEdit($data, $id);
 
-            $validated = $bookJsonValidator->processEdit($data, $id);
-
-            return response()->json(
-                [
-                    'message' => $validated['message'],
-                    'data'    => $validated['data'],
-                ], $validated['code']);
-        }
-
-        return response('Not found', 404);
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
     }
 
     /**
