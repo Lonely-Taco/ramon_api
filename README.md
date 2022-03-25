@@ -69,7 +69,9 @@ if there are no swagger docs generate docs:
 ` php artisan l5-swagger:generate `
 
 
-## Api http://127.0.0.1:8000/api/{endpoint}
+http://127.0.0.1:8000/api/documentation 
+
+http://127.0.0.1:8000/api/{{endpoint}}
 
 
 ## Making a request
