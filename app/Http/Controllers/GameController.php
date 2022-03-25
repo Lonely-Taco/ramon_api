@@ -244,6 +244,16 @@ class GameController extends Controller
      *      summary="Edit game",
      *      description="Updates a game",
      *
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
      *        @OA\Parameter(
      *          name="name",
      *          description="Name of the game",

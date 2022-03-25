@@ -226,6 +226,17 @@ class BookController extends Controller
      *      tags={"Book"},
      *      summary="Updates and returns a book object",
      *      description="Updates and returns a book",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
      *     @OA\Parameter(
      *          name="title",
      *          description="Book title",

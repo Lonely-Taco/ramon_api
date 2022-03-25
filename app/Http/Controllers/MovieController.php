@@ -118,13 +118,14 @@ class MovieController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/movie",
+     *      path="/api/movie",
      *      operationId="createMovie",
      *      tags={"Movie"},
      *      summary="Creates and returns a movie object",
      *      description="Creates and returns a movie",
      *
-     * @OA\Parameter(
+
+     *     @OA\Parameter(
      *          name="title",
      *          description="Movie title",
      *          required=true,
@@ -215,6 +216,16 @@ class MovieController extends Controller
      *      tags={"Movie"},
      *      summary="Updates and returns a movie object",
      *      description="Updates and returns a movie",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
      *
      * @OA\Parameter(
      *          name="title",
