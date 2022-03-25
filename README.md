@@ -56,9 +56,18 @@ serve the application;
 
 `php artisan serve`
 
+# Documentation and API
+
+its possible to try the API using the Swagger UI although it its alot slower when fetching large collections.
+
+the GET list method usually takes a couple of minutes.
+
+All testing was done with Postman.
+
 if there are no swagger docs generate docs: 
 
 ` php artisan l5-swagger:generate `
+
 
 ## Api http://127.0.0.1:8000/api/{endpoint}
 
