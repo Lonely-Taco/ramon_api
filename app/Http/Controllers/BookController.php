@@ -12,6 +12,11 @@ use Illuminate\Http\Response;
 use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
+/**
+ * @OA\PathItem (
+ *  path="app/Http/Controllers"
+ *     )
+ */
 class BookController extends Controller
 {
     public function __construct(
@@ -22,6 +27,20 @@ class BookController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/books",
+     *      operationId="bookIndex",
+     *      tags={"Book"},
+     *      summary="Get all books",
+     *      description="Returns all books",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Books"
+     *       )
+     *     )
+     *
+     * Returns list of Books
+     *
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
@@ -45,6 +64,29 @@ class BookController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/api/book/{id}",
+     *      operationId="showBooks",
+     *      tags={"Book"},
+     *      summary="Get book by index",
+     *      description="Returns a book by the given id",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Book id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Book"
+     *       )
+     *     )
+     *
+     * Returns a book by index
      * @param Request $request
      * @param int $id
      * @return XmlResponse|JsonResponse|Response
@@ -76,6 +118,69 @@ class BookController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/book",
+     *      operationId="createBook",
+     *      tags={"Book"},
+     *      summary="Creates and returns a book object",
+     *      description="Creates and returns a book",
+     *
+     *     @OA\Parameter(
+     *          name="title",
+     *          description="Book title",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="authors",
+     *          description="authors in string format seperated by ','",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="average_rating",
+     *          description="average rating",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="ratings_count",
+     *          description="ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="publication_date:2022",
+     *          description="positive ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Book"
+     *       )
+     *     )
+     *
+     * Creates and returns a book object
      * @param JsonBookValidatorInterface $bookJsonValidator
      * @param XmlBookValidatorInterface $bookXmlValidator
      * @param UpdateBookRequest $request
@@ -115,6 +220,77 @@ class BookController extends Controller
     }
 
     /**
+     * @OA\Patch (
+     *      path="/api/book/{id}",
+     *      operationId="editBook",
+     *      tags={"Book"},
+     *      summary="Updates and returns a book object",
+     *      description="Updates and returns a book",
+     *  @OA\Parameter(
+     *          name="id",
+     *          description="Book id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *     @OA\Parameter(
+     *          name="title",
+     *          description="Book title",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="authors",
+     *          description="authors in string format seperated by ','",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="average_rating",
+     *          description="average rating",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="ratings_count",
+     *          description="ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *     @OA\Parameter(
+     *          name="publication_date:2022",
+     *          description="positive ratings count",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Book"
+     *       )
+     *     )
+     *
+     * Updates and returns a book object
      * @param JsonBookValidatorInterface $bookJsonValidator
      * @param XmlBookValidatorInterface $bookXmlValidator
      * @param int $id
@@ -157,6 +333,30 @@ class BookController extends Controller
     }
 
     /**
+     * @OA\Delete (
+     *      path="/api/book/{id}",
+     *      operationId="destroyBook",
+     *      tags={"Book"},
+     *      summary="Delete a book",
+     *      description="Delete a book with the given id",
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Book id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Books"
+     *       ),
+     *     )
+     *
+     * Delete a book with the given id
      * @param int $id
      * @param Request $request
      * @return XmlResponse|JsonResponse|Response
