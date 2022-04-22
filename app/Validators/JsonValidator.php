@@ -14,6 +14,8 @@ abstract class JsonValidator
     }
 
     /**
+     * Validate the creation of an object
+     *
      * @param array $data
      * @return array
      */
@@ -39,6 +41,8 @@ abstract class JsonValidator
     }
 
     /**
+     * Validate the update of an object
+     *
      * @param array $data
      * @param int $id
      * @return array
@@ -81,6 +85,8 @@ abstract class JsonValidator
     }
 
     /**
+     * Validate the json array
+     *
      * @param array $data
      * @return Validator
      */
@@ -96,6 +102,13 @@ abstract class JsonValidator
 
     }
 
+    /**
+     * some variables were turned to strings
+     * this casts them back to integers
+     *
+     * @param array $data
+     * @return array
+     */
     protected function convertToInteger(array $data): array
     {
         if (array_key_exists('positive_ratings', $data)) {

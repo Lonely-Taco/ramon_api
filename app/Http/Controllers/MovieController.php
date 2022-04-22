@@ -64,7 +64,7 @@ class MovieController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/movie/id={id}",
+     *      path="/api/movie/{id}",
      *      operationId="showMovies",
      *      tags={"Movie"},
      *      summary="Get movie by index",
@@ -109,8 +109,8 @@ class MovieController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *      path="/api/movie/",
+     * @OA\Put(
+     *      path="/api/movie",
      *      operationId="createMovie",
      *      tags={"Movie"},
      *      summary="Creates and returns a movie object",
@@ -211,7 +211,7 @@ class MovieController extends Controller
 
     /**
      * * @OA\Patch (
-     *      path="/api/movie/id={id}",
+     *      path="/api/movie/{id}",
      *      operationId="editMovie",
      *      tags={"Movie"},
      *      summary="Updates and returns a movie object",
@@ -321,7 +321,7 @@ class MovieController extends Controller
 
     /**
      * @OA\Delete (
-     *      path="/api/movie/id={id}",
+     *      path="/api/movie/{id}",
      *      operationId="destroyMovie",
      *      tags={"Movie"},
      *      summary="Delete a movie",

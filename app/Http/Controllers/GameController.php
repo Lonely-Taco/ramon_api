@@ -51,6 +51,7 @@ class GameController extends Controller
      */
     public function index(Request $request): XmlResponse|JsonResponse|Response
     {
+        config('xml.rowName', 'game');
 
         if ($request->wantsXml()) {
             return response()->xml(
@@ -67,7 +68,7 @@ class GameController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/game/id={id}",
+     *      path="/api/game/{id}",
      *      operationId="show",
      *      tags={"Game"},
      *      summary="Get game by index",
@@ -244,7 +245,7 @@ class GameController extends Controller
 
     /**
      * @OA\Patch (
-     *      path="/api/game/id={id}",
+     *      path="/api/game/{id}",
      *      operationId="edit",
      *      tags={"Game"},
      *      summary="Edit game",
@@ -378,7 +379,7 @@ class GameController extends Controller
 
     /**
      * @OA\Delete (
-     *      path="/api/game/id={id}",
+     *      path="/api/game/{id}",
      *      operationId="destroy",
      *      tags={"Game"},
      *      summary="Delete a game",
