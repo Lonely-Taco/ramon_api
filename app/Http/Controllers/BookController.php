@@ -202,9 +202,7 @@ class BookController extends Controller
     {
         if ($request->wantsXml()) {
 
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $bookXmlValidator->processCreate($requestXml);
+            $validated = $bookXmlValidator->processCreate($request->getContent());
 
             return response()->xml(
                 [
@@ -215,9 +213,9 @@ class BookController extends Controller
         }
 
 
-        $data = $request->all();
+        $jsonRequest = $request->all();
 
-        $validated = $bookJsonValidator->processCreate($data);
+        $validated = $bookJsonValidator->processCreate($jsonRequest);
 
         return response()->json(
             [
