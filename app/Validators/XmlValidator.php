@@ -13,6 +13,8 @@ abstract class XmlValidator
     }
 
     /**
+     * Validates the creation of an object
+     *
      * @param string $xmlString
      * @return array
      */
@@ -34,6 +36,8 @@ abstract class XmlValidator
     }
 
     /**
+     * Validates the update of an object
+     *
      * @param string $xmlString
      * @param int $id
      * @return array
@@ -68,6 +72,8 @@ abstract class XmlValidator
         ];
     }
     /**
+     * validates the xml string with a schema
+     *
      * @param string $xmlString
      * @param string $schemaPath
      * @return array

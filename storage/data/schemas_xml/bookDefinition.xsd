@@ -14,12 +14,19 @@
             <xs:element name="authors" type="xs:string"/>
             <xs:element name="average_rating" type="xs:float"/>
             <xs:element name="ratings_count" type="xs:int"/>
-            <xs:element name="publication_date" type="xs:gYear"/>
+            <xs:element name="publication_date" type="yearOfPublication"/>
             <xs:element name="created_at" minOccurs="0" type="xs:dateTime"/>
             <xs:element name="updated_at" minOccurs="0" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
+
     <xs:element name="root" type="root"/>
+
+    <xs:simpleType name="yearOfPublication">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[0-9][0-9][0-9][0-9]"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
 
 

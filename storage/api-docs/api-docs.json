@@ -25,7 +25,7 @@
                 }
             }
         },
-        "/api/book/id={id}": {
+        "/api/book/{id}": {
             "get": {
                 "tags": [
                     "Book"
@@ -162,7 +162,7 @@
                 }
             }
         },
-        "/api/book/": {
+        "/api/book": {
             "post": {
                 "tags": [
                     "Book"
@@ -248,7 +248,7 @@
                 }
             }
         },
-        "/api/game/id={id}": {
+        "/api/game/{id}": {
             "get": {
                 "tags": [
                     "Game"
@@ -489,7 +489,7 @@
                 }
             }
         },
-        "/api/movie/id={id}": {
+        "/api/movie/{id}": {
             "get": {
                 "tags": [
                     "Movie"
@@ -611,7 +611,7 @@
                 }
             }
         },
-        "/api/movie/": {
+        "/api/movie": {
             "post": {
                 "tags": [
                     "Movie"
@@ -673,8 +673,5 @@
                 }
             }
         }
-    },
-    "security": [
-        []
-    ]
+    }
 }
