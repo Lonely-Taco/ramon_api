@@ -142,13 +142,13 @@ Route::get('/movies', [MovieController::class, 'index']);
 Route::get('/movie/{id}', [MovieController::class, 'show']);
 
 /**
- * @OA\Put    (
+ * @OA\Post     (
  *     path="/api/movie",
  *     description="create movie",
  *     @OA\Response(response="default", description="create")
  * )
  */
-Route::put('/movie', [MovieController::class, 'create']);
+Route::post('/movie', [MovieController::class, 'create']);
 
 /**
  * @OA\Patch    (

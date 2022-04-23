@@ -207,21 +207,18 @@ class GameController extends Controller
      *       ),
      *)
      * Creates and returns a game object
-     * @param UpdateGameRequest $request
+     * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
     public function create(
         JsonGameValidatorInterface $jsonGameValidator,
         XmlGameValidatorInterface $gameXmlValidator,
-        UpdateGameRequest $request
+        Request $request
     ): XmlResponse|JsonResponse|Response
     {
-
         if ($request->wantsXml()) {
 
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $gameXmlValidator->processCreate($requestXml);
+            $validated = $gameXmlValidator->processCreate($request->getContent());
 
             return response()->xml(
                 [
@@ -347,16 +344,14 @@ class GameController extends Controller
      */
     public function edit(
         JsonGameValidatorInterface $jsonGameValidator,
-        int $id, UpdateGameRequest $request,
-        XmlGameValidatorInterface $gameXmlValidator
+        int $id,
+        Request $request,
+        XmlGameValidatorInterface $gameXmlValidator,
     ): XmlResponse|JsonResponse|Response
     {
-
         if ($request->wantsXml()) {
 
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $gameXmlValidator->processEdit($requestXml, $id);
+            $validated = $gameXmlValidator->processEdit($request->getContent(), $id);
 
             return response()->xml(
                 [
