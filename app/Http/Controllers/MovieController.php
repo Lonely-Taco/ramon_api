@@ -9,7 +9,6 @@ use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
 /**
@@ -109,7 +108,7 @@ class MovieController extends Controller
     }
 
     /**
-     * @OA\Put(
+     * @OA\Post (
      *      path="/api/movie",
      *      operationId="createMovie",
      *      tags={"Movie"},
@@ -176,20 +175,17 @@ class MovieController extends Controller
      * Creates and returns a movie object
      * @param JsonMovieValidatorInterface $movieJsonValidator
      * @param XmlMovieValidatorInterface $movieXmlValidator
-     * @param UpdateMovieRequest $request
+     * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
     public function create(
         JsonMovieValidatorInterface $movieJsonValidator,
         XmlMovieValidatorInterface $movieXmlValidator,
-        UpdateMovieRequest $request): XmlResponse|JsonResponse|Response
+        Request $request,
+    ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
-
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $movieXmlValidator->processCreate($requestXml);
-
+            $validated = $movieXmlValidator->processCreate($request->getContent());
             return response()->xml(
                 [
                     'message' => $validated['message'],
@@ -285,20 +281,18 @@ class MovieController extends Controller
      * Updates and returns a movie object
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param int $id
-     * @param UpdateMovieRequest $request
+     * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
     public function edit(
         JsonMovieValidatorInterface $movieJsonValidator,
         XmlMovieValidatorInterface $movieXmlValidator,
-        int $id, UpdateMovieRequest $request): XmlResponse|JsonResponse|Response
+        int $id,
+        Request $request,
+    ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
-
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $movieXmlValidator->processEdit($requestXml, $id);
-
+            $validated = $movieXmlValidator->processEdit($request->getContent(), $id);
             return response()->xml(
                 [
                     'message' => $validated['message'],

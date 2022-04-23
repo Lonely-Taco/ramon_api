@@ -192,7 +192,7 @@ class BookController extends Controller
      * Creates and returns a book object
      * @param JsonBookValidatorInterface $bookJsonValidator
      * @param XmlBookValidatorInterface $bookXmlValidator
-     * @param UpdateBookRequest $request
+     * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
     public function create(JsonBookValidatorInterface $bookJsonValidator,
@@ -313,20 +313,18 @@ class BookController extends Controller
      * @param JsonBookValidatorInterface $bookJsonValidator
      * @param XmlBookValidatorInterface $bookXmlValidator
      * @param int $id
-     * @param UpdateBookRequest $request
+     * @param Request $request
      * @return XmlResponse|JsonResponse|Response
      */
     public function edit(
         JsonBookValidatorInterface $bookJsonValidator,
         XmlBookValidatorInterface $bookXmlValidator,
-        int $id, UpdateBookRequest $request
+        int $id,
+        Request $request,
     ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
-
-            $requestXml = ArrayToXml::convert($request->all());
-
-            $validated = $bookXmlValidator->processEdit($requestXml, $id);
+            $validated = $bookXmlValidator->processEdit($request->getContent(), $id);
 
             return response()->xml(
                 [
