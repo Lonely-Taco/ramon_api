@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
-use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
 /**
@@ -197,7 +195,7 @@ class BookController extends Controller
      */
     public function create(JsonBookValidatorInterface $bookJsonValidator,
         XmlBookValidatorInterface $bookXmlValidator,
-        UpdateBookRequest $request
+        Request $request,
     ): XmlResponse|JsonResponse|Response
     {
         if ($request->wantsXml()) {
@@ -212,10 +210,7 @@ class BookController extends Controller
 
         }
 
-
-        $jsonRequest = $request->all();
-
-        $validated = $bookJsonValidator->processCreate($jsonRequest);
+        $validated = $bookJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -333,9 +328,8 @@ class BookController extends Controller
                 ], $validated['code']);
         }
 
-        $data = $request->all();
 
-        $validated = $bookJsonValidator->processEdit($data, $id);
+        $validated = $bookJsonValidator->processEdit($request->getContent(), $id);
 
         return response()->json(
             [

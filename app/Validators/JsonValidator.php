@@ -15,20 +15,18 @@ abstract class JsonValidator
 
     /**
      * Validate the creation of an object
-     *
-     * @param array $data
-     * @return array
      */
-    public function processCreate(array $data): array
+    public function processCreate(string $data): array
     {
-        $validator = $this->validateJson($data);
+        $jsonData  = json_decode($data, true);
+        $validator = $this->validateJson($jsonData);
 
         if ($validator->isValid()) {
             $instance = new $this->model();
 
             return
                 ['message' => 'The data has been inserted.',
-                 'data'    => $instance::create($data),
+                 'data'    => $instance::create($jsonData),
                  'code'    => 200,
                 ];
         }
@@ -42,12 +40,8 @@ abstract class JsonValidator
 
     /**
      * Validate the update of an object
-     *
-     * @param array $data
-     * @param int $id
-     * @return array
      */
-    public function processEdit(array $data, int $id): array
+    public function processEdit(string $data, int $id): array
     {
         $instance = new $this->model();
 
@@ -60,14 +54,14 @@ abstract class JsonValidator
                 ];
         }
 
+        $jsonData = json_decode($data, true);
 
-        $validator = $this->validateJson($data);
+        $validator = $this->validateJson($jsonData);
 
         if ($validator->isValid()) {
-
             $instance      = new $this->model();
             $instanceModel = $instance::findOrFail($id);
-            $instanceModel->update($data);
+            $instanceModel->update($jsonData);
             $instanceModel->save();
 
             return
@@ -94,7 +88,7 @@ abstract class JsonValidator
     {
         $validator = new Validator();
 
-        $jsonData = Validator::arrayToObjectRecursive($this->convertToInteger($data));
+        $jsonData = Validator::arrayToObjectRecursive($data);
 
         $validator->validate($jsonData, (object) ['$ref' => $this->schemaPath]);
 

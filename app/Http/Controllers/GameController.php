@@ -228,9 +228,7 @@ class GameController extends Controller
 
         }
 
-        $data = $request->all();
-
-        $validated = $jsonGameValidator->processCreate($data);
+        $validated = $jsonGameValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -360,9 +358,7 @@ class GameController extends Controller
                 ], $validated['code']);
         }
 
-        $data = $request->all();
-
-        $validated = $jsonGameValidator->processEdit($data, $id);
+        $validated = $jsonGameValidator->processEdit($request->getContent(), $id);
 
         return response()->json(
             [

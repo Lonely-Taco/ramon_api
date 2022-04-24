@@ -8,16 +8,22 @@
       "type": "string"
     },
     "average_rating": {
-      "type": "integer"
+        "type": "number",
+        "minimum": 0,
+        "maximum": 10,
+        "maxLength": 3
     },
     "authors": {
         "type": "string"
     },
     "ratings_count": {
-      "type": "integer"
+      "type": "integer",
+        "minimum": 0
     },
     "publication_date": {
-        "type": "integer"
+        "type": "number",
+        "minimum": 1,
+        "maximum": 3000
     }
   },
   "required": [

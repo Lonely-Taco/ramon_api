@@ -5,15 +5,15 @@ namespace App\Contracts;
 interface JsonGameValidatorInterface
 {
     /**
-     * @param array $data
+     * @param string $data
      * @return array
      */
-    public function processCreate(array $data): array;
+    public function processCreate(string $data): array;
 
     /**
-     * @param array $data
+     * @param string $data
      * @param int $id
      * @return array
      */
-    public function processEdit(array $data, int $id): array;
+    public function processEdit(string $data, int $id): array;
 }
