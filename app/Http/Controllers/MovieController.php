@@ -193,9 +193,7 @@ class MovieController extends Controller
                 ], $validated['code']);
         }
 
-        $data = $request->all();
-
-        $validated = $movieJsonValidator->processCreate($data);
+        $validated = $movieJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -301,9 +299,7 @@ class MovieController extends Controller
         }
 
 
-        $data = $request->all();
-
-        $validated = $movieJsonValidator->processEdit($data, $id);
+        $validated = $movieJsonValidator->processEdit($request->getContent(), $id);
 
         return response()->json(
             [

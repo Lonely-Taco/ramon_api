@@ -1,31 +1,37 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://ramon.api/movie",
-  "$description": "schema to define movie structure",
-  "type": "object",
-  "properties": {
-    "id": {
-      "type": "integer"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://ramon.api/movie",
+    "$description": "schema to define movie structure",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "title": {
+            "type": "string"
+        },
+        "year": {
+            "type": "number",
+            "minimum": 1800,
+            "maximum": 3000
+        },
+        "iMDb": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+        },
+        "runtime": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+        }
     },
-    "title": {
-      "type": "string"
-    },
-    "year": {
-      "type": "integer"
-    },
-    "iMDb": {
-      "type": "integer"
-    },
-    "runtime": {
-      "type": "integer"
-    }
-  },
-  "required": [
-    "title",
-    "year",
-    "iMDb",
-    "runtime"
-  ]
+    "required": [
+        "title",
+        "year",
+        "iMDb",
+        "runtime"
+    ]
 }
 
 
