@@ -1,5 +1,8 @@
 # Changelog
 
+### 04/29/2022
+- adding consuming api
+
 ### 04/24/2022
 - changed endpoints to consume JSON
 - updated controllers 
