@@ -27,6 +27,7 @@ Route::group([
     Route::get('/', [ConsumeGamesController::class, 'index']);
     Route::get('/{id}', [ConsumeGamesController::class, 'show']);
     Route::get('/delete/{id}', [ConsumeGamesController::class, 'destroy']);
+   Route::get('chart/game-chart', [ConsumeGamesController::class, 'chart']);
 });
 
 Route::group([
@@ -46,4 +47,6 @@ Route::group([
     Route::get('/{id}', [ConsumeBooksController::class, 'show']);
     Route::get('/delete/{id}', [ConsumeBooksController::class, 'destroy']);
 });
+
+
 

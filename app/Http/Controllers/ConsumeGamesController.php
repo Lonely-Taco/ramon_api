@@ -37,4 +37,9 @@ class ConsumeGamesController extends Controller
 
         dump($game);
     }
+
+    public function chart()
+    {
+        return view('charts.game-chart');
+    }
 }
