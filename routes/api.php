@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,8 @@ Route::post('/game', [GameController::class, 'create']);
  */
 Route::delete('/game/{id}', [GameController::class, 'destroy']);
 
+Route::post('tags/game/{id}', [GameController::class, 'tag']);
+
 //-----------------------------------------------------------------------------
 // Book endpoints
 //-----------------------------------------------------------------------------
@@ -119,6 +122,8 @@ Route::patch('/book/{id}', [BookController::class, 'edit']);
  */
 Route::delete('/book/{id}', [BookController::class, 'destroy']);
 
+Route::post('tags/book/{id}', [BookController::class, 'tag']);
+
 //-----------------------------------------------------------------------------
 // Movie endpoints
 //-----------------------------------------------------------------------------
@@ -166,4 +171,57 @@ Route::patch('/movie/{id}', [MovieController::class, 'edit']);
  *     @OA\Response(response="default", description="delete")
  * )
  */
+
 Route::delete('/movie/{id}', [MovieController::class, 'destroy']);
+
+Route::post('tags/movie/{id}', [MovieController::class, 'tag']);
+
+//-----------------------------------------------------------------------------
+// Tag endpoints
+//-----------------------------------------------------------------------------
+
+/**
+ * @OA\Get(
+ *     path="/api/tags",
+ *     description="tags",
+ *     @OA\Response(response="default", description="get all tags")
+ * )
+ */
+Route::get('/tags', [TagController::class, 'index']);
+
+/**
+ * @OA\Get   (
+ *     path="/api/tag/{id}",
+ *     description="get a tag",
+ *     @OA\Response(response="default", description="get")
+ * )
+ */
+Route::get('/tag/{id}', [TagController::class, 'show']);
+
+/**
+ * @OA\Post     (
+ *     path="/api/tag",
+ *     description="create tag",
+ *     @OA\Response(response="default", description="create")
+ * )
+ */
+Route::post('/tag', [TagController::class, 'create']);
+
+/**
+ * @OA\Patch    (
+ *     path="/api/tag/{id}",
+ *     description="tag",
+ *     @OA\Response(response="default", description="patch")
+ * )
+ */
+Route::patch('/tag/{id}', [TagController::class, 'edit']);
+
+/**
+ * @OA\Delete (
+ *     path="/api/tag/{id}",
+ *     description="delete tag",
+ *     @OA\Response(response="default", description="delete")
+ * )
+ */
+
+Route::delete('/tag/{id}', [TagController::class, 'destroy']);

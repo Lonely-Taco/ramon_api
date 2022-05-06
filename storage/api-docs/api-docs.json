@@ -672,6 +672,195 @@
                     }
                 }
             }
+        },
+        "/api/tags/movie/{id}": {
+            "post": {
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "add a tag to a movie",
+                "description": "add tag",
+                "operationId": "tagMovie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tag id",
+                        "in": "query",
+                        "description": "Id of the tag",
+                        "required": true,
+                        "schema": {
+                            "type": "id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get all tags",
+                "description": "Returns all tags",
+                "operationId": "tagIndex",
+                "responses": {
+                    "200": {
+                        "description": "Tags"
+                    }
+                }
+            }
+        },
+        "/api/tag/{id}": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get tag by index",
+                "description": "Returns a tag by the given id",
+                "operationId": "showTags",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tag"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Delete a tag",
+                "description": "Delete a tag with the given id",
+                "operationId": "destroyTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Updates and returns a tag object",
+                "description": "Updates and returns a tag",
+                "operationId": "editTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tag name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/tag": {
+            "post": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Creates and returns a tag object",
+                "description": "Creates and returns a tag",
+                "operationId": "createTag",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tag name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
         }
     }
 }

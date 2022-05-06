@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Movie extends Model
 {
     use HasFactory;
+    use Taggable;
 
     protected $fillable = [
         'title',
@@ -43,13 +45,4 @@ class Movie extends Model
         'genres',
         'runtime',
     ];
-
-    //-----------------------------------------------------------------------------
-    // Relationships
-    //-----------------------------------------------------------------------------
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class);
-    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface JsonBookValidatorInterface
+interface JsonTagValidatorInterface
 {
     /**
      * @param string $data

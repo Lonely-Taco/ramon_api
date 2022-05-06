@@ -2,12 +2,16 @@
 
 namespace App\Validators;
 
+use App\Models\Tag;
+use App\Traits\Taggable;
+use Illuminate\Database\Eloquent\Model;
 use JsonSchema\Validator;
 
 abstract class JsonValidator
 {
     public function __construct(
         protected string $schemaPath,
+        protected string $tagSchemaPath,
         protected string $model,
     )
     {
@@ -79,6 +83,61 @@ abstract class JsonValidator
     }
 
     /**
+     * @param string $data
+     * @param int $modelId
+     * @return array
+     */
+    public function processTag(string $data, int $modelId): array
+    {
+        $instance = new $this->model();
+
+        if ($instance::where('id', $modelId)->doesntExist()) {
+            return
+                [
+                    'message' => 'The data with the following id was not found',
+                    'data'    => $modelId,
+                    'code'    => 404,
+                ];
+        }
+
+        $jsonData = json_decode($data, true);
+
+        $validator = new Validator();
+
+        $jsonObject = Validator::arrayToObjectRecursive($jsonData);
+
+        $validator->validate($jsonObject, (object) ['$ref' => $this->tagSchemaPath]);
+
+        if ($validator->isValid()) {
+
+            $tag = Tag::firstOrNew(
+                ['id' => $jsonData['id']],
+                ['name'=> $jsonData['name']]
+            );
+
+
+            /** @var Model|Taggable $instanceModel */
+            $instanceModel = $instance::findOrFail($modelId);
+
+            $instanceModel->tags()->attach([$tag->id]);
+
+            $instanceModel->save();
+
+            return
+                ['message' => 'The data has been inserted.',
+                 'data'    => $instanceModel->tags,
+                 'code'    => 200,
+                ];
+        }
+
+        return [
+            'message' => 'The data was invalid.',
+            'data'    => $validator->getErrors(),
+            'code'    => 422,
+        ];
+    }
+
+    /**
      * Validate the json array
      *
      * @param array $data
@@ -94,47 +153,5 @@ abstract class JsonValidator
 
         return $validator;
 
-    }
-
-    /**
-     * some variables were turned to strings
-     * this casts them back to integers
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function convertToInteger(array $data): array
-    {
-        if (array_key_exists('positive_ratings', $data)) {
-            $data['positive_ratings'] = $data['positive_ratings'] != null ? (int) $data['positive_ratings'] : $data['positive_ratings'];
-        }
-
-        if (array_key_exists('negative_ratings', $data)) {
-            $data['negative_ratings'] = $data['negative_ratings'] != null ? (int) $data['negative_ratings'] : $data['negative_ratings'];
-        }
-
-        if (array_key_exists('year', $data)) {
-            $data['year'] = $data['year'] != null ? (int) $data['year'] : $data['year'];
-        }
-
-        if (array_key_exists('iMDb', $data)) {
-            $data['iMDb'] = $data['iMDb'] != null ? (int) $data['iMDb'] : $data['iMDb'];
-        }
-
-        if (array_key_exists('runtime', $data)) {
-            $data['runtime'] = $data['runtime'] != null ? (int) $data['runtime'] : $data['runtime'];
-        }
-
-        if (array_key_exists('average_rating', $data)) {
-            $data['average_rating'] = $data['average_rating'] != null ? (int) $data['average_rating'] : $data['average_rating'];
-        }
-        if (array_key_exists('ratings_count', $data)) {
-            $data['ratings_count'] = $data['ratings_count'] != null ? (int) $data['ratings_count'] : $data['ratings_count'];
-        }
-        if (array_key_exists('publication_date', $data)) {
-            $data['publication_date'] = $data['publication_date'] != null ? (int) $data['publication_date'] : $data['publication_date'];
-        }
-
-        return $data;
     }
 }

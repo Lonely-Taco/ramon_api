@@ -375,4 +375,82 @@ class MovieController extends Controller
 
 
     }
+
+    /**
+     * * @OA\Post (
+     *      path="/api/tags/movie/{id}",
+     *      operationId="tagMovie",
+     *      tags={"Movie"},
+     *      summary="add a tag to a movie",
+     *      description="add tag",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="tag id",
+     *          description="Id of the tag",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="id"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
+     * tags a game and returns a collection of tags
+     * @param JsonMovieValidatorInterface $movieJsonValidator
+     * @param XmlMovieValidatorInterface $movieXmlValidator
+     * @param int $id
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function tag(
+        JsonMovieValidatorInterface $movieJsonValidator,
+        XmlMovieValidatorInterface $movieXmlValidator,
+        int $id,
+        Request $request,
+    ): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+            $validated = $movieXmlValidator->processTag($request->getContent(), $id);
+            return response()->xml(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
+        }
+
+
+        $validated = $movieJsonValidator->processTag($request->getContent(), $id);
+
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
+
+    }
 }

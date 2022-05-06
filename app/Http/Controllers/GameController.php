@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\JsonGameValidatorInterface;
+use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\XmlGameValidatorInterface;
+use App\Contracts\XmlMovieValidatorInterface;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use Illuminate\Http\JsonResponse;
@@ -430,5 +432,83 @@ class GameController extends Controller
                 'message' => 'The data has been deleted.',
                 'data'    => $model,
             ], 200);
+    }
+
+    /**
+     * * @OA\Post (
+     *      path="/api/tags/game/{id}",
+     *      operationId="tagMovie",
+     *      tags={"Movie"},
+     *      summary="add a tag to a movie",
+     *      description="add tag",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="tag id",
+     *          description="Id of the tag",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="id"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
+     * tags a game and returns a collection of tags
+     * @param JsonGameValidatorInterface $gameJsonValidator
+     * @param XmlGameValidatorInterface $gameXmlValidator
+     * @param int $id
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function tag(
+        JsonGameValidatorInterface $gameJsonValidator,
+        XmlGameValidatorInterface $gameXmlValidator,
+        int $id,
+        Request $request,
+    ): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+            $validated = $gameXmlValidator->processTag($request->getContent(), $id);
+            return response()->xml(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
+        }
+
+
+        $validated = $gameJsonValidator->processTag($request->getContent(), $id);
+
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
+
     }
 }

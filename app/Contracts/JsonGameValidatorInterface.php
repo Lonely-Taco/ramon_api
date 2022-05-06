@@ -16,4 +16,11 @@ interface JsonGameValidatorInterface
      * @return array
      */
     public function processEdit(string $data, int $id): array;
+
+    /**
+     * @param string $data
+     * @param int $modelId
+     * @return array
+     */
+    public function processTag(string $data, int $modelId): array;
 }

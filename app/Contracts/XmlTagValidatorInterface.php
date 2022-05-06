@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface XmlGameValidatorInterface
+interface XmlTagValidatorInterface
 {
     /**
      * @param string $xmlString
@@ -18,9 +18,9 @@ interface XmlGameValidatorInterface
     public function processEdit(string $xmlString, int $id): array;
 
     /**
-     * @param string $tagId
-     * @param int $modelId
+     * @param string $xmlString
+     * @param int $id
      * @return array
      */
-    public function processTag(string $tagId, int $modelId): array;
+    public function processTag(string $xmlString, int $id): array;
 }
