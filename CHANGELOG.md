@@ -1,5 +1,9 @@
 # Changelog
 
+### 05/06/2022
+- added graphs for games movies and books with relation to tags
+- added crud end points for tags
+
 ### 04/29/2022
 - adding consuming api
 
