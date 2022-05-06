@@ -2,17 +2,17 @@
 
 @extends('layout')
 @section('content')
+    <!-- Chart's container -->
     <div id="chart" style="height: 500px;"></div>
     <!-- Charting library -->
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <!-- Chartisan -->
     <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
     <!-- Your application script -->
-
     <script>
         const chart = new Chartisan({
             el: '#chart',
-            url: "@chart('game_chart')",
+            url: "@chart('book_chart')",
             hooks: new ChartisanHooks()
                 .tooltip(true)
                 .legend(),
@@ -33,29 +33,29 @@
         </a>
     </div>
     <div class="row m-16">
-        <table class="table self-center">
+        <table class="table">
             <thead>
             <tr>
                 <th>Name</th>
+                <th>Books</th>
                 <th>Games</th>
                 <th>Movies</th>
-                <th>Books</th>
             </tr>
             </thead>
             <tbody>
             @foreach($tags as $tag)
-                <tr>
-                    <td>
+                <tr class="p-2">
+                    <td class="p-2">
                         {{ $tag->name }}
+                    </td>
+                    <td class="p-2">
+                        {{ $tag->books->count() }}
                     </td>
                     <td class="p-2">
                         {{ $tag->games->count() }}
                     </td>
                     <td class="p-2">
                         {{ $tag->movies->count() }}
-                    </td>
-                    <td class="p-2">
-                        {{ $tag->books->count() }}
                     </td>
                 </tr>
             @endforeach

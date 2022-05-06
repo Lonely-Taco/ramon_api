@@ -12,7 +12,7 @@
     <script>
         const chart = new Chartisan({
             el: '#chart',
-            url: "@chart('game_chart')",
+            url: "@chart('movie_chart')",
             hooks: new ChartisanHooks()
                 .tooltip(true)
                 .legend(),
@@ -33,12 +33,12 @@
         </a>
     </div>
     <div class="row m-16">
-        <table class="table self-center">
+        <table class="table">
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Games</th>
                 <th>Movies</th>
+                <th>Games</th>
                 <th>Books</th>
             </tr>
             </thead>
@@ -49,10 +49,10 @@
                         {{ $tag->name }}
                     </td>
                     <td class="p-2">
-                        {{ $tag->games->count() }}
+                        {{ $tag->movies->count() }}
                     </td>
                     <td class="p-2">
-                        {{ $tag->movies->count() }}
+                        {{ $tag->games->count() }}
                     </td>
                     <td class="p-2">
                         {{ $tag->books->count() }}

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Charts\BookChart;
 use App\Charts\GameChart;
+use App\Charts\MovieChart;
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\JsonGameValidatorInterface;
 use App\Contracts\JsonMovieValidatorInterface;
@@ -43,7 +45,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Charts $charts)
     {
         $charts->register([
-            GameChart::class
+            GameChart::class,
+            MovieChart::class,
+            BookChart::class,
         ]);
     }
 

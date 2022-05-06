@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 
 class ConsumeMoviesController extends Controller
@@ -26,5 +29,13 @@ class ConsumeMoviesController extends Controller
 //        exit();
         return view('movies.movies', ['movie' => $movie]);
 
+    }
+
+    public function chart(DatabaseManager $databaseManager)
+    {
+        /** @var Collection<Tag> $tags */
+        $tags = Tag::whereHas('movies')->get();
+
+        return view('charts.movie-chart', ['tags' => $tags]);
     }
 }

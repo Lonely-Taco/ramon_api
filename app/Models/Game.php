@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $release_date
  * @property string $categories
  * @property string $genres
- * @property string $steamspy_tags
  * @property int $positive_ratings
  * @property int $negative_ratings
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -34,7 +33,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Game whereNegativeRatings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Game wherePositiveRatings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Game whereReleaseDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Game whereSteamspyTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Game whereUpdatedAt($value)
  * @mixin \Eloquent
  */

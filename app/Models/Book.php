@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string|null $title
  * @property string|null $authors
- * @property string|null $categories
  * @property float|null $average_rating
  * @property int|null $ratings_count
  * @property string|null $publication_date
@@ -27,7 +26,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Book query()
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereAuthors($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereAverageRating($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Book whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Book whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Book wherePublicationDate($value)

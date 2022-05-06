@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Tag;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,11 +37,17 @@ class ConsumeGamesController extends Controller
 
         $game = json_decode(Route::dispatch($request)->getContent());
 
-        dump($game);
+        return redirect('games.game', ['game' => $game])->with(['success' => $game->name . 'Deleted']);
     }
 
-    public function chart()
+    public function chart(DatabaseManager $databaseManager)
     {
-        return view('charts.game-chart');
+
+        /** @var Collection<Tag> $tags */
+        $tags = Tag::whereHas('games')->get();
+
+        return view('charts.game-chart', ['tags' => $tags]);
     }
+
+
 }

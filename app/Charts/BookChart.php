@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Charts;
 
-use App\Models\Game;
 use App\Models\Tag;
 use Chartisan\PHP\Chartisan;
 use Chartisan\PHP\DatasetData;
@@ -12,7 +11,7 @@ use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class GameChart extends BaseChart
+class BookChart extends BaseChart
 {
     /**
      * Handles the HTTP request for the given chart.
@@ -21,9 +20,8 @@ class GameChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
-        $games = Game::all();
         /** @var Collection<Tag> $tags */
-        $tags = Tag::whereHas('games')->get();
+        $tags = Tag::whereHas('books')->get();
 
         $chart = Chartisan::build();
 
@@ -33,16 +31,13 @@ class GameChart extends BaseChart
 
             if ($i === 0) {
                 // First round, create the initial data
-                $serverData->datasets[0] = new DatasetData('tags', [$tag->games->count()], null);
-//                $serverData->datasets[0] = new DatasetData('Game', [$game->tags->count()], null);
+                $serverData->datasets[0] = new DatasetData('tags', [$tag->books->count()], null);
             } else {
                 // Append to existing
-                $serverData->datasets[0]->values[] = $tag->games->count();
-//                $serverData->datasets[1]->values[] = $game->tags->count();
+                $serverData->datasets[0]->values[] = $tag->books->count();
             }
         });
 
         return $chart;
-
     }
 }

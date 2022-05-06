@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $title
  * @property int $year
  * @property float|null $iMDb
- * @property string|null $genres
  * @property int|null $runtime
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -25,7 +24,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Movie newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Movie query()
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Movie whereGenres($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereIMDb($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Movie whereRuntime($value)

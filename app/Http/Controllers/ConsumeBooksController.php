@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 
 class ConsumeBooksController extends Controller
@@ -23,5 +26,14 @@ class ConsumeBooksController extends Controller
         $book = json_decode(Route::dispatch($request)->getContent());
 
         return view('books.books', ['book' => $book]);
+    }
+
+    public function chart(DatabaseManager $databaseManager)
+    {
+
+        /** @var Collection<Tag> $tags */
+        $tags = Tag::whereHas('books')->get();
+
+        return view('charts.book-chart', ['tags' => $tags]);
     }
 }

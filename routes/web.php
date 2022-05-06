@@ -37,6 +37,7 @@ Route::group([
     Route::get('/', [ConsumeMoviesController::class, 'index']);
     Route::get('/{id}', [ConsumeMoviesController::class, 'show']);
     Route::get('/delete/{id}', [ConsumeMoviesController::class, 'destroy']);
+    Route::get('chart/movie-chart', [ConsumeMoviesController::class, 'chart']);
 });
 
 Route::group([
@@ -46,6 +47,7 @@ Route::group([
     Route::get('/', [ConsumeBooksController::class, 'index']);
     Route::get('/{id}', [ConsumeBooksController::class, 'show']);
     Route::get('/delete/{id}', [ConsumeBooksController::class, 'destroy']);
+    Route::get('chart/book-chart', [ConsumeBooksController::class, 'chart']);
 });
 
 

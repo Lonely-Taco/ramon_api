@@ -32,6 +32,7 @@ class BookImport implements ToModel
         if ($tags == null) {
             return;
         }
+
         $book->tags()->attach($tags);
     }
 
@@ -39,21 +40,25 @@ class BookImport implements ToModel
      * @param string|null $tag
      * @return Collection
      */
-    public function makeTags(?string $tag): Collection
+    public function makeTags(?string $tags): Collection
     {
         $tagCollection = new Collection();
 
-        if ($tag == null) {
+        if ($tags == null) {
             return $tagCollection;
         }
 
-        $newTag = Tag::firstOrNew([
-            'name' => $tag,
-        ]);
+        $tagsArray = explode(',', $tags);
 
-        $newTag->save();
+        foreach ($tagsArray as $tag) {
+            $newTag = Tag::firstOrNew([
+                'name' => $tag,
+            ]);
 
-        $tagCollection->add($newTag);
+            $newTag->save();
+
+            $tagCollection->add($newTag);
+        }
 
         return $tagCollection;
     }
