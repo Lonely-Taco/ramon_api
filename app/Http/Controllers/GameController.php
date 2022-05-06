@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\JsonGameValidatorInterface;
-use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\XmlGameValidatorInterface;
-use App\Contracts\XmlMovieValidatorInterface;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\ArrayToXml\ArrayToXml;
 use XmlResponse\XmlResponse;
 
 /**
@@ -437,9 +434,9 @@ class GameController extends Controller
     /**
      * * @OA\Post (
      *      path="/api/tags/game/{id}",
-     *      operationId="tagMovie",
-     *      tags={"Movie"},
-     *      summary="add a tag to a movie",
+     *      operationId="tagGame",
+     *      tags={"Game"},
+     *      summary="add a tag to a game",
      *      description="add tag",
      *      @OA\Parameter(
      *          name="id",

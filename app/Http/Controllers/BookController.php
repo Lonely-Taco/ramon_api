@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
+use App\Contracts\XmlMovieValidatorInterface;
 use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -410,5 +411,83 @@ class BookController extends Controller
         }
 
         return response('No Content', 204);
+    }
+
+    /**
+     * * @OA\Post (
+     *      path="/api/tags/book/{id}",
+     *      operationId="tagBook",
+     *      tags={"Book"},
+     *      summary="add a tag to a book",
+     *      description="add tag",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     * @OA\Parameter(
+     *          name="tag id",
+     *          description="Id of the tag",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucess"
+     *       ),
+     *     @OA\Response(
+     *          response=422,
+     *          description="Unproccessed data"
+     *       ),
+     *     @OA\Response(
+     *          response=204,
+     *          description="No content"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
+     * tags a book and returns a collection of tags
+     * @param JsonBookValidatorInterface $bookJsonValidator
+     * @param XmlBookValidatorInterface $bookXmlValidator
+     * @param int $id
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function tag(
+        JsonBookValidatorInterface $bookJsonValidator,
+        XmlBookValidatorInterface $bookXmlValidator,
+        int $id,
+        Request $request,
+    ): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+            $validated = $bookXmlValidator->processTag($request->getContent(), $id);
+            return response()->xml(
+                [
+                    'message' => $validated['message'],
+                    'data'    => $validated['data'],
+                ], $validated['code']);
+        }
+
+
+        $validated = $bookJsonValidator->processTag($request->getContent(), $id);
+
+        return response()->json(
+            [
+                'message' => $validated['message'],
+                'data'    => $validated['data'],
+            ], $validated['code']);
+
     }
 }

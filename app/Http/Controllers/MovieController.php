@@ -399,7 +399,7 @@ class MovieController extends Controller
      *          required=true,
      *          in="query",
      *          @OA\Schema(
-     *              type="id"
+     *              type="integer"
      *            ),
      *         ),
      *

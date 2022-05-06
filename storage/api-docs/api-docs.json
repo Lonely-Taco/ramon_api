@@ -233,6 +233,50 @@
                 }
             }
         },
+        "/api/tags/book/{id}": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "add a tag to a book",
+                "description": "add tag",
+                "operationId": "tagBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tag id",
+                        "in": "query",
+                        "description": "Id of the tag",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
         "/api/games": {
             "get": {
                 "tags": [
@@ -455,6 +499,50 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucess"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/tags/game/{id}": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "add a tag to a game",
+                "description": "add tag",
+                "operationId": "tagGame",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tag id",
+                        "in": "query",
+                        "description": "Id of the tag",
+                        "required": true,
+                        "schema": {
+                            "type": "id"
                         }
                     }
                 ],
@@ -697,7 +785,7 @@
                         "description": "Id of the tag",
                         "required": true,
                         "schema": {
-                            "type": "id"
+                            "type": "integer"
                         }
                     }
                 ],
