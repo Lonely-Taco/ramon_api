@@ -128,63 +128,14 @@ class GameController extends Controller
      *      summary="Creates and returns a game object",
      *      description="Creates and returns a game",
      *
-     *        @OA\Parameter(
-     *          name="name",
-     *          description="Name of the game",
+     *      @OA\RequestBody (
+     *          description="Create a Game object",
      *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="release_date",
-     *          description="Date released",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="categories",
-     *          description="categorie",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="genres",
-     *          description="genres in a string format seperated by ';'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="positive_ratings",
-     *          description="positive ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="negative_ratings",
-     *          description="negative ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Game"
+     *              ),
      *            ),
      *         ),
      *
@@ -238,12 +189,12 @@ class GameController extends Controller
     }
 
     /**
-     * @OA\Patch (
+     * @OA\Put (
      *      path="/api/game/{id}",
      *      operationId="edit",
      *      tags={"Game"},
      *      summary="Edit game",
-     *      description="Updates a game",
+     *      description="Updates a game Consuming a Game object",
      *
      *
      *      @OA\Parameter(
@@ -255,63 +206,15 @@ class GameController extends Controller
      *              type="integer"
      *            ),
      *         ),
-     *        @OA\Parameter(
-     *          name="name",
-     *          description="Name of the game",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="release_date",
-     *          description="Date released",
+     *      @OA\RequestBody (
+     *          description="Update a Game object ID not required",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="categories",
-     *          description="categorie",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="genres",
-     *          description="genres in a string format seperated by ';'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="positive_ratings",
-     *          description="positive ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="negative_ratings",
-     *          description="negative ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Game"
+     *              ),
      *            ),
      *         ),
      *

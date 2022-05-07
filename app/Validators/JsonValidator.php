@@ -23,6 +23,15 @@ abstract class JsonValidator
     public function processCreate(string $data): array
     {
         $jsonData  = json_decode($data, true);
+
+        if ($jsonData == null){
+            return   [
+                'message' => 'Bad Request; Body is null or properties are missing',
+                'data'    => $jsonData,
+                'code'    => 400,
+            ];
+        }
+
         $validator = $this->validateJson($jsonData);
 
         if ($validator->isValid()) {
@@ -59,6 +68,14 @@ abstract class JsonValidator
         }
 
         $jsonData = json_decode($data, true);
+
+        if ($jsonData == null){
+             return   [
+                    'message' => 'Bad Request; Body is null or properties are missing',
+                    'data'    => $jsonData,
+                    'code'    => 400,
+                ];
+        }
 
         $validator = $this->validateJson($jsonData);
 
@@ -145,6 +162,7 @@ abstract class JsonValidator
      */
     protected function validateJson(array $data): Validator
     {
+
         $validator = new Validator();
 
         $jsonData = Validator::arrayToObjectRecursive($data);

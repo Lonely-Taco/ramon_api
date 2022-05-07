@@ -8,6 +8,7 @@ use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Monolog\Handler\IFTTTHandler;
 use XmlResponse\XmlResponse;
 
 /**
@@ -114,45 +115,17 @@ class MovieController extends Controller
      *      summary="Creates and returns a movie object",
      *      description="Creates and returns a movie",
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Movie title",
+     *      @OA\RequestBody (
+     *          description="update with a Movie object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Movie"
+     *              ),
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="year",
-     *          description="Year the movie was released",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="iMDb",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="runtime",
-     *          description="movie duration in mintues",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
      *          response=200,
      *          description="sucess"
@@ -203,7 +176,7 @@ class MovieController extends Controller
     }
 
     /**
-     * * @OA\Patch (
+     * @OA\Put  (
      *      path="/api/movie/{id}",
      *      operationId="editMovie",
      *      tags={"Movie"},
@@ -219,45 +192,17 @@ class MovieController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="title",
-     *          description="Movie title",
+     *      @OA\RequestBody (
+     *          description="update with a Movie object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Movie"
+     *              ),
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="year",
-     *          description="Year the movie was released",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     * @OA\Parameter(
-     *          name="iMDb",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     * @OA\Parameter(
-     *          name="runtime",
-     *          description="movie duration in mintues",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
      *          response=200,
      *          description="sucess"
@@ -288,7 +233,17 @@ class MovieController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+
+
         if ($request->wantsXml()) {
+            if ($request->getContent() == null){
+                return response()->xml(
+                    [
+                        'message' => 'Bad Request; Body is null or properties are missing',
+                        'data'    => $request->getContent(),
+                    ], 400);
+            }
+
             $validated = $movieXmlValidator->processEdit($request->getContent(), $id);
             return response()->xml(
                 [

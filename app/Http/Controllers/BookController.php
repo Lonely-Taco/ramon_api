@@ -122,55 +122,17 @@ class BookController extends Controller
      *      summary="Creates and returns a book object",
      *      description="Creates and returns a book",
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Book title",
+     *      @OA\RequestBody (
+     *          description="Update a Book object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Book"
+     *              ),
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="authors",
-     *          description="authors in string format seperated by ','",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="average_rating",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="ratings_count",
-     *          description="ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="publication_date",
-     *          description="pblication date 'YYYY'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
      *          response=200,
      *          description="sucess"
@@ -221,7 +183,7 @@ class BookController extends Controller
     }
 
     /**
-     * @OA\Patch (
+     * @OA\Put (
      *      path="/api/book/{id}",
      *      operationId="editBook",
      *      tags={"Book"},
@@ -238,53 +200,14 @@ class BookController extends Controller
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Book title",
+     *      @OA\RequestBody (
+     *          description="Update a Book object ID not required",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="authors",
-     *          description="authors in string format seperated by ','",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="average_rating",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="ratings_count",
-     *          description="ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="publication_date",
-     *          description="publication date 'YYYY'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Book"
+     *              ),
      *            ),
      *         ),
      *      @OA\Response(

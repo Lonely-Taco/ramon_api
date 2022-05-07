@@ -45,13 +45,13 @@ Route::get('/games', [GameController::class, 'index']);
 Route::get('/game/{id}', [GameController::class, 'show']);
 
 /**
- * @OA\Patch  (
+ * @OA\Put    (
  *     path="/api/game/{id}",
  *     description="games",
  *     @OA\Response(response="default", description="read")
  * )
  */
-Route::patch('/game/{id}', [GameController::class, 'edit']);
+Route::put('/game/{id}', [GameController::class, 'edit']);
 
 /**
  * @OA\Post   (
@@ -105,13 +105,13 @@ Route::get('/book/{id}', [BookController::class, 'show']);
 Route::post('/book', [BookController::class, 'create']);
 
 /**
- * @OA\Patch  (
+ * @OA\Put   (
  *     path="/api/book/{id}",
  *     description="update book",
  *     @OA\Response(response="default", description="read")
  * )
  */
-Route::patch('/book/{id}', [BookController::class, 'edit']);
+Route::put('/book/{id}', [BookController::class, 'edit']);
 
 /**
  * @OA\Delete (
@@ -156,13 +156,13 @@ Route::get('/movie/{id}', [MovieController::class, 'show']);
 Route::post('/movie', [MovieController::class, 'create']);
 
 /**
- * @OA\Patch    (
+ * @OA\Put    (
  *     path="/api/movie/{id}",
  *     description="movie",
  *     @OA\Response(response="default", description="patch")
  * )
  */
-Route::patch('/movie/{id}', [MovieController::class, 'edit']);
+Route::put('/movie/{id}', [MovieController::class, 'edit']);
 
 /**
  * @OA\Delete (

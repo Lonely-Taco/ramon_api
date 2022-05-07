@@ -10,6 +10,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
+ * @OA\Schema(
+ * @OA\Property(property="title", type="string", description="title of the film"),
+ * @OA\Property(property="authors", type="string", description="book author/s"),
+ * @OA\Property(property="average_rating", type="integer", description="Book rating"),
+ * @OA\Property(property="ratings_count", type="string", description="number of ratings"),
+ * @OA\Property(property="publication_date", type="integer", description="publication year")),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp", readOnly="true"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp", readOnly="true"),
+ * )
+ * Class BaseModel
+ *
+ * @package App\Models
+ */
+
+
+/**
  * App\Models\Book
  *
  * @property int $id
