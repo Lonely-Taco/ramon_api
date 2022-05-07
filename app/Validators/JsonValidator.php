@@ -5,6 +5,7 @@ namespace App\Validators;
 use App\Models\Tag;
 use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use JsonSchema\Validator;
 
 abstract class JsonValidator
@@ -22,10 +23,13 @@ abstract class JsonValidator
      */
     public function processCreate(string $data): array
     {
-        $jsonData  = json_decode($data, true);
+        $jsonData = json_decode($data, true);
 
-        if ($jsonData == null){
-            return   [
+        // remove possible ids fields.
+        $cleanJson = Arr::except($jsonData, ['confirm-password']);
+
+        if ($cleanJson == null) {
+            return [
                 'message' => 'Bad Request; Body is null or properties are missing',
                 'data'    => $jsonData,
                 'code'    => 400,
