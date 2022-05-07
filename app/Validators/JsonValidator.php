@@ -4,8 +4,8 @@ namespace App\Validators;
 
 use App\Models\Tag;
 use App\Traits\Taggable;
+use Arr;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use JsonSchema\Validator;
 
 abstract class JsonValidator
@@ -26,7 +26,7 @@ abstract class JsonValidator
         $jsonData = json_decode($data, true);
 
         // remove possible ids fields.
-        $cleanJson = Arr::except($jsonData, ['confirm-password']);
+        $cleanJson = Arr::except($jsonData, ['id']);
 
         if ($cleanJson == null) {
             return [
