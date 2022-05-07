@@ -168,7 +168,7 @@ class TagController extends Controller
     }
 
     /**
-     * * @OA\Patch (
+     * * @OA\Put (
      *      path="/api/tag/{id}",
      *      operationId="editTag",
      *      tags={"Tag"},

@@ -208,13 +208,13 @@ Route::get('/tag/{id}', [TagController::class, 'show']);
 Route::post('/tag', [TagController::class, 'create']);
 
 /**
- * @OA\Patch    (
+ * @OA\Put   (
  *     path="/api/tag/{id}",
  *     description="tag",
  *     @OA\Response(response="default", description="patch")
  * )
  */
-Route::patch('/tag/{id}', [TagController::class, 'edit']);
+Route::put('/tag/{id}', [TagController::class, 'edit']);
 
 /**
  * @OA\Delete (
