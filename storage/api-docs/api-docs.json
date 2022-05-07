@@ -17,7 +17,7 @@
                 "operationId": "bookIndex",
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Create Successfull"
                     },
                     "404": {
                         "description": "Not found"
@@ -46,7 +46,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Create Successfull"
                     },
                     "404": {
                         "description": "Not found"
@@ -81,8 +81,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -144,8 +144,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -188,8 +188,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Create Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -277,8 +277,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -337,8 +337,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -464,8 +464,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -524,8 +524,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creating Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -651,8 +651,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creating Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -711,8 +711,8 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Creating Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"

@@ -4,8 +4,8 @@ namespace App\Validators;
 
 use App\Models\Tag as TagToAppend;
 use App\Traits\Taggable;
+use Arr;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use Xml;
 
 abstract class XmlValidator
@@ -14,7 +14,8 @@ abstract class XmlValidator
         protected string $schemaPath,
         protected string $tagSchemaPath,
         protected string $model,
-    ) {
+    )
+    {
     }
 
     /**
@@ -28,14 +29,25 @@ abstract class XmlValidator
         $validatedArray = $this->validateXmlSchema($xmlString, $this->schemaPath);
 
         if (array_key_exists('code', $validatedArray)) {
+
+            if (array_key_exists('', $validatedArray['data'])) {
+                return [
+                    'message' => 'Bad Request; Body is null or properties are missing',
+                    'code'    => 400,
+                ];
+            }
+
             return $validatedArray;
         }
+
+        // remove possible id field.
+        $clean = Arr::except($validatedArray, ['id']);
 
         $instance = new $this->model();
 
         return [
             'message' => 'The data has been inserted.',
-            'data'    => $instance::create($validatedArray),
+            'data'    => $instance::create($clean),
             'code'    => 200,
         ];
     }
@@ -49,6 +61,14 @@ abstract class XmlValidator
      */
     public function processEdit(string $xmlString, int $id): array
     {
+        if ($xmlString == null) {
+            return response()->xml(
+                [
+                    'message' => 'The data with the following id was not found',
+                    'data'    => $id,
+                ], 404);
+        }
+
         $instance = new $this->model();
 
         if ($instance::where('id', $id)->doesntExist()) {
@@ -62,12 +82,22 @@ abstract class XmlValidator
         $validatedArray = $this->validateXmlSchema($xmlString, $this->schemaPath);
 
         if (array_key_exists('code', $validatedArray)) {
+
+            if (array_key_exists('', $validatedArray['data'])) {
+                return [
+                    'message' => 'Bad Request; Body is null or properties are missing',
+                    'code'    => 400,
+                ];
+            }
+
             return $validatedArray;
         }
 
-        $instance = new $this->model();
+        // remove possible id field.
+        $clean         = Arr::except($validatedArray, ['id']);
+        $instance      = new $this->model();
         $instanceModel = $instance::findOrFail($id);
-        $instanceModel->update($validatedArray);
+        $instanceModel->update($clean);
         $instanceModel->save();
 
         return [

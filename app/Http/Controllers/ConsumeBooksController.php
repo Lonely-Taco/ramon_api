@@ -29,7 +29,6 @@ class ConsumeBooksController extends Controller
 
     public function chart()
     {
-
         /** @var Collection<Tag> $tags */
         $tags = Tag::whereHas('books')->get();
 

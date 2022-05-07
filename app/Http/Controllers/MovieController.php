@@ -126,8 +126,8 @@ class MovieController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -155,16 +155,24 @@ class MovieController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = match ($request->getContentType()) {
+            'json' => $movieJsonValidator->processCreate($request->getContent()),
+            'xml' => $movieXmlValidator->processCreate($request->getContent()),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
         if ($request->wantsXml()) {
-            $validated = $movieXmlValidator->processCreate($request->getContent());
+
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
-        $validated = $movieJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -203,8 +211,8 @@ class MovieController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -232,18 +240,20 @@ class MovieController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = [];
 
+        $validated = match ($request->getContentType()) {
+            'json' => $movieJsonValidator->processEdit($request->getContent(), $id),
+            'xml' => $movieXmlValidator->processEdit($request->getContent(), $id),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
 
         if ($request->wantsXml()) {
-            if ($request->getContent() == null){
-                return response()->xml(
-                    [
-                        'message' => 'Bad Request; Body is null or properties are missing',
-                        'data'    => $request->getContent(),
-                    ], 400);
-            }
 
-            $validated = $movieXmlValidator->processEdit($request->getContent(), $id);
             return response()->xml(
                 [
                     'message' => $validated['message'],
@@ -251,15 +261,11 @@ class MovieController extends Controller
                 ], $validated['code']);
         }
 
-
-        $validated = $movieJsonValidator->processEdit($request->getContent(), $id);
-
         return response()->json(
             [
                 'message' => $validated['message'],
                 'data'    => $validated['data'],
             ], $validated['code']);
-
     }
 
     /**
@@ -316,7 +322,6 @@ class MovieController extends Controller
                     'data'    => $model,
                 ], 200);
         }
-
 
         $model->delete();
 
@@ -397,7 +402,6 @@ class MovieController extends Controller
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
 
         $validated = $movieJsonValidator->processTag($request->getContent(), $id);
 

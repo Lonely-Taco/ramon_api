@@ -119,8 +119,8 @@ class TagController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -196,8 +196,8 @@ class TagController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,

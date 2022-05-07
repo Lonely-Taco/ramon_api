@@ -4,8 +4,8 @@ namespace App\Validators;
 
 use App\Models\Tag;
 use App\Traits\Taggable;
+use Arr;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use JsonSchema\Validator;
 
 abstract class JsonValidator
@@ -25,10 +25,8 @@ abstract class JsonValidator
     {
         $jsonData = json_decode($data, true);
 
-        // remove possible ids fields.
-        $cleanJson = Arr::except($jsonData, ['confirm-password']);
 
-        if ($cleanJson == null) {
+        if ($jsonData == null) {
             return [
                 'message' => 'Bad Request; Body is null or properties are missing',
                 'data'    => $jsonData,
@@ -36,15 +34,18 @@ abstract class JsonValidator
             ];
         }
 
-        $validator = $this->validateJson($jsonData);
+        // remove possible id field.
+        $cleanJson = Arr::except($jsonData, ['id']);
+
+        $validator = $this->validateJson($cleanJson);
 
         if ($validator->isValid()) {
             $instance = new $this->model();
 
             return
                 ['message' => 'The data has been inserted.',
-                 'data'    => $instance::create($jsonData),
-                 'code'    => 200,
+                 'data'    => $instance::create($cleanJson),
+                 'code'    => 201,
                 ];
         }
 
@@ -73,26 +74,30 @@ abstract class JsonValidator
 
         $jsonData = json_decode($data, true);
 
-        if ($jsonData == null){
-             return   [
-                    'message' => 'Bad Request; Body is null or properties are missing',
-                    'data'    => $jsonData,
-                    'code'    => 400,
-                ];
+
+        if ($jsonData == null) {
+            return [
+                'message' => 'Bad Request; Body is null or properties are missing',
+                'data'    => $jsonData,
+                'code'    => 400,
+            ];
         }
 
-        $validator = $this->validateJson($jsonData);
+        // remove possible id field.
+        $cleanJson = Arr::except($jsonData, ['id']);
+
+        $validator = $this->validateJson($cleanJson);
 
         if ($validator->isValid()) {
             $instance      = new $this->model();
             $instanceModel = $instance::findOrFail($id);
-            $instanceModel->update($jsonData);
+            $instanceModel->update($cleanJson);
             $instanceModel->save();
 
             return
                 ['message' => 'The data has been inserted.',
                  'data'    => $instanceModel,
-                 'code'    => 200,
+                 'code'    => 201,
                 ];
         }
 
@@ -147,7 +152,7 @@ abstract class JsonValidator
             return
                 ['message' => 'The data has been inserted.',
                  'data'    => $instanceModel,
-                 'code'    => 200,
+                 'code'    => 201,
                 ];
         }
 

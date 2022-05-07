@@ -33,7 +33,7 @@ class BookController extends Controller
      *      description="Returns all books",
      *      @OA\Response(
      *          response=200,
-     *          description="success"
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -81,7 +81,7 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="success"
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -133,8 +133,8 @@ class BookController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -160,19 +160,29 @@ class BookController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsXml()) {
+        $validated = [];
 
-            $validated = $bookXmlValidator->processCreate($request->getContent());
+        $validated = match ($request->getContentType()) {
+
+            'json' => $bookJsonValidator->processCreate($request->getContent()),
+            'xml' => $bookXmlValidator->processCreate($request->getContent()),
+
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
+        if ($request->wantsXml()) {
 
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
-
         }
-
-        $validated = $bookJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -210,8 +220,8 @@ class BookController extends Controller
      *            ),
      *         ),
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -241,8 +251,22 @@ class BookController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = [];
+
+        $validated = match ($request->getContentType()) {
+
+            'json' => $bookJsonValidator->processEdit($request->getContent(), $id),
+            'xml' => $bookXmlValidator->processEdit($request->getContent(), $id),
+
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
         if ($request->wantsXml()) {
-            $validated = $bookXmlValidator->processEdit($request->getContent(), $id);
 
             return response()->xml(
                 [
@@ -250,9 +274,6 @@ class BookController extends Controller
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
-
-        $validated = $bookJsonValidator->processEdit($request->getContent(), $id);
 
         return response()->json(
             [
@@ -364,8 +385,8 @@ class BookController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,

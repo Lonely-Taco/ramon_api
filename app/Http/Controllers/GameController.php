@@ -140,8 +140,8 @@ class GameController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -166,19 +166,24 @@ class GameController extends Controller
         Request $request
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = match ($request->getContentType()) {
+            'json' => $jsonGameValidator->processCreate($request->getContent()),
+            'xml' => $gameXmlValidator->processCreate($request->getContent()),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type = ' . $request->getContentType(),
+                'code'    => 400,
+            ],
+        };
+
+
         if ($request->wantsXml()) {
-
-            $validated = $gameXmlValidator->processCreate($request->getContent());
-
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
-
         }
-
-        $validated = $jsonGameValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -219,8 +224,8 @@ class GameController extends Controller
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="success"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -249,9 +254,20 @@ class GameController extends Controller
         XmlGameValidatorInterface $gameXmlValidator,
     ): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsXml()) {
+        $validated = [];
 
-            $validated = $gameXmlValidator->processEdit($request->getContent(), $id);
+        $validated = match ($request->getContentType()) {
+            'json' => $jsonGameValidator->processEdit($request->getContent(), $id),
+            'xml' => $gameXmlValidator->processEdit($request->getContent(), $id),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
+        if ($request->wantsXml()) {
 
             return response()->xml(
                 [
@@ -260,14 +276,11 @@ class GameController extends Controller
                 ], $validated['code']);
         }
 
-        $validated = $jsonGameValidator->processEdit($request->getContent(), $id);
-
         return response()->json(
             [
                 'message' => $validated['message'],
                 'data'    => $validated['data'],
             ], $validated['code']);
-
     }
 
     /**
