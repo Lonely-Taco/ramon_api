@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +27,7 @@ class ConsumeBooksController extends Controller
         return view('books.books', ['book' => $book]);
     }
 
-    public function chart(DatabaseManager $databaseManager)
+    public function chart()
     {
 
         /** @var Collection<Tag> $tags */
