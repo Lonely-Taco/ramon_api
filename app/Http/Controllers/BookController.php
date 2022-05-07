@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
-use App\Contracts\XmlMovieValidatorInterface;
 use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,7 +33,7 @@ class BookController extends Controller
      *      description="Returns all books",
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -82,7 +81,7 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -135,7 +134,7 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -212,7 +211,7 @@ class BookController extends Controller
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -366,7 +365,7 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,

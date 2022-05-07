@@ -8,7 +8,6 @@ use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Monolog\Handler\IFTTTHandler;
 use XmlResponse\XmlResponse;
 
 /**
@@ -128,7 +127,7 @@ class MovieController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -205,7 +204,7 @@ class MovieController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -361,7 +360,7 @@ class MovieController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,

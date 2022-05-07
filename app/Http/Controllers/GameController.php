@@ -84,7 +84,7 @@ class GameController extends Controller
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=204,
@@ -141,7 +141,7 @@ class GameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -220,7 +220,7 @@ class GameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -364,7 +364,7 @@ class GameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
