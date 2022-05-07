@@ -71,7 +71,7 @@ Route::post('/game', [GameController::class, 'create']);
  */
 Route::delete('/game/{id}', [GameController::class, 'destroy']);
 
-Route::post('tags/game/{id}', [GameController::class, 'tag']);
+Route::post('/game/giveTag/{id}', [GameController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Book endpoints
@@ -122,7 +122,7 @@ Route::patch('/book/{id}', [BookController::class, 'edit']);
  */
 Route::delete('/book/{id}', [BookController::class, 'destroy']);
 
-Route::post('tags/book/{id}', [BookController::class, 'tag']);
+Route::post('/book/giveTag/{id}', [BookController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Movie endpoints
@@ -174,7 +174,7 @@ Route::patch('/movie/{id}', [MovieController::class, 'edit']);
 
 Route::delete('/movie/{id}', [MovieController::class, 'destroy']);
 
-Route::post('tags/movie/{id}', [MovieController::class, 'tag']);
+Route::post('/movie/giveTag/{id}', [MovieController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Tag endpoints

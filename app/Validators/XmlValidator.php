@@ -120,7 +120,7 @@ abstract class XmlValidator
 
         return [
             'message' => 'Tag added.',
-            'data'    => $instanceModel->tags,
+            'data'    => $instanceModel,
             'code'    => 200,
         ];
     }

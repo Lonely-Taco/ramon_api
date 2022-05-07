@@ -233,7 +233,7 @@
                 }
             }
         },
-        "/api/tags/book/{id}": {
+        "/api/book/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Book"
@@ -250,17 +250,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "sucess"
@@ -518,7 +518,7 @@
                 }
             }
         },
-        "/api/tags/game/{id}": {
+        "/api/game/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Game"
@@ -535,17 +535,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "id"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "sucess"
@@ -761,7 +761,7 @@
                 }
             }
         },
-        "/api/tags/movie/{id}": {
+        "/api/movie/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Movie"
@@ -778,17 +778,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "sucess"

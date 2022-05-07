@@ -433,7 +433,7 @@ class GameController extends Controller
 
     /**
      * * @OA\Post (
-     *      path="/api/tags/game/{id}",
+     *      path="/api/game/giveTag/{id}",
      *      operationId="tagGame",
      *      tags={"Game"},
      *      summary="add a tag to a game",
@@ -448,13 +448,14 @@ class GameController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="id"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *

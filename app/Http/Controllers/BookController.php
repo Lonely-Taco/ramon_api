@@ -415,7 +415,7 @@ class BookController extends Controller
 
     /**
      * * @OA\Post (
-     *      path="/api/tags/book/{id}",
+     *      path="/api/book/giveTag/{id}",
      *      operationId="tagBook",
      *      tags={"Book"},
      *      summary="add a tag to a book",
@@ -430,13 +430,14 @@ class BookController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *

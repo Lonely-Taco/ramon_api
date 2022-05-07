@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\XmlMovieValidatorInterface;
-use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -377,12 +376,13 @@ class MovieController extends Controller
     }
 
     /**
-     * * @OA\Post (
-     *      path="/api/tags/movie/{id}",
+     *  @OA\Post (
+     *      path="/api/movie/giveTag/{id}",
      *      operationId="tagMovie",
      *      tags={"Movie"},
      *      summary="add a tag to a movie",
      *      description="add tag",
+     *
      *      @OA\Parameter(
      *          name="id",
      *          description="id",
@@ -393,13 +393,14 @@ class MovieController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
@@ -420,7 +421,7 @@ class MovieController extends Controller
      *          description="Not found"
      *       ),
      *)
-     * tags a game and returns a collection of tags
+     * tags a movie and returns a collection of tags
      * @param JsonMovieValidatorInterface $movieJsonValidator
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param int $id
