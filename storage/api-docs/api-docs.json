@@ -666,17 +666,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Tag name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "update with a Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "sucess"
@@ -701,17 +701,15 @@
                 "summary": "Creates and returns a tag object",
                 "description": "Creates and returns a tag",
                 "operationId": "createTag",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Tag name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "description": "update with a Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "sucess"

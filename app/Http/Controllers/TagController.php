@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\JsonTagValidatorInterface;
-use App\Contracts\XmlMovieValidatorInterface;
 use App\Contracts\XmlTagValidatorInterface;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
@@ -109,13 +107,14 @@ class TagController extends Controller
      *      summary="Creates and returns a tag object",
      *      description="Creates and returns a tag",
      *
-     *     @OA\Parameter(
-     *          name="name",
-     *          description="Tag name",
+     *      @OA\RequestBody (
+     *          description="update with a Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
@@ -185,13 +184,14 @@ class TagController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="name",
-     *          description="Tag name",
+     *      @OA\RequestBody (
+     *          description="update with a Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
