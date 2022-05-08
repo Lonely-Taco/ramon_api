@@ -161,7 +161,7 @@ class TagController extends Controller
     /**
      * @OA\Get(
      *      path="/api/tag/{id}",
-     *      operationId="showTags",
+     *      operationId="showTag",
      *      tags={"Tag"},
      *      summary="Get tag by index",
      *      description="Returns a tag by the given id",

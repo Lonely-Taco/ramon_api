@@ -190,6 +190,33 @@ Route::post('/movie/giveTag/{id}', [MovieController::class, 'tag']);
 Route::get('/tags', [TagController::class, 'index']);
 
 /**
+ * @OA\Get(
+ *     path="/api/tags/getBookTags",
+ *     description="tags",
+ *     @OA\Response(response="default", description="get all tags")
+ * )
+ */
+Route::get('/tags/getBookTags', [TagController::class, 'bookTags']);
+
+/**
+ * @OA\Get(
+ *     path="/api/tags/getMovieTags",
+ *     description="tags",
+ *     @OA\Response(response="default", description="get all tags")
+ * )
+ */
+Route::get('/tags/getMovieTags', [TagController::class, 'movieTags']);
+
+/**
+ * @OA\Get(
+ *     path="/api/tags/getGameTags",
+ *     description="tags",
+ *     @OA\Response(response="default", description="get all tags")
+ * )
+ */
+Route::get('/tags/getGameTags', [TagController::class, 'gameTags']);
+
+/**
  * @OA\Get   (
  *     path="/api/tag/{id}",
  *     description="get a tag",
@@ -223,5 +250,4 @@ Route::put('/tag/{id}', [TagController::class, 'edit']);
  *     @OA\Response(response="default", description="delete")
  * )
  */
-
 Route::delete('/tag/{id}', [TagController::class, 'destroy']);

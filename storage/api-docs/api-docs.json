@@ -598,6 +598,51 @@
                 }
             }
         },
+        "/api/tags/getMovieTags": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get all movie tags",
+                "description": "Returns all movie tags",
+                "operationId": "getMovieTags",
+                "responses": {
+                    "200": {
+                        "description": "Tags"
+                    }
+                }
+            }
+        },
+        "/api/tags/getGameTags": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get all game tags",
+                "description": "Returns all game tags",
+                "operationId": "getGameTags",
+                "responses": {
+                    "200": {
+                        "description": "Tags"
+                    }
+                }
+            }
+        },
+        "/api/tags/getBookTags": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get all book tags",
+                "description": "Returns all book tags",
+                "operationId": "getBookTags",
+                "responses": {
+                    "200": {
+                        "description": "Tags"
+                    }
+                }
+            }
+        },
         "/api/tag/{id}": {
             "get": {
                 "tags": [
