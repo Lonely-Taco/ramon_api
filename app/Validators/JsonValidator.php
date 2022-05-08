@@ -152,7 +152,7 @@ abstract class JsonValidator
             return
                 ['message' => 'The data has been inserted.',
                  'data'    => $instanceModel,
-                 'code'    => 201,
+                 'code'    => 200,
                 ];
         }
 
