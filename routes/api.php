@@ -124,6 +124,9 @@ Route::delete('/book/{id}', [BookController::class, 'destroy']);
 
 Route::post('/book/giveTag/{id}', [BookController::class, 'tag']);
 
+Route::get('/book/getBooksByTag/{id}', [BookController::class, 'getByTag']);
+
+
 //-----------------------------------------------------------------------------
 // Movie endpoints
 //-----------------------------------------------------------------------------
@@ -175,6 +178,8 @@ Route::put('/movie/{id}', [MovieController::class, 'edit']);
 Route::delete('/movie/{id}', [MovieController::class, 'destroy']);
 
 Route::post('/movie/giveTag/{id}', [MovieController::class, 'tag']);
+
+Route::get('/movie/getMoviesByTag/{id}', [MovieController::class, 'getByTag']);
 
 //-----------------------------------------------------------------------------
 // Tag endpoints

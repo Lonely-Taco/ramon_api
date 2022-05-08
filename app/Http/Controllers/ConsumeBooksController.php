@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\BookChart;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -27,7 +28,7 @@ class ConsumeBooksController extends Controller
         return view('books.books', ['book' => $book]);
     }
 
-    public function chart()
+    public function chart(Request $request)
     {
         /** @var Collection<Tag> $tags */
         $tags = Tag::whereHas('books')->get();

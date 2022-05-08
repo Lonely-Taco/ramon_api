@@ -3,7 +3,7 @@
 @extends('layout')
 @section('content')
     <!-- Chart's container -->
-    <div id="chart" style="height: 500px;"></div>
+    <div id="chart" style="height: 1000px;"></div>
     <!-- Charting library -->
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <!-- Chartisan -->

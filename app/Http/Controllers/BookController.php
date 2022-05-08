@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
 use App\Models\Book;
+use App\Models\Tag;
+use DB;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -65,7 +68,7 @@ class BookController extends Controller
     /**
      * @OA\Get(
      *      path="/api/book/{id}",
-     *      operationId="showBooks",
+     *      operationId="showBook",
      *      tags={"Book"},
      *      summary="Get book by index",
      *      description="Returns a book by the given id",
@@ -111,6 +114,57 @@ class BookController extends Controller
         }
 
         return response()->json($model, 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/book/getBooksByTag/{id}",
+     *      operationId="showBooks",
+     *      tags={"Book"},
+     *      summary="Get books by Tag",
+     *      description="Returns a collection of books by the given Tag Id",
+     *      description="Returns a collection of books by the given Tag Id",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Tag id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *            ),
+     *         ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Create Successfull"
+     *       ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *       ),
+     *)
+     * Returns a book by index
+     * @param Request $request
+     * @param int $id
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function getByTag(Request $request, int $id): XmlResponse|JsonResponse|Response
+    {
+        if (Tag::where('id', $id)->doesntExist()) {
+            return response()->json(
+                ['message' => 'The data with the following id was not found',
+                 'data'    => $id,
+                ], 404);
+        }
+
+        $models = DB::table('book_tag')->where('tag_id','=',$id)->get();
+
+        if ($request->wantsXml()) {
+
+            return response()->xml($models, 200);
+        }
+
+        return response()->json($models, 200);
     }
 
     /**
