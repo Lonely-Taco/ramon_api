@@ -57,6 +57,111 @@ class TagController extends Controller
 
     /**
      * @OA\Get(
+     *      path="/api/tags/getMovieTags",
+     *      operationId="getMovieTags",
+     *      tags={"Tag"},
+     *      summary="Get all movie tags",
+     *      description="Returns all movie tags",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tags"
+     *       )
+     *     )
+     *
+     * Returns list of Tags
+     *
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function movieTags(Request $request): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+
+            return response()->xml(
+                [
+                    'data' => Tag::whereHas('movies')->get(),
+                ], 200);
+
+        }
+
+        return response()->json(
+            [
+                'data' => Tag::whereHas('movies')->get()
+            ], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/tags/getGameTags",
+     *      operationId="getGameTags",
+     *      tags={"Tag"},
+     *      summary="Get all game tags",
+     *      description="Returns all game tags",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tags"
+     *       )
+     *     )
+     *
+     * Returns list of Tags
+     *
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function gameTags(Request $request): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+
+            return response()->xml(
+                [
+                    'data' => Tag::whereHas('games')->get(),
+                ], 200);
+
+        }
+
+        return response()->json(
+            [
+                'data' => Tag::whereHas('games')->get(),
+            ], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/tags/getBookTags",
+     *      operationId="getBookTags",
+     *      tags={"Tag"},
+     *      summary="Get all book tags",
+     *      description="Returns all book tags",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tags"
+     *       )
+     *     )
+     *
+     * Returns list of Tags
+     *
+     * @param Request $request
+     * @return XmlResponse|JsonResponse|Response
+     */
+    public function bookTags(Request $request): XmlResponse|JsonResponse|Response
+    {
+        if ($request->wantsXml()) {
+
+            return response()->xml(
+                [
+                    'data' => Tag::whereHas('books')->get(),
+                ], 200);
+
+        }
+
+        return response()->json(
+            [
+                'data' => Tag::whereHas('books')->get(),
+            ], 200);
+    }
+
+    /**
+     * @OA\Get(
      *      path="/api/tag/{id}",
      *      operationId="showTags",
      *      tags={"Tag"},

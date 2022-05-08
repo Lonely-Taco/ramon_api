@@ -25,8 +25,6 @@ class ConsumeMoviesController extends Controller
 
         $movie = json_decode(Route::dispatch($request)->getContent());
 
-//        dump($movie);
-//        exit();
         return view('movies.movies', ['movie' => $movie]);
 
     }
