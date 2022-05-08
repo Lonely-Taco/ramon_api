@@ -45,13 +45,13 @@ Route::get('/games', [GameController::class, 'index']);
 Route::get('/game/{id}', [GameController::class, 'show']);
 
 /**
- * @OA\Patch  (
+ * @OA\Put    (
  *     path="/api/game/{id}",
  *     description="games",
  *     @OA\Response(response="default", description="read")
  * )
  */
-Route::patch('/game/{id}', [GameController::class, 'edit']);
+Route::put('/game/{id}', [GameController::class, 'edit']);
 
 /**
  * @OA\Post   (
@@ -71,7 +71,7 @@ Route::post('/game', [GameController::class, 'create']);
  */
 Route::delete('/game/{id}', [GameController::class, 'destroy']);
 
-Route::post('tags/game/{id}', [GameController::class, 'tag']);
+Route::post('/game/giveTag/{id}', [GameController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Book endpoints
@@ -105,13 +105,13 @@ Route::get('/book/{id}', [BookController::class, 'show']);
 Route::post('/book', [BookController::class, 'create']);
 
 /**
- * @OA\Patch  (
+ * @OA\Put   (
  *     path="/api/book/{id}",
  *     description="update book",
  *     @OA\Response(response="default", description="read")
  * )
  */
-Route::patch('/book/{id}', [BookController::class, 'edit']);
+Route::put('/book/{id}', [BookController::class, 'edit']);
 
 /**
  * @OA\Delete (
@@ -122,7 +122,7 @@ Route::patch('/book/{id}', [BookController::class, 'edit']);
  */
 Route::delete('/book/{id}', [BookController::class, 'destroy']);
 
-Route::post('tags/book/{id}', [BookController::class, 'tag']);
+Route::post('/book/giveTag/{id}', [BookController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Movie endpoints
@@ -156,13 +156,13 @@ Route::get('/movie/{id}', [MovieController::class, 'show']);
 Route::post('/movie', [MovieController::class, 'create']);
 
 /**
- * @OA\Patch    (
+ * @OA\Put    (
  *     path="/api/movie/{id}",
  *     description="movie",
  *     @OA\Response(response="default", description="patch")
  * )
  */
-Route::patch('/movie/{id}', [MovieController::class, 'edit']);
+Route::put('/movie/{id}', [MovieController::class, 'edit']);
 
 /**
  * @OA\Delete (
@@ -174,7 +174,7 @@ Route::patch('/movie/{id}', [MovieController::class, 'edit']);
 
 Route::delete('/movie/{id}', [MovieController::class, 'destroy']);
 
-Route::post('tags/movie/{id}', [MovieController::class, 'tag']);
+Route::post('/movie/giveTag/{id}', [MovieController::class, 'tag']);
 
 //-----------------------------------------------------------------------------
 // Tag endpoints
@@ -208,13 +208,13 @@ Route::get('/tag/{id}', [TagController::class, 'show']);
 Route::post('/tag', [TagController::class, 'create']);
 
 /**
- * @OA\Patch    (
+ * @OA\Put   (
  *     path="/api/tag/{id}",
  *     description="tag",
  *     @OA\Response(response="default", description="patch")
  * )
  */
-Route::patch('/tag/{id}', [TagController::class, 'edit']);
+Route::put('/tag/{id}', [TagController::class, 'edit']);
 
 /**
  * @OA\Delete (

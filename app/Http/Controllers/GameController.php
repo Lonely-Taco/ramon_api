@@ -84,7 +84,7 @@ class GameController extends Controller
      *         ),
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=204,
@@ -128,69 +128,20 @@ class GameController extends Controller
      *      summary="Creates and returns a game object",
      *      description="Creates and returns a game",
      *
-     *        @OA\Parameter(
-     *          name="name",
-     *          description="Name of the game",
+     *      @OA\RequestBody (
+     *          description="Create a Game object",
      *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="release_date",
-     *          description="Date released",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="categories",
-     *          description="categorie",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="genres",
-     *          description="genres in a string format seperated by ';'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="positive_ratings",
-     *          description="positive ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="negative_ratings",
-     *          description="negative ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Game"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -215,19 +166,24 @@ class GameController extends Controller
         Request $request
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = match ($request->getContentType()) {
+            'json' => $jsonGameValidator->processCreate($request->getContent()),
+            'xml' => $gameXmlValidator->processCreate($request->getContent()),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type = ' . $request->getContentType(),
+                'code'    => 400,
+            ],
+        };
+
+
         if ($request->wantsXml()) {
-
-            $validated = $gameXmlValidator->processCreate($request->getContent());
-
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
-
         }
-
-        $validated = $jsonGameValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -238,12 +194,12 @@ class GameController extends Controller
     }
 
     /**
-     * @OA\Patch (
+     * @OA\Put (
      *      path="/api/game/{id}",
      *      operationId="edit",
      *      tags={"Game"},
      *      summary="Edit game",
-     *      description="Updates a game",
+     *      description="Updates a game Consuming a Game object",
      *
      *
      *      @OA\Parameter(
@@ -255,69 +211,21 @@ class GameController extends Controller
      *              type="integer"
      *            ),
      *         ),
-     *        @OA\Parameter(
-     *          name="name",
-     *          description="Name of the game",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="release_date",
-     *          description="Date released",
+     *      @OA\RequestBody (
+     *          description="Update a Game object ID not required",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="categories",
-     *          description="categorie",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="genres",
-     *          description="genres in a string format seperated by ';'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="positive_ratings",
-     *          description="positive ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="negative_ratings",
-     *          description="negative ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Game"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -346,9 +254,20 @@ class GameController extends Controller
         XmlGameValidatorInterface $gameXmlValidator,
     ): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsXml()) {
+        $validated = [];
 
-            $validated = $gameXmlValidator->processEdit($request->getContent(), $id);
+        $validated = match ($request->getContentType()) {
+            'json' => $jsonGameValidator->processEdit($request->getContent(), $id),
+            'xml' => $gameXmlValidator->processEdit($request->getContent(), $id),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
+        if ($request->wantsXml()) {
 
             return response()->xml(
                 [
@@ -357,14 +276,11 @@ class GameController extends Controller
                 ], $validated['code']);
         }
 
-        $validated = $jsonGameValidator->processEdit($request->getContent(), $id);
-
         return response()->json(
             [
                 'message' => $validated['message'],
                 'data'    => $validated['data'],
             ], $validated['code']);
-
     }
 
     /**
@@ -433,7 +349,7 @@ class GameController extends Controller
 
     /**
      * * @OA\Post (
-     *      path="/api/tags/game/{id}",
+     *      path="/api/game/giveTag/{id}",
      *      operationId="tagGame",
      *      tags={"Game"},
      *      summary="add a tag to a game",
@@ -448,19 +364,20 @@ class GameController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="id"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,

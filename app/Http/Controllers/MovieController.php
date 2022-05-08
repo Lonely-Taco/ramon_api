@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\XmlMovieValidatorInterface;
-use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -115,48 +114,20 @@ class MovieController extends Controller
      *      summary="Creates and returns a movie object",
      *      description="Creates and returns a movie",
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Movie title",
+     *      @OA\RequestBody (
+     *          description="update with a Movie object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Movie"
+     *              ),
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="year",
-     *          description="Year the movie was released",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="iMDb",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="runtime",
-     *          description="movie duration in mintues",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -184,16 +155,24 @@ class MovieController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = match ($request->getContentType()) {
+            'json' => $movieJsonValidator->processCreate($request->getContent()),
+            'xml' => $movieXmlValidator->processCreate($request->getContent()),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
         if ($request->wantsXml()) {
-            $validated = $movieXmlValidator->processCreate($request->getContent());
+
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
-        $validated = $movieJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -204,7 +183,7 @@ class MovieController extends Controller
     }
 
     /**
-     * * @OA\Patch (
+     * @OA\Put  (
      *      path="/api/movie/{id}",
      *      operationId="editMovie",
      *      tags={"Movie"},
@@ -220,48 +199,20 @@ class MovieController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="title",
-     *          description="Movie title",
+     *      @OA\RequestBody (
+     *          description="update with a Movie object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Movie"
+     *              ),
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="year",
-     *          description="Year the movie was released",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     * @OA\Parameter(
-     *          name="iMDb",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     * @OA\Parameter(
-     *          name="runtime",
-     *          description="movie duration in mintues",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -289,8 +240,20 @@ class MovieController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = [];
+
+        $validated = match ($request->getContentType()) {
+            'json' => $movieJsonValidator->processEdit($request->getContent(), $id),
+            'xml' => $movieXmlValidator->processEdit($request->getContent(), $id),
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
         if ($request->wantsXml()) {
-            $validated = $movieXmlValidator->processEdit($request->getContent(), $id);
+
             return response()->xml(
                 [
                     'message' => $validated['message'],
@@ -298,15 +261,11 @@ class MovieController extends Controller
                 ], $validated['code']);
         }
 
-
-        $validated = $movieJsonValidator->processEdit($request->getContent(), $id);
-
         return response()->json(
             [
                 'message' => $validated['message'],
                 'data'    => $validated['data'],
             ], $validated['code']);
-
     }
 
     /**
@@ -364,7 +323,6 @@ class MovieController extends Controller
                 ], 200);
         }
 
-
         $model->delete();
 
         return response()->json(
@@ -377,12 +335,13 @@ class MovieController extends Controller
     }
 
     /**
-     * * @OA\Post (
-     *      path="/api/tags/movie/{id}",
+     *  @OA\Post (
+     *      path="/api/movie/giveTag/{id}",
      *      operationId="tagMovie",
      *      tags={"Movie"},
      *      summary="add a tag to a movie",
      *      description="add tag",
+     *
      *      @OA\Parameter(
      *          name="id",
      *          description="id",
@@ -393,19 +352,20 @@ class MovieController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="success"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -420,7 +380,7 @@ class MovieController extends Controller
      *          description="Not found"
      *       ),
      *)
-     * tags a game and returns a collection of tags
+     * tags a movie and returns a collection of tags
      * @param JsonMovieValidatorInterface $movieJsonValidator
      * @param XmlMovieValidatorInterface $movieXmlValidator
      * @param int $id
@@ -442,7 +402,6 @@ class MovieController extends Controller
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
 
         $validated = $movieJsonValidator->processTag($request->getContent(), $id);
 

@@ -5,7 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
+
+/**
+ * @OA\Schema(
+ * @OA\Property(property="name", type="string", description="Name for the Tag"),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp", readOnly="true"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp", readOnly="true"),
+ * )
+ * Class BaseModel
+ *
+ * @package App\Models
+ */
 
 /**
  * App\Models\Tag
@@ -33,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Tag extends Model
 {
     use HasFactory;
+
 
     protected $fillable = [
         'name',

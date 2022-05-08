@@ -7,7 +7,21 @@ namespace App\Models;
 use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+/**
+ * @OA\Schema(
+ * @OA\Property(property="title", type="string", description="title of the film"),
+ * @OA\Property(property="year", type="integer", description="year of release"),
+ * @OA\Property(property="iMDb", type="integer", description="IMDB score"),
+ * @OA\Property(property="genres", type="string", description="generes for the movie"),
+ * @OA\Property(property="runtime", type="integer", description="movie duration"),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp", readOnly="true"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp", readOnly="true"),
+ * )
+ * Class BaseModel
+ *
+ * @package App\Models
+ */
 
 /**
  * App\Models\Movie

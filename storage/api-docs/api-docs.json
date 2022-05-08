@@ -17,7 +17,7 @@
                 "operationId": "bookIndex",
                 "responses": {
                     "200": {
-                        "description": "sucess"
+                        "description": "Create Successfull"
                     },
                     "404": {
                         "description": "Not found"
@@ -46,7 +46,49 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "sucess"
+                        "description": "Create Successfull"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Updates and returns a book object",
+                "description": "Updates and returns a book",
+                "operationId": "editBook",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update a Book object ID not required",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creation Successfull"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
                     },
                     "404": {
                         "description": "Not found"
@@ -82,84 +124,6 @@
                         "description": "No content"
                     }
                 }
-            },
-            "patch": {
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Updates and returns a book object",
-                "description": "Updates and returns a book",
-                "operationId": "editBook",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "Book title",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "authors",
-                        "in": "query",
-                        "description": "authors in string format seperated by ','",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "average_rating",
-                        "in": "query",
-                        "description": "average rating",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "ratings_count",
-                        "in": "query",
-                        "description": "ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "publication_date",
-                        "in": "query",
-                        "description": "publication date 'YYYY'",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "sucess"
-                    },
-                    "422": {
-                        "description": "Unproccessed data"
-                    },
-                    "204": {
-                        "description": "No content"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    }
-                }
             }
         },
         "/api/book": {
@@ -170,56 +134,18 @@
                 "summary": "Creates and returns a book object",
                 "description": "Creates and returns a book",
                 "operationId": "createBook",
-                "parameters": [
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "Book title",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "authors",
-                        "in": "query",
-                        "description": "authors in string format seperated by ','",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "average_rating",
-                        "in": "query",
-                        "description": "average rating",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "ratings_count",
-                        "in": "query",
-                        "description": "ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "publication_date",
-                        "in": "query",
-                        "description": "pblication date 'YYYY'",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "requestBody": {
+                    "description": "Update a Book object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "sucess"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -233,7 +159,7 @@
                 }
             }
         },
-        "/api/tags/book/{id}": {
+        "/api/book/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Book"
@@ -250,20 +176,20 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
-                    "200": {
-                        "description": "sucess"
+                    "201": {
+                        "description": "Create Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -313,7 +239,49 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "sucess"
+                        "description": "success"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Edit game",
+                "description": "Updates a game Consuming a Game object",
+                "operationId": "edit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update a Game object ID not required",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creation Successfull"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
                     },
                     "204": {
                         "description": "No content"
@@ -349,93 +317,6 @@
                         "description": "Not found"
                     }
                 }
-            },
-            "patch": {
-                "tags": [
-                    "Game"
-                ],
-                "summary": "Edit game",
-                "description": "Updates a game",
-                "operationId": "edit",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Name of the game",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "release_date",
-                        "in": "query",
-                        "description": "Date released",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "categories",
-                        "in": "query",
-                        "description": "categorie",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "genres",
-                        "in": "query",
-                        "description": "genres in a string format seperated by ';'",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "positive_ratings",
-                        "in": "query",
-                        "description": "positive ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "negative_ratings",
-                        "in": "query",
-                        "description": "negative ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "sucess"
-                    },
-                    "422": {
-                        "description": "Unproccessed data"
-                    },
-                    "204": {
-                        "description": "No content"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    }
-                }
             }
         },
         "/api/game": {
@@ -446,65 +327,18 @@
                 "summary": "Creates and returns a game object",
                 "description": "Creates and returns a game",
                 "operationId": "create",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "description": "Name of the game",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "release_date",
-                        "in": "query",
-                        "description": "Date released",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "categories",
-                        "in": "query",
-                        "description": "categorie",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "genres",
-                        "in": "query",
-                        "description": "genres in a string format seperated by ';'",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "positive_ratings",
-                        "in": "query",
-                        "description": "positive ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "negative_ratings",
-                        "in": "query",
-                        "description": "negative ratings count",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "requestBody": {
+                    "description": "Create a Game object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "sucess"
+                    "201": {
+                        "description": "Creation Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -518,7 +352,7 @@
                 }
             }
         },
-        "/api/tags/game/{id}": {
+        "/api/game/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Game"
@@ -535,20 +369,20 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "id"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "sucess"
+                        "description": "success"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -602,6 +436,48 @@
                     }
                 }
             },
+            "put": {
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Updates and returns a movie object",
+                "description": "Updates and returns a movie",
+                "operationId": "editMovie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "update with a Movie object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creation Successfull"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
             "delete": {
                 "tags": [
                     "Movie"
@@ -628,75 +504,6 @@
                         "description": "Not found"
                     }
                 }
-            },
-            "patch": {
-                "tags": [
-                    "Movie"
-                ],
-                "summary": "Updates and returns a movie object",
-                "description": "Updates and returns a movie",
-                "operationId": "editMovie",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "Movie title",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "year",
-                        "in": "query",
-                        "description": "Year the movie was released",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "iMDb",
-                        "in": "query",
-                        "description": "average rating",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "runtime",
-                        "in": "query",
-                        "description": "movie duration in mintues",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "sucess"
-                    },
-                    "422": {
-                        "description": "Unproccessed data"
-                    },
-                    "204": {
-                        "description": "No content"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    }
-                }
             }
         },
         "/api/movie": {
@@ -707,47 +514,18 @@
                 "summary": "Creates and returns a movie object",
                 "description": "Creates and returns a movie",
                 "operationId": "createMovie",
-                "parameters": [
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "Movie title",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "year",
-                        "in": "query",
-                        "description": "Year the movie was released",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "iMDb",
-                        "in": "query",
-                        "description": "average rating",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "runtime",
-                        "in": "query",
-                        "description": "movie duration in mintues",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "requestBody": {
+                    "description": "update with a Movie object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "sucess"
+                    "201": {
+                        "description": "Creating Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -761,7 +539,7 @@
                 }
             }
         },
-        "/api/tags/movie/{id}": {
+        "/api/movie/giveTag/{id}": {
             "post": {
                 "tags": [
                     "Movie"
@@ -778,20 +556,20 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "tag id",
-                        "in": "query",
-                        "description": "Id of the tag",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "description": "Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "sucess"
+                        "description": "success"
                     },
                     "422": {
                         "description": "Unproccessed data"
@@ -845,6 +623,48 @@
                     }
                 }
             },
+            "put": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Updates and returns a tag object",
+                "description": "Updates and returns a tag",
+                "operationId": "editTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "update with a Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creating Successfull"
+                    },
+                    "422": {
+                        "description": "Unproccessed data"
+                    },
+                    "204": {
+                        "description": "No content"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            },
             "delete": {
                 "tags": [
                     "Tag"
@@ -871,48 +691,6 @@
                         "description": "Not found"
                     }
                 }
-            },
-            "patch": {
-                "tags": [
-                    "Tag"
-                ],
-                "summary": "Updates and returns a tag object",
-                "description": "Updates and returns a tag",
-                "operationId": "editTag",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Tag name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "sucess"
-                    },
-                    "422": {
-                        "description": "Unproccessed data"
-                    },
-                    "204": {
-                        "description": "No content"
-                    },
-                    "404": {
-                        "description": "Not found"
-                    }
-                }
             }
         },
         "/api/tag": {
@@ -923,20 +701,18 @@
                 "summary": "Creates and returns a tag object",
                 "description": "Creates and returns a tag",
                 "operationId": "createTag",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Tag name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "description": "update with a Tag object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "sucess"
+                    "201": {
+                        "description": "Creating Successfull"
                     },
                     "422": {
                         "description": "Unproccessed data"

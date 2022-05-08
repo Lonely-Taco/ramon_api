@@ -4,6 +4,7 @@ namespace App\Validators;
 
 use App\Models\Tag;
 use App\Traits\Taggable;
+use Arr;
 use Illuminate\Database\Eloquent\Model;
 use JsonSchema\Validator;
 
@@ -22,16 +23,29 @@ abstract class JsonValidator
      */
     public function processCreate(string $data): array
     {
-        $jsonData  = json_decode($data, true);
-        $validator = $this->validateJson($jsonData);
+        $jsonData = json_decode($data, true);
+
+
+        if ($jsonData == null) {
+            return [
+                'message' => 'Bad Request; Body is null or properties are missing',
+                'data'    => $jsonData,
+                'code'    => 400,
+            ];
+        }
+
+        // remove possible id field.
+        $cleanJson = Arr::except($jsonData, ['id']);
+
+        $validator = $this->validateJson($cleanJson);
 
         if ($validator->isValid()) {
             $instance = new $this->model();
 
             return
                 ['message' => 'The data has been inserted.',
-                 'data'    => $instance::create($jsonData),
-                 'code'    => 200,
+                 'data'    => $instance::create($cleanJson),
+                 'code'    => 201,
                 ];
         }
 
@@ -60,18 +74,30 @@ abstract class JsonValidator
 
         $jsonData = json_decode($data, true);
 
-        $validator = $this->validateJson($jsonData);
+
+        if ($jsonData == null) {
+            return [
+                'message' => 'Bad Request; Body is null or properties are missing',
+                'data'    => $jsonData,
+                'code'    => 400,
+            ];
+        }
+
+        // remove possible id field.
+        $cleanJson = Arr::except($jsonData, ['id']);
+
+        $validator = $this->validateJson($cleanJson);
 
         if ($validator->isValid()) {
             $instance      = new $this->model();
             $instanceModel = $instance::findOrFail($id);
-            $instanceModel->update($jsonData);
+            $instanceModel->update($cleanJson);
             $instanceModel->save();
 
             return
                 ['message' => 'The data has been inserted.',
                  'data'    => $instanceModel,
-                 'code'    => 200,
+                 'code'    => 201,
                 ];
         }
 
@@ -125,7 +151,7 @@ abstract class JsonValidator
 
             return
                 ['message' => 'The data has been inserted.',
-                 'data'    => $instanceModel->tags,
+                 'data'    => $instanceModel,
                  'code'    => 200,
                 ];
         }
@@ -145,6 +171,7 @@ abstract class JsonValidator
      */
     protected function validateJson(array $data): Validator
     {
+
         $validator = new Validator();
 
         $jsonData = Validator::arrayToObjectRecursive($data);

@@ -10,6 +10,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
+ * @OA\Schema(
+ * @OA\Property(property="name", type="string", description="title of the film"),
+ * @OA\Property(property="release_date", type="string", format="date",description="year of release"),
+ * @OA\Property(property="categories", type="string", description="categories for a game e.g 'Multi-player'"),
+ * @OA\Property(property="genres", type="string", description="generes for a game"),
+ * @OA\Property(property="positive_ratings", type="integer", description="positive ratings"),
+ * @OA\Property(property="negative_ratings", type="integer", description="negative ratings"),
+ * @OA\Property(property="created_at", type="string", format="date-time", description="Initial creation timestamp", readOnly="true"),
+ * @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp", readOnly="true"),
+ * )
+ * Class BaseModel
+ *
+ * @package App\Models
+ */
+
+
+/**
  * App\Models\Game
  *
  * @property int $id

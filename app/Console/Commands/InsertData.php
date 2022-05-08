@@ -7,7 +7,6 @@ namespace App\Console\Commands;
 use App\Imports\BookImport;
 use App\Imports\GameImport;
 use App\Imports\MovieImport;
-use App\Models\Book;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,13 +23,13 @@ class InsertData extends Command
 
     public function handle(): void
     {
-        Excel::import(new BookImport, storage_path('data/books.csv'));
+        Excel::import(new BookImport, storage_path('data/books_c.csv'));
         $this->info('books inserted');
 
-        Excel::import(new GameImport, storage_path('data/games.csv'));
+        Excel::import(new GameImport, storage_path('data/games_c.csv'));
         $this->info('games inserted');
 
-        Excel::import(new MovieImport, storage_path('data/movies.csv'));
+        Excel::import(new MovieImport, storage_path('data/movies_c.csv'));
         $this->info('movies inserted');
     }
 }

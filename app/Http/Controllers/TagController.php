@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\JsonMovieValidatorInterface;
 use App\Contracts\JsonTagValidatorInterface;
-use App\Contracts\XmlMovieValidatorInterface;
 use App\Contracts\XmlTagValidatorInterface;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
@@ -214,19 +212,20 @@ class TagController extends Controller
      *      summary="Creates and returns a tag object",
      *      description="Creates and returns a tag",
      *
-     *     @OA\Parameter(
-     *          name="name",
-     *          description="Tag name",
+     *      @OA\RequestBody (
+     *          description="update with a Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -274,7 +273,7 @@ class TagController extends Controller
     }
 
     /**
-     * * @OA\Patch (
+     * * @OA\Put (
      *      path="/api/tag/{id}",
      *      operationId="editTag",
      *      tags={"Tag"},
@@ -290,19 +289,20 @@ class TagController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="name",
-     *          description="Tag name",
+     *      @OA\RequestBody (
+     *          description="update with a Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creating Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -416,82 +416,4 @@ class TagController extends Controller
 
 
     }
-
-//    /**
-//     * * @OA\Post (
-//     *      path="/api/tags/movie/{id}",
-//     *      operationId="tagMovie",
-//     *      tags={"Tag"},
-//     *      summary="add a tag to a movie",
-//     *      description="add tag",
-//     *      @OA\Parameter(
-//     *          name="id",
-//     *          description="id",
-//     *          required=true,
-//     *          in="path",
-//     *          @OA\Schema(
-//     *              type="integer"
-//     *            ),
-//     *         ),
-//     *
-//     * @OA\Parameter(
-//     *          name="tag id",
-//     *          description="Id of the tag",
-//     *          required=true,
-//     *          in="query",
-//     *          @OA\Schema(
-//     *              type="id"
-//     *            ),
-//     *         ),
-//     *
-//     *      @OA\Response(
-//     *          response=200,
-//     *          description="sucess"
-//     *       ),
-//     *     @OA\Response(
-//     *          response=422,
-//     *          description="Unproccessed data"
-//     *       ),
-//     *     @OA\Response(
-//     *          response=204,
-//     *          description="No content"
-//     *       ),
-//     *     @OA\Response(
-//     *          response=404,
-//     *          description="Not found"
-//     *       ),
-//     *)
-//     * tags and returns movie object
-//     * @param JsonTagValidatorInterface $tagJsonValidator
-//     * @param XmlTagValidatorInterface $tagXmlValidator
-//     * @param int $id
-//     * @param Request $request
-//     * @return XmlResponse|JsonResponse|Response
-//     */
-//    public function tag(
-//        JsonTagValidatorInterface $tagJsonValidator,
-//        XmlTagValidatorInterface $tagXmlValidator,
-//        int $id,
-//        Request $request,
-//    ): XmlResponse|JsonResponse|Response
-//    {
-//        if ($request->wantsXml()) {
-//            $validated = $tagXmlValidator->processTag($request->getContent(), $id);
-//            return response()->xml(
-//                [
-//                    'message' => $validated['message'],
-//                    'data'    => $validated['data'],
-//                ], $validated['code']);
-//        }
-//
-//
-//        $validated = $tagJsonValidator->processTag($request->getContent(), $id);
-//
-//        return response()->json(
-//            [
-//                'message' => $validated['message'],
-//                'data'    => $validated['data'],
-//            ], $validated['code']);
-//
-//    }
 }

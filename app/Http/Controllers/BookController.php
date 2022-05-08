@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\JsonBookValidatorInterface;
 use App\Contracts\XmlBookValidatorInterface;
-use App\Contracts\XmlMovieValidatorInterface;
 use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,7 +33,7 @@ class BookController extends Controller
      *      description="Returns all books",
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -82,7 +81,7 @@ class BookController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="sucess"
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=404,
@@ -122,58 +121,20 @@ class BookController extends Controller
      *      summary="Creates and returns a book object",
      *      description="Creates and returns a book",
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Book title",
+     *      @OA\RequestBody (
+     *          description="Update a Book object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
+     *              ref="#/components/schemas/Book"
+     *              ),
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="authors",
-     *          description="authors in string format seperated by ','",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="average_rating",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="ratings_count",
-     *          description="ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="publication_date",
-     *          description="pblication date 'YYYY'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -199,19 +160,29 @@ class BookController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
-        if ($request->wantsXml()) {
+        $validated = [];
 
-            $validated = $bookXmlValidator->processCreate($request->getContent());
+        $validated = match ($request->getContentType()) {
+
+            'json' => $bookJsonValidator->processCreate($request->getContent()),
+            'xml' => $bookXmlValidator->processCreate($request->getContent()),
+
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
+        if ($request->wantsXml()) {
 
             return response()->xml(
                 [
                     'message' => $validated['message'],
                     'data'    => $validated['data'],
                 ], $validated['code']);
-
         }
-
-        $validated = $bookJsonValidator->processCreate($request->getContent());
 
         return response()->json(
             [
@@ -221,7 +192,7 @@ class BookController extends Controller
     }
 
     /**
-     * @OA\Patch (
+     * @OA\Put (
      *      path="/api/book/{id}",
      *      operationId="editBook",
      *      tags={"Book"},
@@ -238,58 +209,19 @@ class BookController extends Controller
      *            ),
      *         ),
      *
-     *     @OA\Parameter(
-     *          name="title",
-     *          description="Book title",
+     *      @OA\RequestBody (
+     *          description="Update a Book object ID not required",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
      *
-     *     @OA\Parameter(
-     *          name="authors",
-     *          description="authors in string format seperated by ','",
-     *          required=true,
-     *          in="query",
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="string"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="average_rating",
-     *          description="average rating",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="ratings_count",
-     *          description="ratings count",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
-     *            ),
-     *         ),
-     *
-     *     @OA\Parameter(
-     *          name="publication_date",
-     *          description="publication date 'YYYY'",
-     *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Book"
+     *              ),
      *            ),
      *         ),
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Creation Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
@@ -319,8 +251,22 @@ class BookController extends Controller
         Request $request,
     ): XmlResponse|JsonResponse|Response
     {
+        $validated = [];
+
+        $validated = match ($request->getContentType()) {
+
+            'json' => $bookJsonValidator->processEdit($request->getContent(), $id),
+            'xml' => $bookXmlValidator->processEdit($request->getContent(), $id),
+
+            default => [
+                'message' => 'Provide content-type header',
+                'data'    => 'Content-Type missing',
+                'code'    => 400,
+            ],
+        };
+
+
         if ($request->wantsXml()) {
-            $validated = $bookXmlValidator->processEdit($request->getContent(), $id);
 
             return response()->xml(
                 [
@@ -328,9 +274,6 @@ class BookController extends Controller
                     'data'    => $validated['data'],
                 ], $validated['code']);
         }
-
-
-        $validated = $bookJsonValidator->processEdit($request->getContent(), $id);
 
         return response()->json(
             [
@@ -415,7 +358,7 @@ class BookController extends Controller
 
     /**
      * * @OA\Post (
-     *      path="/api/tags/book/{id}",
+     *      path="/api/book/giveTag/{id}",
      *      operationId="tagBook",
      *      tags={"Book"},
      *      summary="add a tag to a book",
@@ -430,19 +373,20 @@ class BookController extends Controller
      *            ),
      *         ),
      *
-     * @OA\Parameter(
-     *          name="tag id",
-     *          description="Id of the tag",
+     *      @OA\RequestBody (
+     *          description="Tag object",
      *          required=true,
-     *          in="query",
+     *
+     *       @OA\JsonContent(
      *          @OA\Schema(
-     *              type="integer"
+     *              ref="#/components/schemas/Tag"
+     *              ),
      *            ),
      *         ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="sucess"
+     *          response=201,
+     *          description="Create Successfull"
      *       ),
      *     @OA\Response(
      *          response=422,
