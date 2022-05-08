@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Charts\AllChart;
 use App\Charts\BookChart;
 use App\Charts\GameChart;
 use App\Charts\MovieChart;
@@ -53,6 +54,8 @@ class AppServiceProvider extends ServiceProvider
             GameChart::class,
             MovieChart::class,
             BookChart::class,
+            AllChart::class,
+            AllChart::class,
         ]);
     }
 

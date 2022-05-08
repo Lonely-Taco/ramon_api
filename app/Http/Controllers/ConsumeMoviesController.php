@@ -32,7 +32,7 @@ class ConsumeMoviesController extends Controller
     public function chart(DatabaseManager $databaseManager)
     {
         /** @var Collection<Tag> $tags */
-        $tags = Tag::whereHas('movies')->get();
+        $tags = Tag::whereHas('movies')->orderBy('name')->get();
 
         return view('charts.movie-chart', ['tags' => $tags]);
     }

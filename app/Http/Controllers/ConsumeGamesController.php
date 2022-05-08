@@ -44,7 +44,7 @@ class ConsumeGamesController extends Controller
     {
 
         /** @var Collection<Tag> $tags */
-        $tags = Tag::whereHas('games')->get();
+        $tags = Tag::whereHas('games')->orderBy('name')->get();
 
         return view('charts.game-chart', ['tags' => $tags]);
     }

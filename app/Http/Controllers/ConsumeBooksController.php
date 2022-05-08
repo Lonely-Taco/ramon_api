@@ -31,7 +31,7 @@ class ConsumeBooksController extends Controller
     public function chart(Request $request)
     {
         /** @var Collection<Tag> $tags */
-        $tags = Tag::whereHas('books')->get();
+        $tags = Tag::whereHas('books')->orderBy('name')->get();
 
         return view('charts.book-chart', ['tags' => $tags]);
     }

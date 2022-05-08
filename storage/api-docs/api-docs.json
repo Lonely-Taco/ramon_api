@@ -32,7 +32,7 @@
                 ],
                 "summary": "Get book by index",
                 "description": "Returns a book by the given id",
-                "operationId": "showBooks",
+                "operationId": "showBook",
                 "parameters": [
                     {
                         "name": "id",
@@ -126,6 +126,35 @@
                 }
             }
         },
+        "/api/book/getBooksByTag/{id}": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get books by Tag",
+                "description": "Returns a collection of books by the given Tag Id",
+                "operationId": "showBooks",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Successfull"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
         "/api/book": {
             "post": {
                 "tags": [
@@ -203,7 +232,7 @@
                 }
             }
         },
-        "/api/games": {
+        "/api/game/all": {
             "get": {
                 "tags": [
                     "Game"
@@ -650,7 +679,7 @@
                 ],
                 "summary": "Get tag by index",
                 "description": "Returns a tag by the given id",
-                "operationId": "showTags",
+                "operationId": "showTag",
                 "parameters": [
                     {
                         "name": "id",

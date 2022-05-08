@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
-use App\Models\Tag;
 use Chartisan\PHP\Chartisan;
 use Chartisan\PHP\DatasetData;
 use ConsoleTVs\Charts\BaseChart;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 
-class MovieChart extends BaseChart
+class AllChart extends BaseChart
 {
     /**
      * Handles the HTTP request for the given chart.
@@ -22,7 +20,9 @@ class MovieChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
-        $request = Request::create('/api/tags/getMovieTags', 'GET');
+        $request = Request::create('/api/tags', 'GET');
+
+        $request->header();
 
         $tags = json_decode(Route::dispatch($request)->getContent());
 

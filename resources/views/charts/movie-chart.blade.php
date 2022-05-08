@@ -19,17 +19,21 @@
         });
     </script>
     <div class="links">
-        <a href="http://127.0.0.1:8000">
+        <a href="{{ route('home') }}">
             Home
         </a>
-        <a href="http://127.0.0.1:8000/games/chart/game-chart">
+        <a href="{{route('games.game-chart')}}">
             Games
         </a>
-        <a href="http://127.0.0.1:8000/movies/chart/movie-chart">
+        <a href="{{route('movies.movie-chart')}}">
             Movies
         </a>
-        <a href="http://127.0.0.1:8000/books/chart/book-chart">
+        <a href="{{ route('books.book-chart') }}">
             Books
+        </a>
+        <a href="{{ route('all-chart') }}">
+            All
+        </a>ooks
         </a>
     </div>
     <div class="row m-16">

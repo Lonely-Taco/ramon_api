@@ -37,14 +37,20 @@ class BookChart extends BaseChart
             $serverData                  = $chart->toObject();
             $serverData->chart->labels[] = $tagArray[$i]->name;
 
-            $models = DB::table('book_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
+            $movies = DB::table('movie_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
+            $books  = DB::table('book_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
+            $games  = DB::table('game_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
 
             if ($i === 0) {
                 // First round, create the initial data
-                $serverData->datasets[0] = new DatasetData('Books per tag', [$models->count()], null);
+                $serverData->datasets[] = new DatasetData('Movies per tag', [$movies->count()], null);
+                $serverData->datasets[] = new DatasetData('Books per tag', [$books->count()], null);
+                $serverData->datasets[] = new DatasetData('Games per tag', [$games->count()], null);
             } else {
                 // Append to existing
-                $serverData->datasets[0]->values[] = $models->count();
+                $serverData->datasets[0]->values[] = $movies->count();
+                $serverData->datasets[1]->values[] = $books->count();
+                $serverData->datasets[2]->values[] = $games->count();
             }
         }
 
