@@ -36,7 +36,7 @@ class BookChart extends BaseChart
         for ($i = 0; $i < count($tagArray); $i++) {
             $serverData                  = $chart->toObject();
             $serverData->chart->labels[] = $tagArray[$i]->name;
-            
+
             $models = DB::table('book_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
 
             if ($i === 0) {
@@ -47,20 +47,6 @@ class BookChart extends BaseChart
                 $serverData->datasets[0]->values[] = $models->count();
             }
         }
-
-
-//        $tags->each(function (Tag $tag, int $i) use ($chart) {
-//            $serverData                  = $chart->toObject();
-//            $serverData->chart->labels[] = $tag->name;
-//
-//            if ($i === 0) {
-//                // First round, create the initial data
-//                $serverData->datasets[0] = new DatasetData('tags', [$tag->books->count()], null);
-//            } else {
-//                // Append to existing
-//                $serverData->datasets[0]->values[] = $tag->books->count();
-//            }
-//        });
 
         return $chart;
     }

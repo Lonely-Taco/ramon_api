@@ -9,8 +9,10 @@ use App\Models\Tag;
 use Chartisan\PHP\Chartisan;
 use Chartisan\PHP\DatasetData;
 use ConsoleTVs\Charts\BaseChart;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 
 class GameChart extends BaseChart
 {
@@ -21,26 +23,28 @@ class GameChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
-        $games = Game::all();
-        /** @var Collection<Tag> $tags */
-        $tags = Tag::whereHas('games')->get();
+        $request = Request::create('/api/tags/getGameTags', 'GET');
+
+        $tags = json_decode(Route::dispatch($request)->getContent());
 
         $chart = Chartisan::build();
 
-        $tags->each(function (Tag $tag, int $i) use ($chart) {
+        $tagArray = $tags->data;
+
+        for ($i = 0; $i < count($tagArray); $i++) {
             $serverData                  = $chart->toObject();
-            $serverData->chart->labels[] = $tag->name;
+            $serverData->chart->labels[] = $tagArray[$i]->name;
+
+            $models = DB::table('game_tag')->where('tag_id', '=', $tagArray[$i]->id)->get();
 
             if ($i === 0) {
                 // First round, create the initial data
-                $serverData->datasets[0] = new DatasetData('tags', [$tag->games->count()], null);
-//                $serverData->datasets[0] = new DatasetData('Game', [$game->tags->count()], null);
+                $serverData->datasets[0] = new DatasetData('Games per tag', [$models->count()], null);
             } else {
                 // Append to existing
-                $serverData->datasets[0]->values[] = $tag->games->count();
-//                $serverData->datasets[1]->values[] = $game->tags->count();
+                $serverData->datasets[0]->values[] = $models->count();
             }
-        });
+        }
 
         return $chart;
 
