@@ -50,3 +50,16 @@ Below I create a validator instance for and XML game validator and pass its resp
 To save from as much duplicate code and save from the headache of fixing 3 different validators I use the
 same ```JsonValidator``` or ```XmlValidator``` class for all the controllers.
 
+# Data Visualization
+
+Laravel Chartisan was used to create some bar graphs that will represent the correlation in games, movies, books. Using tags as the most common denominator some graphs can be displayed to show the Tags some objects have in common.
+
+*for a better view of the tags, click on the Legend at eh top to toggle data on or off for a certain category.
+
+![img_6.png](img_6.png)
+
+![img_7.png](img_7.png)
+
+![img_8.png](img_8.png)
+
+![img_9.png](img_9.png)

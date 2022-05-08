@@ -55,6 +55,7 @@ serve the application;
 
 `php artisan serve`
 
+
 # Documentation and API
 
 its possible to try the API using the Swagger UI although it its alot slower when fetching large collections.
@@ -74,6 +75,12 @@ ramon_api/storage/api_docs/api-docs.json
 http://127.0.0.1:8000/api/documentation
 
 http://127.0.0.1:8000/api/{{endpoint}}
+
+### Data Visualization
+
+* for a better view of the tags, click on the Legend at the top to toggle data on or off for a certain category.
+
+![img_10.png](img_10.png)
 
 ## Making a request
 
